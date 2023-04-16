@@ -1,0 +1,59 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+
+/* Welcome page */
+#welcome-text {
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 5rem;
+    color: greenyellow;
+    -webkit-text-fill-color: black;
+    -webkit-text-stroke: 2px;
+    padding-top: 100%;
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 15%;
+}
+
+.button {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.5rem;
+    padding-block: 1%;
+    padding-inline: 3%;
+    border-radius: 10px;
+    width: 200px;
+}
+
+.log-in {
+    margin-right: 5%;
+    background-color: greenyellow;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.log-in:active {
+    background-color: #8ccc26;
+}
+
+.register:active {
+    background-color: #6bccc9;
+}
+
+.register {
+    margin-left: 5%;
+    background-color: lightskyblue;
+}
+
+#welcome-bg {
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+}

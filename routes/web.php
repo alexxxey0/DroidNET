@@ -17,9 +17,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function() {
     return view('welcome', [
-        'posts' => Post::all()
-    ]
-);
-})
+        'title' => 'Welcome to DroidNET!',
+        'page' => 'welcome'
+    ]);
+})->name('/');
+
+
+
+
+Route::get('/user/{username}', function($username) {
+    return view('user', [
+        'user' => User::select('*')->where('username', '=', $username)->get(),
+        'title' => 'User: ' . $username,
+        'page' => 'user_page'
+    ]);
+});
 
 ?>

@@ -16,9 +16,12 @@ class UserFactory extends Factory
         $num = rand();
         $passwordHash = hash('sha256', $num);
         return [
-            'username' => fake()->name(),
+            'username' => fake()->userName(),
+            'first_name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
             'password' => $passwordHash, // password
             'email' => fake()->unique()->safeEmail(),
+            'about_me' => fake()->paragraph(10),
             'role' => $roles[array_rand($roles, 1)]
         ];
     }

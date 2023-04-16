@@ -1,0 +1,26 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/*Header*/
+header {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2rem;
+    background-color: greenyellow;
+    display: flex;
+    border-bottom: 10px solid black;
+}
+
+header img {
+    width: 120px;
+}
+
+header a {
+    padding: 1%;
+}
+
+header h1 {
+    align-self: center;
+    float: right;
+}

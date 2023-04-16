@@ -1,10 +1,12 @@
-<h1>Welcome to DroidNET!</h1>
+@extends('layouts/main_layout')
 
-@foreach ($posts as $post)
-    <h2>{{$post['title']}}</h2>
-    <h3>Author: {{$post['author']}}</h3>
-    <p>{{$post['content']}}</p>
+@section('content')
+    <img id='welcome-bg' src="{{ asset('images/dark4.gif') }}">
 
-    <footer>Published on: {{$post['created_at']}}</footer>
-    <hr>
-@endforeach
+    <p id='welcome-text'>Welcome to DroidNET!</p>
+    
+    <div id='buttons'>
+        <button class='button log-in'>Log In</button>
+        <button class='button register'>Register</button>
+    </div>
+@endsection
