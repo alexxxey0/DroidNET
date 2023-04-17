@@ -3,6 +3,13 @@
     margin: 0;
 }
 
+main{
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 10%;
+    min-height: 60vh;
+}
+
 /*Header*/
 header {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -23,4 +30,35 @@ header a {
 header h1 {
     align-self: center;
     float: right;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 20px;
+}
+  
+::-webkit-scrollbar-track {
+    background-color: #33383B;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf9a;
+}
+
+/* Footer */
+
+footer {
+    background-color: greenyellow;
+    color: black;
+    padding-block: 1%;
+    padding-right: 1%;
+    text-align: right;
+    border-top: 3px solid black;
 }

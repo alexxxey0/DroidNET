@@ -8,11 +8,11 @@
 #welcome-text {
     text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 5rem;
+    font-size: 6rem;
     color: greenyellow;
     -webkit-text-fill-color: black;
     -webkit-text-stroke: 2px;
-    padding-top: 100%;
+    padding-top: 10%;
 }
 
 #buttons {
@@ -22,12 +22,16 @@
 }
 
 .button {
+    display: inline-block;
+    width: 100px;
+    color: black;
+    text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1.5rem;
     padding-block: 1%;
     padding-inline: 3%;
     border-radius: 10px;
-    width: 200px;
+    text-decoration: none;
 }
 
 .log-in {
@@ -54,6 +58,8 @@
 
 #welcome-bg {
     width: 100%;
+    height: auto;
     position: absolute;
+    overflow: hidden;
     z-index: -1;
 }

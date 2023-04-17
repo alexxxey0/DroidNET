@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
+// Welcome page
 Route::get('/', function() {
     return view('welcome', [
         'title' => 'Welcome to DroidNET!',
@@ -22,15 +23,9 @@ Route::get('/', function() {
     ]);
 })->name('/');
 
+// User profile page
+Route::get('/user/{username}', [UserController::class, 'show_posts']);
 
-
-
-Route::get('/user/{username}', function($username) {
-    return view('user', [
-        'user' => User::select('*')->where('username', '=', $username)->get(),
-        'title' => 'User: ' . $username,
-        'page' => 'user_page'
-    ]);
-});
-
+// Registration page
+Route::get('/register', [UserController::class, 'register'])->name('/register');
 ?>

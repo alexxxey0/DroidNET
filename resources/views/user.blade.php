@@ -5,13 +5,26 @@
 @endif
 
 @section('content')
+    <h2>Name: {{$user[0]['first_name']}} {{$user[0]['last_name']}}</h2>
+
     @if (count($user) == 0)
         <h2>This user doesn't exist</h2>
     @else
-        <h1>Username: {{$user[0]['username']}}</h1>
-        <h1>Role: {{$user[0]['role']}}</h1>
-        <h1>About me: {{$user[0]['about_me']}}</h1>
-        <h1>Registered at: {{$user[0]['created_at']}}</h1>
+        @if (count($posts) == 0)
+            <h2>This user doesn't have any posts</h2>
+        @else
+            @foreach ($posts as $post)
+                <h1>{{$post['title']}}</h1>
+                <h2>{{$post['content']}}</h2>
+
+                @foreach ($comments as $comment)
+                    @if ($comment['post'] == $post['id'])
+                        <p>Comment by: {{$comment['author']}}</p>
+                        <p>Comment text: {{$comment['content']}}</p>
+                    @endif
+                @endforeach
+            @endforeach
+        @endif
     @endif
     
 @endsection

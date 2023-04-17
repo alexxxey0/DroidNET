@@ -6,7 +6,7 @@
     <p id='welcome-text'>Welcome to DroidNET!</p>
     
     <div id='buttons'>
-        <button class='button log-in'>Log In</button>
-        <button class='button register'>Register</button>
+        <a class='button log-in' href="#">Log In</a>
+        <a class='button register' href="{{route('/register')}}">Register</a>
     </div>
 @endsection
