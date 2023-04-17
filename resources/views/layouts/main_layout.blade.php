@@ -12,6 +12,18 @@
     <header>
         <a href="{{route('/')}}"><img src="{{ asset('images/logo.png') }}"></a>
         <h1>DroidNET</h1>
+        @auth
+            @php $image_name = isset(auth()->user()->image) ? auth()->user()->image : 'default_image.jpg'; @endphp
+            <img id='top-pic' src='{{ asset('images/' . $image_name) }}' alt="Profile Pic">
+            
+            <div id='logged-in'>
+                <span id='logged-in-as'>Logged in as: {{ auth()->user()->username }}</span>
+                <form id='logout-form' action="{{ route('/logout') }}" method='POST'>
+                    @csrf
+                    <button type='submit' id='log-out'>Log Out</button>
+                </form>
+            </div>
+        @endauth
     </header>
     
     <main>
@@ -19,7 +31,7 @@
     </main>
 
     <footer>
-        <p>DroidNET, 2023 | All rights reserved</p>
+        <p><strong>DroidNET &copy;, 2023 | All rights reserved</strong></p>
     </footer>
 </body>
 </html>

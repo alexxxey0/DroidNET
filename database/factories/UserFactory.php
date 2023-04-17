@@ -22,7 +22,8 @@ class UserFactory extends Factory
             'password' => $passwordHash, // password
             'email' => fake()->unique()->safeEmail(),
             'about_me' => fake()->paragraph(10),
-            'role' => $roles[array_rand($roles, 1)]
+            'role' => $roles[array_rand($roles, 1)],
+            'registered_at' => fake()->dateTime()
         ];
     }
 

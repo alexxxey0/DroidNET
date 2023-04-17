@@ -17,9 +17,10 @@ return new class extends Migration
             $table->string('last_name', 20);
             $table->string('password', 64);
             $table->string('email', 50)->unique();
-            $table->text('about_me');
-            $table->string('role', 20);
-            $table->timestamps();
+            $table->text('about_me')->nullable();
+            $table->string('role', 20)->default('user');
+            $table->string('image')->nullable();
+            $table->timestamp('registered_at');
         });
     }
 

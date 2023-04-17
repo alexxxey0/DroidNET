@@ -1,11 +1,11 @@
-#reg-header {
+#login-header {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
     padding-top: 10%;
     padding-bottom: 5%;
 }
 
-#reg-outline {
+#login-outline {
     margin-inline: auto;
     width: 50%;
     background-color: greenyellow;
@@ -14,17 +14,17 @@
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
-#reg-form {
+#login-form {
     display: flex;
     flex-direction: column;
 }
 
-#reg-form label {
+#login-form label {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1.2rem;
 }
 
-#reg-form input {
+#login-form input {
     border-radius: 5px;
     border: 1px solid black;
     padding: 1%;
@@ -32,12 +32,12 @@
     font-size: 1.2rem;
 }
 
-#reg-form > * {
+#login-form > * {
     width: 50%;
     margin-inline: auto;
 }
 
-#reg-form > textarea {
+#login-form > textarea {
     margin-bottom: 5%;
     border-radius: 5px;
     border: 1px solid black;
@@ -47,17 +47,9 @@
     font-size: 1.2rem;
 }
 
-#about_me_label {
-    padding-top: 1%;
-    text-align: center;
-}
-
-#reg-form #image {
-    border: 0;
-}
-
-#reg-button {
+#login-button {
     margin-bottom: 5%;
+    margin-top: 5%;
     display: inline-block;
     color: black;
     background-color: whitesmoke;
@@ -71,11 +63,11 @@
     width: 30%;
 }
 
-#reg-button:hover {
+#login-button:hover {
     cursor: pointer;
 }
 
-#reg-button:active {
+#login-button:active {
     background-color: #c4c4c4;
 }
 

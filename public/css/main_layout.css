@@ -32,6 +32,41 @@ header h1 {
     float: right;
 }
 
+#logged-in {
+    font-size: 1.6rem;
+    padding-top: 1%;
+    padding-right: 1%;
+}
+
+#logout-form button {
+    display: block;
+    background-color: #FF69B4;
+    font-size: 1.6rem;
+    padding: 2%;
+    border-radius: 5px;
+    border: 2px solid black;
+    margin-left: auto;
+    margin-top: 5%;
+}
+
+#logout-form button:hover {
+    cursor: pointer;
+}
+
+#logout-form button:active {
+    background-color: #cc5490;
+}
+
+#top-pic {
+    width: 100px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: 1%;
+    align-self: center;
+    border: 5px solid black;
+    border-radius: 10px;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
     width: 20px;

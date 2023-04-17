@@ -24,8 +24,21 @@ Route::get('/', function() {
 })->name('/');
 
 // User profile page
-Route::get('/user/{username}', [UserController::class, 'show_posts']);
+Route::get('/user/{username}', [UserController::class, 'user_profile']);
 
 // Registration page
-Route::get('/register', [UserController::class, 'register'])->name('/register');
+Route::get('/register', [UserController::class, 'register'])->name('register');
+
+// Create a new user
+Route::post('/create_user', [UserController::class, 'create_user'])->name('create_user');
+
+// Show login page
+Route::get('/login', [UserController::class, 'login'])->name('/login');
+
+// Login user
+Route::post('/authenticate', [UserController::class, 'authenticate'])->name('authenticate');
+
+
+// Log out
+Route::post('/logout', [UserController::class, 'logout'])->name('/logout');
 ?>
