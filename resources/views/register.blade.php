@@ -5,6 +5,7 @@
         <h1 id='reg-header'>Registration</h1>
         <form name='reg-form' id='reg-form' method='POST' action='{{ route('create_user') }}' enctype="multipart/form-data">
             @csrf
+            
             <label for='username'>Username</label>
             <input type='text' name='username' value='{{old('username')}}'>
             @error('username')

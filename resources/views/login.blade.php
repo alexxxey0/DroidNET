@@ -4,8 +4,8 @@
     <div id='login-outline'>
         <h1 id='login-header'>Log In</h1>
         <form name='login-form' id='login-form' method='POST' action='{{ route('authenticate') }}'>
-
             @csrf
+            
             <label for='username'>Username</label>
             <input type='text' name='username' value='{{old('username')}}'>
             @error('username')

@@ -3,14 +3,20 @@
     margin: 0;
 }
 
-main{
-    position: relative;
-    overflow: hidden;
-    padding-bottom: 10%;
-    min-height: 60vh;
+main {
+    overflow: visible;
 }
 
 /*Header*/
+
+#home-link {
+    color: black;
+    text-decoration: none;
+    align-self: center;
+    font-size: 3rem;
+    line-height: 1;
+}
+
 header {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 2rem;
@@ -60,11 +66,14 @@ header h1 {
 #top-pic {
     width: 100px;
     height: 100px;
+    border: 5px solid black;
+    border-radius: 10px;
+}
+
+#top-pic-link {
     margin-left: auto;
     margin-right: 1%;
     align-self: center;
-    border: 5px solid black;
-    border-radius: 10px;
 }
 
 /* Scrollbar */
@@ -94,6 +103,58 @@ footer {
     color: black;
     padding-block: 1%;
     padding-right: 1%;
+    margin-top: 5%;
     text-align: right;
     border-top: 3px solid black;
+}
+
+@media screen and (max-width: 1000px) {
+    #logo {
+        display: none;
+    }
+
+    #home-link {
+        margin-inline: auto;
+    }
+
+    #logout-form button {
+        margin-left: auto;
+    }
+
+    html {
+        height: 100%;
+    }
+    
+    body {
+        display:flex;
+        flex-direction:column;
+        height: 100%;
+    }
+    
+    main {
+        flex: 1;
+    }
+ 
+}
+
+@media screen and (max-width: 750px) {
+    header {
+        flex-direction: column;
+    }
+
+    #logout-form button {
+        margin-left: auto;
+        margin-bottom: 5%;
+    }
+
+    #logged-in {
+        margin-left: auto;
+        margin-right: 5%;
+    }
+
+    #top-pic-link {
+        margin-left: auto;
+        margin-right: 4%;
+        align-self: flex-start;
+    }
 }

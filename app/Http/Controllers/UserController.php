@@ -44,14 +44,13 @@ class UserController extends Controller
             'email' => ['required', 'email', Rule::unique('users', 'email')],
             'image' => 'image|mimes:jpg,png,jpeg,svg'
         ]);
+        $form_fields['about_me'] = $request['about_me'];
 
         if (isset($form_fields['image'])) {
             $imageName = time().'.'.$request->image->extension();
             $request->image->move(public_path('images'), $imageName);
             $form_fields['image'] = $imageName;
         }
-
-        $form_fields['about_me'] = $request['about_me'];
 
         // Hash password
         $form_fields['password'] = bcrypt($form_fields['password']);

@@ -10,12 +10,17 @@
 </head>
 <body>
     <header>
-        <a href="{{route('/')}}"><img src="{{ asset('images/logo.png') }}"></a>
-        <h1>DroidNET</h1>
+        <a id='logo' href="{{route('/')}}"><img src="{{ asset('images/logo.png') }}"></a>
+        <a id='home-link' href="{{route('/')}}"><strong>DroidNET</strong></a>
+
         @auth
-            @php $image_name = isset(auth()->user()->image) ? auth()->user()->image : 'default_image.jpg'; @endphp
-            <img id='top-pic' src='{{ asset('images/' . $image_name) }}' alt="Profile Pic">
-            
+            @php
+                $image_name = isset(auth()->user()->image) ? auth()->user()->image : 'default_image.jpg';
+            @endphp
+            <a id='top-pic-link' href="{{route('user', auth()->user()->username)}}">
+                <img id='top-pic' src='{{ asset('images/' . $image_name) }}' alt="Profile Pic">
+            </a>
+
             <div id='logged-in'>
                 <span id='logged-in-as'>Logged in as: {{ auth()->user()->username }}</span>
                 <form id='logout-form' action="{{ route('/logout') }}" method='POST'>

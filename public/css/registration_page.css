@@ -83,3 +83,13 @@
     color: red;
     padding-bottom: 1%;
 }
+
+@media screen and (max-width: 1000px) {
+    #reg-outline {
+        width: 75%;
+    }
+
+    #reg-button {
+        width: 50%;
+    }
+}
