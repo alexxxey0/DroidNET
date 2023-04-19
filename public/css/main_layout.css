@@ -3,56 +3,82 @@
     margin: 0;
 }
 
-main {
-    overflow: visible;
+html {
+    height: 100%;
 }
 
-/*Header*/
-
-#home-link {
-    color: black;
-    text-decoration: none;
-    align-self: center;
-    font-size: 3rem;
-    line-height: 1;
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: scroll;
 }
 
 header {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 2rem;
-    background-color: greenyellow;
     display: flex;
+    justify-content: space-between;
+    background-color: greenyellow;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     border-bottom: 10px solid black;
 }
 
-header img {
-    width: 120px;
+header > * {
+    width: 50%;
 }
 
-header a {
-    padding: 1%;
+#droid-net {
+    display: flex;
+    justify-content: flex-start;
 }
 
-header h1 {
+#droid-net a {
+    width: 20%;
+}
+
+#droid-net strong {
     align-self: center;
-    float: right;
+    font-size: 4vw;
+}
+
+#droid-net img {
+    width: 80%;
+    padding: 10%;
 }
 
 #logged-in {
-    font-size: 1.6rem;
-    padding-top: 1%;
-    padding-right: 1%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#logged-in > * {
+    align-self: center;
+}
+
+#logged-in a {
+    width: 30%;
+}
+
+#logged-in img {
+    display: block;
+    width: 50%;
+    aspect-ratio: 1 / 1;
+    border: 5px solid black;
+    border-radius: 10px;
+    margin-inline: auto;
+}
+
+#logout-form {
+    margin-right: 5%;
+    margin-left: 5%;
 }
 
 #logout-form button {
-    display: block;
     background-color: #FF69B4;
-    font-size: 1.6rem;
-    padding: 2%;
+    padding: 5%;
+    font-size: 1.5em;
     border-radius: 5px;
     border: 2px solid black;
-    margin-left: auto;
-    margin-top: 5%;
+    white-space: nowrap;
 }
 
 #logout-form button:hover {
@@ -63,18 +89,27 @@ header h1 {
     background-color: #cc5490;
 }
 
-#top-pic {
-    width: 100px;
-    height: 100px;
-    border: 5px solid black;
-    border-radius: 10px;
+#logged-in-as {
+    font-size: 1.5em;
 }
 
-#top-pic-link {
-    margin-left: auto;
-    margin-right: 1%;
-    align-self: center;
+
+header img {
+    max-width: 100%;
 }
+
+/* Footer */
+
+footer {
+    background-color: greenyellow;
+    font-size: 1.5em;
+    text-align: right;
+    padding-block: 1%;
+    padding-right: 1%;
+    white-space: nowrap;
+    border-top: 5px solid black;
+}
+
 
 /* Scrollbar */
 ::-webkit-scrollbar {
@@ -96,65 +131,34 @@ header h1 {
     background-color: #a8bbbf9a;
 }
 
-/* Footer */
-
-footer {
-    background-color: greenyellow;
-    color: black;
-    padding-block: 1%;
-    padding-right: 1%;
-    margin-top: 5%;
-    text-align: right;
-    border-top: 3px solid black;
-}
-
-@media screen and (max-width: 1000px) {
-    #logo {
-        display: none;
-    }
-
-    #home-link {
-        margin-inline: auto;
-    }
-
-    #logout-form button {
-        margin-left: auto;
-    }
-
-    html {
-        height: 100%;
-    }
-    
-    body {
-        display:flex;
-        flex-direction:column;
-        height: 100%;
-    }
-    
-    main {
-        flex: 1;
-    }
- 
-}
-
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 768px) {
     header {
         flex-direction: column;
-    }
-
-    #logout-form button {
-        margin-left: auto;
-        margin-bottom: 5%;
+        gap: 1em;
     }
 
     #logged-in {
-        margin-left: auto;
-        margin-right: 5%;
+        justify-content: flex-start;
+        margin-bottom: 2%;
+        flex-direction: column;
+        gap: 1em;
     }
 
-    #top-pic-link {
-        margin-left: auto;
-        margin-right: 4%;
-        align-self: flex-start;
+    #droid-net {
+        justify-content: flex-start;
     }
+
+    #logged-in img {
+        border-width: 2px;
+    }
+
+    header > * {
+        width: 100%;
+    }
+
+    footer {
+        font-size: 1em;
+    }
+
 }
+

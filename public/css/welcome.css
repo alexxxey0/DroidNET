@@ -1,27 +1,16 @@
-* {
-    padding: 0;
-    margin: 0;
-}
-
-footer {
-    margin-top: 0;
-}
-
 main {
-    position: relative;
-    overflow: hidden;
+    background-image: url('../images/dark4.gif');
+    height: 900px;
+    width: 100%;
+    background-position: center;
 }
 
-/* Welcome page */
-#welcome-text {
-    text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 10rem;
-    color: greenyellow;
-    -webkit-text-fill-color: black;
-    -webkit-text-stroke: 2px;
-    padding-top: 5%;
+body, html {
+    display: initial;
+    height: initial;
 }
+
+/* Buttons */
 
 #buttons {
     display: flex;
@@ -65,55 +54,35 @@ main {
     background-color: lightskyblue;
 }
 
-#welcome-bg, #welcome-bg2 {
-    width: 100%;
-    height: auto;
-    position: absolute;
-    overflow: hidden;
-    z-index: -1;
+#welcome-text {
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 10vw;
+    color: greenyellow;
+    -webkit-text-fill-color: black;
+    -webkit-text-stroke: 2px;
+    padding-top: 5%;
 }
 
-#welcome-bg2 {
-    display: none;
-}
-
-@media screen and (max-width: 1000px) {
-    #welcome-text {
-        font-size: 4rem;
+@media screen and (max-width: 768px) {
+    main {
+        background-image: url('../images/dark5.gif');
+        height: 600px;
+        width: 100%;
+        background-position: center;
     }
 
     #buttons {
         flex-direction: column;
+        align-items: center;
+        gap: 2em;
     }
 
-    .register, .log-in {
+    .button {
         margin: 0;
-        align-self: center;
-        padding: 3%;
-    }
-
-    .log-in {
-        margin-top: 10%;
-        margin-bottom: 10%;
-    }
-
-    #welcome-bg {
-        display: none;
-    }
-
-    #welcome-bg2 {
-        display: block;
-        height: 100%;
-    }
-
-    main {
-        overflow: visible;
+        border: 3px solid black;
+        border-radius: 10px;
     }
 }
 
-@media screen and (min-width: 1001px) and (max-width: 1200px) {
-    #welcome-text {
-        font-size: 8rem;
-    }
-}
 

@@ -10,24 +10,26 @@
 </head>
 <body>
     <header>
-        <a id='logo' href="{{route('/')}}"><img src="{{ asset('images/logo.png') }}"></a>
-        <a id='home-link' href="{{route('/')}}"><strong>DroidNET</strong></a>
+        <div id='droid-net'>
+            <a id='logo' href="{{route('/')}}"><img src="{{ asset('images/logo.png') }}"></a>
+            <strong>DroidNET</strong>
+        </div>
 
         @auth
             @php
                 $image_name = isset(auth()->user()->image) ? auth()->user()->image : 'default_image.jpg';
             @endphp
-            <a id='top-pic-link' href="{{route('user', auth()->user()->username)}}">
-                <img id='top-pic' src='{{ asset('images/' . $image_name) }}' alt="Profile Pic">
-            </a>
 
-            <div id='logged-in'>
-                <span id='logged-in-as'>Logged in as: {{ auth()->user()->username }}</span>
-                <form id='logout-form' action="{{ route('/logout') }}" method='POST'>
-                    @csrf
-                    <button type='submit' id='log-out'>Log Out</button>
-                </form>
-            </div>
+        <div id='logged-in'>
+            <a href="{{route('user', auth()->user()->username)}}">
+                <img src='{{ asset('images/' . $image_name) }}' alt="Profile Pic">
+            </a>
+            <span id='logged-in-as'>Logged in as: {{ auth()->user()->username }}</span>
+            <form id='logout-form' action="{{ route('/logout') }}" method='POST'>
+                @csrf
+                <button type='submit' id='log-out'>Log Out</button>
+            </form>
+        </div>
         @endauth
     </header>
     
