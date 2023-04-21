@@ -14,7 +14,7 @@ class UserFactory extends Factory
     {
         $roles = array('admin', 'user');
         $num = rand();
-        $passwordHash = hash('sha256', $num);
+        $passwordHash = bcrypt($num);
         return [
             'username' => fake()->userName(),
             'first_name' => fake()->firstName(),

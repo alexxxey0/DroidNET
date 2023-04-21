@@ -14,13 +14,20 @@ class UserController extends Controller
 {
     public function user_profile($username) {
         $posts = Post::select('*')->where('author', '=', $username)->get(); // select all posts made by the user
+
         $post_ids = Post::select('id')->where('author', '=', $username)->get();
+        $comments = Comment::select('*')->whereIn('post', $post_ids)->get(); // select all comments belonging to user's posts
+
+        $commenters_info = Comment::commenters_info();
+
         return view('user', [
             'user' => User::select('*')->where('username', '=', $username)->get(),
+            'users' => User::select('username', 'image')->get(),
             'posts' => $posts,
-            'comments' => Comment::select('*')->whereIn('post', $post_ids)->get(), // select all comments belonging to user's posts
             'title' => 'User: ' . $username,
-            'page' => 'user_page'
+            'page' => 'user_page',
+            'comments' => $comments,
+            'commenters_info' => $commenters_info
         ]);
     }
 
@@ -96,4 +103,5 @@ class UserController extends Controller
 
         return back()->withErrors(['password' => 'Invalid credentials'])->withInput();
     }
+
 }

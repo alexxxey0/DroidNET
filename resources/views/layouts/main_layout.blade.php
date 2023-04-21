@@ -25,12 +25,13 @@
                 <img src='{{ asset('images/' . $image_name) }}' alt="Profile Pic">
             </a>
             <span id='logged-in-as'>Logged in as: {{ auth()->user()->username }}</span>
-            <form id='logout-form' action="{{ route('/logout') }}" method='POST'>
+            <form id='logout-form' action="{{ route('logout') }}" method='POST'>
                 @csrf
                 <button type='submit' id='log-out'>Log Out</button>
             </form>
         </div>
         @endauth
+        
     </header>
     
     <main>
@@ -38,7 +39,7 @@
     </main>
 
     <footer>
-        <p><strong>DroidNET &copy;, 2023 | All rights reserved</strong></p>
+        <span><strong>DroidNET &copy;, 2023 | All rights reserved</strong></span>
     </footer>
 </body>
 </html>

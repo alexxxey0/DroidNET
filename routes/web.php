@@ -40,4 +40,4 @@ Route::post('/authenticate', [UserController::class, 'authenticate'])->name('aut
 
 
 // Log out
-Route::post('/logout', [UserController::class, 'logout'])->name('/logout');
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
