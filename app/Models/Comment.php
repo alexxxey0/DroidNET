@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
+    protected $fillable = ['id', 'post', 'author', 'content', 'created_at', 'updated_at'];
 
     // Get each commenters' username, profile picture, first name and last name
     public static function commenters_info() {

@@ -43,8 +43,10 @@
             @enderror
 
             <label id='about_me_label' for='about_me'>Tell us about yourself</label>
-            <textarea form='reg-form' name='about_me' id='about_me' cols='30' rows='8'>{{ old('about_me') }}</textarea>
+            <textarea onkeydown=adjust(this) form='reg-form' name='about_me' id='about_me' rows='8'>{{ old('about_me') }}</textarea>
             <button id='reg-button' type='submit'>Register!</button>
         </form>
     </div>
+
+    <script src="{{ asset('js/textarea_adjust.js') }}"></script>
 @endsection

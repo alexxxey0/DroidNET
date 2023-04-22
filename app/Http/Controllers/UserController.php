@@ -13,10 +13,10 @@ use App\Models\Comment;
 class UserController extends Controller
 {
     public function user_profile($username) {
-        $posts = Post::select('*')->where('author', '=', $username)->get(); // select all posts made by the user
+        $posts = Post::select('*')->where('author', '=', $username)->orderBy('created_at', 'DESC')->get(); // select all posts made by the user
 
         $post_ids = Post::select('id')->where('author', '=', $username)->get();
-        $comments = Comment::select('*')->whereIn('post', $post_ids)->get(); // select all comments belonging to user's posts
+        $comments = Comment::select('*')->whereIn('post', $post_ids)->orderBy('created_at', 'DESC')->get(); // select all comments belonging to user's posts
 
         $commenters_info = Comment::commenters_info();
 
@@ -65,7 +65,7 @@ class UserController extends Controller
         $user = User::create($form_fields);
         auth()->login($user);
 
-        return redirect('user/' . $form_fields['username']); // redirect user to his profile page
+        return redirect('user/' . $form_fields['username'])->with(['register_success' => true]); // redirect user to his profile page
     }
 
     // Log out

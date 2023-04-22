@@ -1,5 +1,8 @@
 <?php
 namespace App\Models;
+
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -38,6 +41,14 @@ Route::get('/login', [UserController::class, 'login'])->name('login');
 // Login user
 Route::post('/authenticate', [UserController::class, 'authenticate'])->name('authenticate');
 
-
 // Log out
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+// Show "Create a new post" form
+Route::get('/new_post', [PostController::class, 'new_post'])->name('new_post');
+
+// Add new post to the database
+Route::post('/new_post', [PostController::class, 'add_post'])->name('add_post');
+
+// Add a new comment
+Route::post('/add_comment', [CommentController::class, 'add_comment'])->name('add_comment');

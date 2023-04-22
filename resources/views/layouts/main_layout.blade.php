@@ -11,7 +11,7 @@
 <body>
     <header>
         <div id='droid-net'>
-            <a id='logo' href="{{route('/')}}"><img src="{{ asset('images/logo.png') }}"></a>
+            <a id='logo' href="{{route('/')}}"><img src="{{ asset('images/logo.png') }}" alt='Logo'></a>
             <strong>DroidNET</strong>
         </div>
 
