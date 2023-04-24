@@ -5,11 +5,30 @@ if (find_textarea) {
     const textarea_padding = parseFloat(textarea_styles.getPropertyValue('padding'));
 
     function adjust(textarea) {
-        let current_height = textarea.scrollHeight;
+        var current_height = textarea.scrollHeight;
         textarea.style.height = 'auto';
 
         if (textarea.scrollHeight > textarea.clientHeight) textarea.style.height = (textarea.scrollHeight - 2 * textarea_padding) + 'px';
         if (textarea.scrollHeight < current_height) textarea.style.height = (textarea.scrollHeight - 2 * textarea_padding) + 'px';
     }
 }
+
+// Delete post confirmation
+$(document).ready(function () {
+    // Select the submit buttons of forms with data-confirm attribute
+    var delete_buttons = $('.delete-post');
+
+    delete_buttons.on('click', function (event) {
+        event.preventDefault();
+
+        var button = $(this); // Get the button
+        var form = button.closest('form'); // Get the related form
+        var msg = ('Are you sure you want to delete this post?'); // Get the confirm message
+
+        if (confirm(msg)) form.submit();
+
+    })
+
+});
+
 

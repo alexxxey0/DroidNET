@@ -54,6 +54,7 @@
 .post p {
     font-size: 1.3em;
     word-wrap: break-word;
+    margin-bottom: 1%;
 }
 
 .title-date {
@@ -169,4 +170,52 @@
 
 .new-post a button:active {
     background-color: #8ccc26;
+}
+
+
+
+.post-buttons {
+    position: relative;
+}
+
+/* Delete post button */
+.delete-post-form .delete-post {
+    display: none;
+}
+
+.delete-post-form div:hover img {
+    display: none;
+}
+
+.delete-post-form div:hover .delete-post {
+    display: block;
+}
+
+.delete-post-form .delete-post, .delete-post-form img {
+    width: 4%;
+    aspect-ratio: 1 / 1;
+    position: absolute;
+    right: 5%;
+    top: 0;
+}
+
+/* Edit post button */
+.edit-active {
+    display: none;
+}
+
+.edit-link:hover .edit-inactive {
+    display: none;
+}
+
+.edit-link:hover .edit-active {
+    display: block;
+}
+
+.edit-active, .edit-inactive {
+    width: 4%;
+    aspect-ratio: 1 / 1;
+    position: absolute;
+    right: 4.7%;
+    top: 5rem;
 }

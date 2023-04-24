@@ -52,3 +52,12 @@ Route::post('/new_post', [PostController::class, 'add_post'])->name('add_post');
 
 // Add a new comment
 Route::post('/add_comment', [CommentController::class, 'add_comment'])->name('add_comment');
+
+//Delete a post
+Route::delete('/delete_post', [PostController::class, 'delete_post'])->name('delete_post');
+
+// Show edit post form
+Route::get('/edit_post/{post}', [PostController::class, 'edit_post'])->name('edit_post');
+
+// Update a post
+Route::put('/update_post/{post}', [PostController::class, 'update_post'])->name('update_post');

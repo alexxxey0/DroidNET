@@ -15,8 +15,6 @@ class CommentController extends Controller
         
         $validator = Validator::make($request->all(), [
             'content' => 'required',
-        ], [
-            'content.required' => 'Comment text is required'
         ]);
 
         //$form = '#comment_form' . $request['post_id'];
@@ -27,7 +25,7 @@ class CommentController extends Controller
         $form_fields['author'] = $username;
 
         $name = $request['name'];
-        $image = asset('images/' . auth()->user()->image);
+        $image = isset(auth()->user()->image) ? asset('images/' . auth()->user()->image) : asset('images/default_image.jpg');
         $time = date("M jS, Y G:i", time());
 
         Comment::create($form_fields);

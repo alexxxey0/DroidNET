@@ -34,5 +34,37 @@ class PostController extends Controller
         return redirect('user/' . $username)->with(['post_success' => true]);
     }
 
+    public function delete_post(Request $request) {
+        Post::where('id', '=', $request['post_id'])->delete();
+        return response()->json(['message' => 'Post deleted successfully!']);
+    }
+
+    public function edit_post(Post $post) {
+        return view('edit_post', [
+            'post' => $post['id'],
+            'post_title' => $post['title'],
+            'content' => $post['content'],
+            'title' => 'Edit post',
+            'page' => 'edit_post'
+        ]);
+    }
+
+    public function update_post(Request $request, Post $post) {
+        //dd($post);
+        $form_fields = $request->validate([
+            'title' => 'required',
+            'content' => 'required'
+        ], [
+            'title.required' => 'Post title is required',
+            'content.required' => 'Post text is required'
+        ]);
+
+        $username = auth()->user()->username;
+        $form_fields['author'] = $username;
+
+        $post->update($form_fields);
+        return redirect('user/' . $username)->with(['post_edit_success' => true]);
+    }
+
 }
  
