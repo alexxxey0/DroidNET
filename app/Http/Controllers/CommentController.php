@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,17 +19,19 @@ class CommentController extends Controller
             'content.required' => 'Comment text is required'
         ]);
 
-        $form = '#comment_form' . $request['post_id'];
- 
-        if ($validator->fails()) return redirect(url()->previous().$form)->withErrors($validator, $request['post_id']);
+        //$form = '#comment_form' . $request['post_id'];
 
         $form_fields = $request->all();
         $form_fields['post'] = $request['post_id'];
         $username = auth()->user()->username;
         $form_fields['author'] = $username;
 
+        $name = $request['name'];
+        $image = asset('images/' . auth()->user()->image);
+        $time = date("M jS, Y G:i", time());
+
         Comment::create($form_fields);
-        return redirect(url()->previous().$form);
+        return response()->json(['name' => $name, 'image' => $image, 'content' => $form_fields['content'], 'post_id' => $form_fields['post'], 'profile_link' => route('user', $username), 'time' => $time]);
         
     }
 }

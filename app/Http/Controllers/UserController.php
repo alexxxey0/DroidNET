@@ -44,9 +44,9 @@ class UserController extends Controller
 
     public function create_user(Request $request) {
         $form_fields = $request->validate([
-            'username' => ['required', Rule::unique('users', 'username')],
-            'first_name' => ['required'],
-            'last_name' => ['required'],
+            'username' => ['required', Rule::unique('users', 'username'), 'max:50'],
+            'first_name' => ['required', 'max:20'],
+            'last_name' => ['required', 'max:20'],
             'password' => ['required', 'min:6'],
             'email' => ['required', 'email', Rule::unique('users', 'email')],
             'image' => 'image|mimes:jpg,png,jpeg,svg'

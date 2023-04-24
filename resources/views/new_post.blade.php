@@ -22,5 +22,5 @@
         </form>
     </div>
 
-    <script src="{{ asset('js/textarea_adjust.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 @endsection

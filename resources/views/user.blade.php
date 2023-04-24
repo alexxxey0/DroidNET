@@ -19,9 +19,8 @@
             }
     </style>
 
+    <!-- Show a "registration successful" message -->
     @if (session()->get('register_success'))
-
-        <!-- Show a "registration successful" message -->
         <h1 class='success-msg'>Registration successful!</h1>
 
         <script>
@@ -91,10 +90,12 @@
                         <form id='{{'comment_form' . $post['id'] }}'  name='comment_form' class='new-comment-form' method='POST' action='{{ route('add_comment') }}'>
                             @csrf
                             <input type="text" name='post_id' value='{{ $post['id'] }}'>
+                            <input type="text" name='img' value='{{ auth()->user()->image }}'>
+                            <input type="text" name='name' value='{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}'>
                             <textarea id='{{'new_comment_text' . $post['id']}}' class="@error ('content', $post['id']) is-invalid @enderror comment-text" form='{{'comment_form' . $post['id'] }}' onkeyup=adjust(this) name="content" rows="3" placeholder="Your comment"></textarea>
                             <span>
                                 <img src="{{ asset('images/send_icon.png') }}" alt="Send" >
-                                <input id='send_comment' type='image' name='submit' src="{{ asset('images/send_icon_active.png') }}" alt="Send" >
+                                <input class='send_comment' type='image' name='submit' src="{{ asset('images/send_icon_active.png') }}" alt="Send" >
                             </span>
                             @error('content', $post['id'])
                                     <strong><p class='error-msg'>{{ $message }}</p></strong>
@@ -131,6 +132,53 @@
             @endforeach
         @endif
     @endif
-    <script src="{{ asset('js/textarea_adjust.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+    
+    <script>
+        $(function() {
+            $('.new-comment-form').submit(function(event) {
+                var form_id = $(this).attr('id');
+                event.preventDefault();
+                var formData = $(this).serializeArray();
+
+                $.ajax({
+                    url: `{{ route('add_comment') }}`,
+                    type: 'post',
+                    data: formData,
+                    success: function(response) {
+                        $('#comment_error').remove();
+
+                        var content = response.content;
+                        content = content.replace(/\n/g, "<br />");
+
+                        var profile_link = response.profile_link;
+                        var image = response.image;
+                        var name = response.name;
+                        var time = response.time;
+
+
+                        var comment = `<div class="comment">
+                                    <a href="` + profile_link + `"><img src="` + image + `" alt="Comment author's pic"></a>
+                                    <span class='comment-name'><strong>` + name + `</strong></span>
+                                    <span class='comment-date'>` + time + `</span>
+                                    <span></span>
+                                    <span class='comment-content'>` + content + `</span>
+                                </div>`;
+                        
+                        $('#post' + response.post_id + ' hr').after(comment);
+                        $('textarea').val('');
+                    },
+
+                    error: function(response) {
+                        $('#comment_error').remove(); // don't display more than 1 error message at once
+
+                        var form = $('#' + form_id);
+                        var error = `<h2 id='comment_error'>Comment text is required!</h2>`;
+                        $(form).append(error);
+                    }
+                });
+            });
+        });
+    </script>
     
 @endsection
