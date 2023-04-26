@@ -31,7 +31,7 @@ class PostController extends Controller
         $form_fields['author'] = $username;
 
         Post::create($form_fields);
-        return redirect('user/' . $username)->with(['post_success' => true]);
+        return redirect('user/' . $username)->with(['message' => 'Post created successfully!']);
     }
 
     public function delete_post(Request $request) {
@@ -63,7 +63,7 @@ class PostController extends Controller
         $form_fields['author'] = $username;
 
         $post->update($form_fields);
-        return redirect('user/' . $username)->with(['post_edit_success' => true]);
+        return redirect('user/' . $username)->with(['message' => 'Post edited successfully!']);
     }
 
 }

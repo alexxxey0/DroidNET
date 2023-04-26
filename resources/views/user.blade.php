@@ -19,31 +19,9 @@
             }
     </style>
 
-    <!-- Show a "registration successful" message -->
-    @if (session()->get('register_success'))
-        <h1 class='success-msg'>Registration successful!</h1>
-
-        <script>
-            const success_msg = document.querySelector('.success-msg');
-            setTimeout(() => {success_msg.style.display="none"}, 3000);
-        </script>
-
-    @endif
-    
-    <!-- Show a "post created successfully" message -->
-    @if (session()->get('post_success'))
-        <h1 class='success-msg'>Post created successfully!</h1>
-
-        <script>
-            const success_msg = document.querySelector('.success-msg');
-            setTimeout(() => {success_msg.style.display="none"}, 3000);
-        </script>
-
-    @endif
-
-    <!-- Show a "post edited successfully" message -->
-    @if (session()->get('post_edit_success'))
-        <h1 class='success-msg'>Post edited successfully!</h1>
+    <!-- Show a success message -->
+    @if (session()->get('message'))
+        <h1 class='success-msg'>{{ session()->get('message') }}</h1>
 
         <script>
             const success_msg = document.querySelector('.success-msg');
