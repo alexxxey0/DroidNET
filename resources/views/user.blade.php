@@ -12,7 +12,7 @@
                 margin-inline: auto;
                 left: 0;
                 right: 0;
-                width: 40%;
+                width: fit-content;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
                 border: 3px solid black;
                 padding: 1%;
@@ -114,7 +114,12 @@
 
                                         <a href="{{ route('user', $comment['author']) }}"><img src="{{ asset('images/' . $comment_image) }}" alt="Comment author's pic"></a>
                                         <span class='comment-name'><strong>{{ $commenter_first_name }} {{ $commenter_last_name }}</strong></span>
-                                        <span class='comment-date'>{{ date("M jS, Y G:i", strtotime($comment['created_at'])) }}</span>
+                                        <span class='comment-date'>
+                                            {{ date("M jS, Y G:i", strtotime($comment['created_at'])) }}
+                                            @if ($comment['created_at'] != $comment['updated_at'])
+                                                <br>Last edited on: {{ date("M jS, Y G:i", strtotime($comment['updated_at'])) }}
+                                            @endif
+                                        </span>
                                         <span></span>
                                         <span class='comment-content'> {!! nl2br($comment['content']) !!} </span>
                                     </div>

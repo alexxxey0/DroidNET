@@ -63,7 +63,7 @@ class PostController extends Controller
         $form_fields['author'] = $username;
 
         $post->update($form_fields);
-        return redirect('user/' . $username)->with(['message' => 'Post edited successfully!']);
+        return redirect('user/' . $username . '#post-buttons' . $post['id'])->with(['message' => 'Post edited successfully!']);
     }
 
 }

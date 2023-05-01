@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Http\Request;
@@ -35,5 +36,30 @@ class CommentController extends Controller
     public function delete_comment(Request $request) {
         Comment::where('id', '=', $request['comment_id'])->delete();
         return response()->json(['message' => 'Comment deleted successfully!']);
+    }
+
+    public function edit_comment(Comment $comment) {
+        return view('edit_comment', [
+            'comment' => $comment['id'],
+            'content' => $comment['content'],
+            'title' => 'Edit comment',
+            'page' => 'edit_comment'
+        ]);
+    }
+
+    public function update_comment(Request $request, Comment $comment) {
+        $form_fields = $request->validate([
+            'content' => 'required'
+        ], [
+            'content.required' => 'Comment text is required'
+        ]);
+
+        $username = auth()->user()->username;
+        $form_fields['author'] = $username;
+
+        $post = Post::select('author')->where('id', '=', $comment['post'])->get();
+
+        $comment->update($form_fields);
+        return redirect('user/' . $post[0]['author'] . '#comment-buttons' . $comment['id'])->with(['message' => 'Comment edited successfully!']);
     }
 }
