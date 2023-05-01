@@ -17,8 +17,6 @@ class CommentController extends Controller
             'content' => 'required',
         ]);
 
-        //$form = '#comment_form' . $request['post_id'];
-
         $form_fields = $request->all();
         $form_fields['post'] = $request['post_id'];
         $username = auth()->user()->username;
