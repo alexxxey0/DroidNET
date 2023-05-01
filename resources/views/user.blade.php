@@ -118,24 +118,28 @@
                                         <span></span>
                                         <span class='comment-content'> {!! nl2br($comment['content']) !!} </span>
                                     </div>
-                                    @if ($comment['author'] == auth()->user()->username)
-                                        <!-- Delete comment form -->
-                                        <form id='{{'delete-comment-form' . $comment['id'] }}'  name='delete-comment-form' class='delete-comment-form' method='POST' action='{{ route('delete_comment') }}'>
-                                            @csrf
-                                            @method('DELETE')
-                                            <input type="hidden" name='comment_id' value='{{ $comment['id'] }}'>
-                                            <div>
-                                                <img src="{{ asset('images/delete_icon.png') }}" alt="Delete">
-                                                <input class='delete-comment' type='image' name='submit' src="{{ asset('images/delete_icon_active.png') }}" alt="Delete" >
-                                            </div>
-                                        </form>
-                
-                                        <!-- Edit comment link -->
-                                        <div class='edit-comment-link'>
-                                            <img src="{{ asset('images/edit_icon.png') }}" alt="Edit" class='edit-comment-inactive'>
-                                            <a href='{{ route('edit_comment', ['comment' => $comment['id']]) }}'><img class='edit-comment-active' type='image' name='submit' src="{{ asset('images/edit_icon_active.png') }}" alt="Edit"></a>
-                                        </div>
-                                    @endif
+
+                                    @auth
+                                        @if ($comment['author'] == auth()->user()->username || $my_page)
+                                            <!-- Delete comment form -->
+                                            <form id='{{'delete-comment-form' . $comment['id'] }}'  name='delete-comment-form' class='delete-comment-form' method='POST' action='{{ route('delete_comment') }}'>
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" name='comment_id' value='{{ $comment['id'] }}'>
+                                                <div>
+                                                    <img src="{{ asset('images/delete_icon.png') }}" alt="Delete">
+                                                    <input class='delete-comment' type='image' name='submit' src="{{ asset('images/delete_icon_active.png') }}" alt="Delete" >
+                                                </div>
+                                            </form>
+                                            @if ($comment['author'] == auth()->user()->username)
+                                                <!-- Edit comment link -->
+                                                <div class='edit-comment-link'>
+                                                    <img src="{{ asset('images/edit_icon.png') }}" alt="Edit" class='edit-comment-inactive'>
+                                                    <a href='{{ route('edit_comment', ['comment' => $comment['id']]) }}'><img class='edit-comment-active' type='image' name='submit' src="{{ asset('images/edit_icon_active.png') }}" alt="Edit"></a>
+                                                </div>
+                                            @endif
+                                        @endif
+                                    @endauth
 
                                 </div>
                             @endif
@@ -303,8 +307,6 @@
                 add_delete_confirmation(object);
             })
             
-
-
 
         });
     </script>
