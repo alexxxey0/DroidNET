@@ -61,3 +61,9 @@ Route::get('/edit_post/{post}', [PostController::class, 'edit_post'])->name('edi
 
 // Update a post
 Route::put('/update_post/{post}', [PostController::class, 'update_post'])->name('update_post');
+
+// Delete a comment
+Route::delete('/delete_comment', [CommentController::class, 'delete_comment'])->name('delete_comment');
+
+// Show edit comment form
+Route::get('/edit_comment/{comment}', [CommentController::class, 'edit_comment'])->name('edit_comment');

@@ -65,7 +65,7 @@ class UserController extends Controller
         $user = User::create($form_fields);
         auth()->login($user);
 
-        return redirect('user/' . $form_fields['username'])->with(['register_success' => true]); // redirect user to his profile page
+        return redirect('user/' . $form_fields['username'])->with(['message' => 'Registration successful!']); // redirect user to his profile page
     }
 
     // Log out

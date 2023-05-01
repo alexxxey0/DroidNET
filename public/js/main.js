@@ -13,22 +13,18 @@ if (find_textarea) {
     }
 }
 
-// Delete post confirmation
-$(document).ready(function () {
-    // Select the submit buttons of forms with data-confirm attribute
-    var delete_buttons = $('.delete-post');
-
-    delete_buttons.on('click', function (event) {
+function add_delete_confirmation(button) {
+    $(button).on('click', function (event) {
         event.preventDefault();
 
-        var button = $(this); // Get the button
-        var form = button.closest('form'); // Get the related form
-        var msg = ('Are you sure you want to delete this post?'); // Get the confirm message
+        var form = $(button).closest('form'); // Get the related form
+        if ($(this).hasClass('delete-comment')) var msg = 'Are you sure you want to delete this comment?';
+        if ($(this).hasClass('delete-post')) var msg = 'Are you sure you want to delete this post?';
 
         if (confirm(msg)) form.submit();
 
     })
+}
 
-});
 
 

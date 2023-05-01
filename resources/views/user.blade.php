@@ -16,34 +16,13 @@
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
                 border: 3px solid black;
                 padding: 1%;
+                z-index: 1;
             }
     </style>
 
-    <!-- Show a "registration successful" message -->
-    @if (session()->get('register_success'))
-        <h1 class='success-msg'>Registration successful!</h1>
-
-        <script>
-            const success_msg = document.querySelector('.success-msg');
-            setTimeout(() => {success_msg.style.display="none"}, 3000);
-        </script>
-
-    @endif
-    
-    <!-- Show a "post created successfully" message -->
-    @if (session()->get('post_success'))
-        <h1 class='success-msg'>Post created successfully!</h1>
-
-        <script>
-            const success_msg = document.querySelector('.success-msg');
-            setTimeout(() => {success_msg.style.display="none"}, 3000);
-        </script>
-
-    @endif
-
-    <!-- Show a "post edited successfully" message -->
-    @if (session()->get('post_edit_success'))
-        <h1 class='success-msg'>Post edited successfully!</h1>
+    <!-- Show a message -->
+    @if (session()->get('message'))
+        <h1 class='success-msg'>{{ session()->get('message') }}</h1>
 
         <script>
             const success_msg = document.querySelector('.success-msg');
@@ -119,24 +98,45 @@
 
                         @foreach ($comments as $comment)
                             @if ($comment['post'] == $post['id'])
-                                <div class="comment">
-                                    
-                                    @php
-                                        // Get commenter's profile picture and name
-                                        foreach ($commenters_info as $commenter) {
-                                            if ($commenter['author'] == $comment['author']) {
-                                                $comment_image = isset($commenter['image']) ? $commenter['image'] : 'default_image.jpg';
-                                                $commenter_first_name = $commenter['first_name'];
-                                                $commenter_last_name = $commenter['last_name'];
+                                <div class='comment-buttons' id='{{ 'comment-buttons' . $comment['id'] }}'>
+                                    <div class="comment">
+                                        
+                                        @php
+                                            // Get commenter's profile picture and name
+                                            foreach ($commenters_info as $commenter) {
+                                                if ($commenter['author'] == $comment['author']) {
+                                                    $comment_image = isset($commenter['image']) ? $commenter['image'] : 'default_image.jpg';
+                                                    $commenter_first_name = $commenter['first_name'];
+                                                    $commenter_last_name = $commenter['last_name'];
+                                                }
                                             }
-                                        }
-                                    @endphp
+                                        @endphp
 
-                                    <a href="{{ route('user', $comment['author']) }}"><img src="{{ asset('images/' . $comment_image) }}" alt="Comment author's pic"></a>
-                                    <span class='comment-name'><strong>{{ $commenter_first_name }} {{ $commenter_last_name }}</strong></span>
-                                    <span class='comment-date'>{{ date("M jS, Y G:i", strtotime($comment['created_at'])) }}</span>
-                                    <span></span>
-                                    <span class='comment-content'> {!! nl2br($comment['content']) !!} </span>
+                                        <a href="{{ route('user', $comment['author']) }}"><img src="{{ asset('images/' . $comment_image) }}" alt="Comment author's pic"></a>
+                                        <span class='comment-name'><strong>{{ $commenter_first_name }} {{ $commenter_last_name }}</strong></span>
+                                        <span class='comment-date'>{{ date("M jS, Y G:i", strtotime($comment['created_at'])) }}</span>
+                                        <span></span>
+                                        <span class='comment-content'> {!! nl2br($comment['content']) !!} </span>
+                                    </div>
+                                    @if ($comment['author'] == auth()->user()->username)
+                                        <!-- Delete comment form -->
+                                        <form id='{{'delete-comment-form' . $comment['id'] }}'  name='delete-comment-form' class='delete-comment-form' method='POST' action='{{ route('delete_comment') }}'>
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name='comment_id' value='{{ $comment['id'] }}'>
+                                            <div>
+                                                <img src="{{ asset('images/delete_icon.png') }}" alt="Delete">
+                                                <input class='delete-comment' type='image' name='submit' src="{{ asset('images/delete_icon_active.png') }}" alt="Delete" >
+                                            </div>
+                                        </form>
+                
+                                        <!-- Edit comment link -->
+                                        <div class='edit-comment-link'>
+                                            <img src="{{ asset('images/edit_icon.png') }}" alt="Edit" class='edit-comment-inactive'>
+                                            <a href='{{ route('edit_comment', ['comment' => $comment['id']]) }}'><img class='edit-comment-active' type='image' name='submit' src="{{ asset('images/edit_icon_active.png') }}" alt="Edit"></a>
+                                        </div>
+                                    @endif
+
                                 </div>
                             @endif
                         @endforeach
@@ -188,18 +188,38 @@
                         var image = response.image;
                         var name = response.name;
                         var time = response.time;
+                        var id = response.id;
+                        var edit_link = response.edit_link;
 
 
-                        var comment = `<div class="comment">
-                                    <a href="` + profile_link + `"><img src="` + image + `" alt="Comment author's pic"></a>
-                                    <span class='comment-name'><strong>` + name + `</strong></span>
-                                    <span class='comment-date'>` + time + `</span>
-                                    <span></span>
-                                    <span class='comment-content'>` + content + `</span>
-                                </div>`;
+                        var comment = ` <div class='comment-buttons' id='comment-buttons` + id + `'>
+                                            <div class="comment">
+                                                <a href="` + profile_link + `"><img src="` + image + `" alt="Comment author's pic"></a>
+                                                <span class='comment-name'><strong>` + name + `</strong></span>
+                                                <span class='comment-date'>` + time + `</span>
+                                                <span></span>
+                                                <span class='comment-content'>` + content + `</span>
+                                            </div>
+                                            <form id='delete-comment-form` + id + `'  name='delete-comment-form' class='delete-comment-form' method='POST' action='{{ route('delete_comment') }}'>
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" name='comment_id' value='` + id + `'>
+                                                <div>
+                                                    <img src="{{ asset('images/delete_icon.png') }}" alt="Delete">
+                                                    <input class='delete-comment' type='image' name='submit' src="{{ asset('images/delete_icon_active.png') }}" alt="Delete" >
+                                                </div>
+                                            </form>
+                    
+                                            <div class='edit-comment-link'>
+                                                <img src="{{ asset('images/edit_icon.png') }}" alt="Edit" class='edit-comment-inactive'>
+                                                <a href='` + edit_link + `'><img class='edit-comment-active' type='image' name='submit' src="{{ asset('images/edit_icon_active.png') }}" alt="Edit"></a>
+                                            </div>
+                                        </div>`;
                         
                         $('#post' + response.post_id + ' hr').after(comment);
                         $('textarea').val('');
+                        comment_delete_ajax($('#delete-comment-form' + id)); // add an ajax event listener to the new comment
+                        add_delete_confirmation($('#delete-comment-form' + id + ' .delete-comment')); // add delete confirmation for the new comment
                     },
 
                     error: function(response) {
@@ -239,6 +259,50 @@
                     }
                 });
             });
+
+            // Ajax request for deleting a comment
+            function comment_delete_ajax(comment) {
+
+                $(comment).on('submit', function(event) {
+                    event.preventDefault();
+                    var div_id = $(this).closest('.comment-buttons').attr('id');
+                    var formData = $(this).serializeArray();
+
+                    $.ajax({
+                        url: `{{ route('delete_comment') }}`,
+                        type: 'post',
+                        data: formData,
+                        success: function(response) {
+                            $('#' + div_id).remove();
+
+                            $('<h1>', {
+                                class: 'success-msg',
+                                text: response.message
+                            }).prependTo('main');
+
+                            const success_msg = document.querySelector('.success-msg');
+                            setTimeout(() => {success_msg.style.display="none"}, 3000);
+                        },
+
+                        error: function(response) {
+                            alert('error');
+                        }
+                    });
+                });
+            }
+
+            $('.delete-comment-form').each(function(index, object) {
+                comment_delete_ajax(object);
+            })
+
+            $('.delete-post').each(function(index, object) {
+                add_delete_confirmation(object);
+            })
+
+            $('.delete-comment').each(function(index, object) {
+                add_delete_confirmation(object);
+            })
+            
 
 
 

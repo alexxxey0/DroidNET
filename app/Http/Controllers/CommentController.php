@@ -28,8 +28,14 @@ class CommentController extends Controller
         $image = isset(auth()->user()->image) ? asset('images/' . auth()->user()->image) : asset('images/default_image.jpg');
         $time = date("M jS, Y G:i", time());
 
-        Comment::create($form_fields);
-        return response()->json(['name' => $name, 'image' => $image, 'content' => $form_fields['content'], 'post_id' => $form_fields['post'], 'profile_link' => route('user', $username), 'time' => $time]);
+        $comment = Comment::create($form_fields);
+        $id = $comment['id'];
+        return response()->json(['name' => $name, 'image' => $image, 'content' => $form_fields['content'], 'post_id' => $form_fields['post'], 'profile_link' => route('user', $username), 'time' => $time, 'id' => $id, 'edit_link' => route('edit_comment', $id)]);
         
+    }
+
+    public function delete_comment(Request $request) {
+        Comment::where('id', '=', $request['comment_id'])->delete();
+        return response()->json(['message' => 'Comment deleted successfully!']);
     }
 }

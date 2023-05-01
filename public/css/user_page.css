@@ -219,3 +219,50 @@
     right: 4.7%;
     top: 5rem;
 }
+
+
+.comment-buttons {
+    position: relative;
+}
+
+/* Delete comment button */
+.delete-comment-form .delete-comment {
+    display: none;
+}
+
+.delete-comment-form div:hover img {
+    display: none;
+}
+
+.delete-comment-form div:hover .delete-comment {
+    display: block;
+}
+
+.delete-comment-form .delete-comment, .delete-comment-form img {
+    width: 3%;
+    aspect-ratio: 1 / 1;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+/* edit-comment comment button */
+.edit-comment-active {
+    display: none;
+}
+
+.edit-comment-link:hover .edit-comment-inactive {
+    display: none;
+}
+
+.edit-comment-link:hover .edit-comment-active {
+    display: block;
+}
+
+.edit-comment-active, .edit-comment-inactive {
+    width: 3%;
+    aspect-ratio: 1 / 1;
+    position: absolute;
+    right: 4%;
+    top: 0;
+}
