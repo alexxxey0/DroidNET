@@ -37,9 +37,6 @@
     @else
         @php
             $my_page = isset(auth()->user()->username) ? auth()->user()->username == $user[0]['username'] : false;
-        @endphp
-
-        @php
             $image_name = isset($user[0]['image']) ? $user[0]['image'] : 'default_image.jpg';
         @endphp
         
@@ -48,6 +45,37 @@
             <img src="{{ asset('images/' . $image_name) }}" alt="Profile Pic">
             <p>{!! nl2br($user[0]['about_me']) !!}</p>
         </div>
+
+        @auth
+            @if (!$my_page)
+                <div id='friend-buttons'>
+
+                        @if ($request_sent)
+                            <button disabled id='request-sent'>Friend request sent</button>
+                        @elseif ($request_received)
+                            <form name='accept-decline-request-form' id='accept-decline-request-form' method='POST' action='{{ route('accept_decline_request') }}'>
+                                @csrf
+                                @method('PUT')
+                                <input type='hidden' name='request_sender' value='{{ $user[0]['username'] }}'>
+                                <button name='accept_decline' value='accept' class='accept-decline' id='accept-request' type='submit'>Accept friend request</button>
+                                <button name='accept_decline' value='decline' class='accept-decline' id='decline-request' type='submit'>Decline friend request</button>
+                            </form>
+                        @elseif ($are_friends)
+                            <p>{{ $user[0]['first_name'] . ' ' . $user[0]['last_name'] }} is your friend &check;</p>
+                        @else
+                            <form name='send-request-form' id='send-request-form' method='POST' action='{{ route('send_request') }}'>
+                                @csrf             
+                                <input type='hidden' name='request_sender' value='{{ auth()->user()->username }}'>
+                                <input type='hidden' name='request_receiver' value='{{ $user[0]['username'] }}'>
+                                <input type='hidden' name='full_name' value='{{$user[0]['first_name'] . ' ' . $user[0]['last_name']}}'>
+                                <button id='send-request' type='submit'>Send a friend request</button>
+                            </form>
+                        @endif
+    
+                    <a href="#"><button>Write a message</button></a>
+                </div>
+            @endif
+        @endauth
   
         @if ($my_page)
             <div class='new-post'>

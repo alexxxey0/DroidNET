@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('about_me')->nullable();
             $table->string('role', 20)->default('user');
             $table->string('image')->nullable();
-            $table->timestamp('registered_at');
+            $table->timestamps();
         });
     }
 

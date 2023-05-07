@@ -82,6 +82,10 @@
     padding-bottom: 1%;
 }
 
+.content {
+    flex-grow: 1;
+}
+
 @media screen and (max-width: 1000px) {
     #new-post-outline {
         width: 75%;

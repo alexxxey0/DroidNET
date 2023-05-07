@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\Friendship;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -20,6 +22,24 @@ class UserController extends Controller
 
         $commenters_info = Comment::commenters_info();
 
+        if (Auth::check()) {
+            $requests_sent = Friendship::select('request_receiver')->where('request_sender', '=', auth()->user()->username)
+            ->where(function($query) {
+                $query->where('status', '=', 'PENDING')->orWhere('status', '=', 'DECLINED');
+            })->pluck('request_receiver')->toArray();
+            $request_sent = in_array($username, $requests_sent); // check if current user has sent a request to this user and it's still pending
+
+            $requests_received = Friendship::select('request_sender')->where('request_receiver', '=', auth()->user()->username)
+            ->where('status', '=', 'PENDING')->pluck('request_sender')->toArray();
+            $request_received = in_array($username, $requests_received); // check if current user has received a request from this user and it's still pending
+
+            $are_friends = Friendship::are_friends(auth()->user()->username, $username);
+        } else {
+            $request_sent = false;
+            $request_received = false;
+            $are_friends = false;
+        }
+
         return view('user', [
             'user' => User::select('*')->where('username', '=', $username)->get(),
             'users' => User::select('username', 'image')->get(),
@@ -27,7 +47,10 @@ class UserController extends Controller
             'title' => 'User: ' . $username,
             'page' => 'user_page',
             'comments' => $comments,
-            'commenters_info' => $commenters_info
+            'commenters_info' => $commenters_info,
+            'request_sent' => $request_sent,
+            'request_received' => $request_received,
+            'are_friends' => $are_friends
         ]);
     }
 

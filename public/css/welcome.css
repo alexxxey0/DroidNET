@@ -64,6 +64,10 @@ body, html {
     padding-top: 5%;
 }
 
+.nav {
+    display: none;
+}
+
 @media screen and (max-width: 768px) {
     main {
         background-image: url('../images/dark5.gif');

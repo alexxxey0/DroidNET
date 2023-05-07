@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -70,3 +71,12 @@ Route::get('/edit_comment/{comment}', [CommentController::class, 'edit_comment']
 
 // Update a comment
 Route::put('/update_comment/{comment}', [CommentController::class, 'update_comment'])->name('update_comment');
+
+// Send a friend request
+Route::post('/send_request', [FriendshipController::class, 'send_request'])->name('send_request');
+
+// Accept or decline a friend request
+Route::put('/accept_decline', [FriendshipController::class, 'accept_decline_request'])->name('accept_decline_request');
+
+// Show user's friends
+Route::get('/user/{username}/friends', [FriendshipController::class, 'show_friends'])->name('friends');

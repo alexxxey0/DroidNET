@@ -16,6 +16,8 @@ body {
 
 main {
     flex: 1;
+    position: relative;
+    display: flex;
 }
 
 header {
@@ -60,6 +62,7 @@ header > * {
 
 #logged-in a {
     width: 30%;
+    cursor: default;
 }
 
 #logged-in img {
@@ -69,6 +72,10 @@ header > * {
     border: 5px solid black;
     border-radius: 10px;
     margin-inline: auto;
+}
+
+#logged-in img:hover {
+    cursor: pointer;
 }
 
 #logout-form {
@@ -135,6 +142,61 @@ footer {
     background-color: #a8bbbf9a;
 }
 
+/* Navbar */
+
+.nav {
+    margin-top: 25px;
+    margin-left: 25px;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 25px;
+    left: 25px;
+    padding-right: 20px;
+    border-right: 5px solid black;
+}
+
+nav a {
+    margin-block: 5%;
+    color: black;
+    text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 2em;
+    margin-bottom: 1%;
+    padding: 5%;
+    text-align: left;
+    width: 100%;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    color: greenyellow;
+    transform: scale(1.05);
+}
+
+nav div {
+    color: white;
+    background-color: red;
+    text-align: center;
+    width: 1.4em;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    outline: 2px solid black;
+    transform: scale(0.9);
+}
+
+#friends {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.3em;
+
+}
+
+
 @media screen and (max-width: 768px) {
     header {
         flex-direction: column;
@@ -162,6 +224,22 @@ footer {
 
     footer {
         font-size: 1em;
+    }
+
+    main {
+        flex-direction: column;
+    }
+
+    nav a {
+        padding-right: 0;
+    }
+
+    nav {
+        border: 0;
+    }
+
+    #friends {
+        justify-content: flex-start;
     }
 
 }

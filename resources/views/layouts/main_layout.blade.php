@@ -25,22 +25,40 @@
                 $image_name = isset(auth()->user()->image) ? auth()->user()->image : 'default_image.jpg';
             @endphp
 
-        <div id='logged-in'>
-            <a href="{{route('user', auth()->user()->username)}}">
-                <img src='{{ asset('images/' . $image_name) }}' alt="Profile Pic">
-            </a>
-            <span id='logged-in-as'>Logged in as: {{ auth()->user()->username }}</span>
-            <form id='logout-form' action="{{ route('logout') }}" method='POST'>
-                @csrf
-                <button type='submit' id='log-out'>Log Out</button>
-            </form>
-        </div>
+            <div id='logged-in'>
+                <a href="{{route('user', auth()->user()->username)}}">
+                    <img src='{{ asset('images/' . $image_name) }}' alt="Profile Pic">
+                </a>
+                <span id='logged-in-as'>Logged in as: {{ auth()->user()->username }}</span>
+                <form id='logout-form' action="{{ route('logout') }}" method='POST'>
+                    @csrf
+                    <button type='submit' id='log-out'>Log Out</button>
+                </form>
+            </div>
         @endauth
         
     </header>
     
     <main>
-        @yield('content')   
+        @auth
+            <div class="nav">
+                <nav>
+                    <a href="{{ route('user', auth()->user()->username) }}"><strong>My Page</strong></a>
+                    <a id='friends' href="{{ route('friends', auth()->user()->username) }}">
+                        <strong>Friends</strong>
+                        @if (isset($received_requests_count) && $received_requests_count > 0)
+                            <div>{{ $received_requests_count }}</div>
+                        @endif
+                    </a>
+                    <a href="#"><strong>Search</strong></a>
+                    <a href="#"><strong>Messages</strong></a>
+                    <a href="#"><strong>Settings</strong></a>
+                </nav>
+            </div>
+        @endauth
+        <div class='content'>
+            @yield('content')   
+        </div>
     </main>
 
     <footer>

@@ -15,10 +15,11 @@
 
 #user-info span {
     font-size: clamp(2em, 5vw, 4em);
+    white-space: nowrap;
 }
 
 #user-info img {
-    width: 50%;
+    width: max(50%, 3em);
     aspect-ratio: 1 / 1;
     border: 5px solid black;
     border-radius: 10px;
@@ -66,7 +67,7 @@
     border-radius: 5px;
     padding: 1%;
     word-wrap: break-word;
-    width: max(50%, 250px);
+    width: max(50%, 150px);
     overflow-y: hidden;
 }
 
@@ -114,6 +115,11 @@
     border: 3px solid black;
     width: 100%;
     aspect-ratio: 1 / 1;
+    transition: 0.3s all ease;
+}
+
+.comment img:hover {
+    transform: scale(1.15);
 }
 
 .comment a {
@@ -170,7 +176,6 @@
 .new-post a button:active {
     background-color: #8ccc26;
 }
-
 
 
 .post-buttons {
@@ -265,3 +270,97 @@
     right: 4%;
     top: 0;
 }
+
+.content {
+    flex-grow: 1;
+}
+
+#friend-buttons {
+    margin-block: 5%;
+    display: flex;
+    width: 76%; /* 70% + 2 * 3% (2 * post padding) */
+    margin-inline: auto;
+    justify-content: space-between;
+    column-gap: 5em;
+}
+
+#friend-buttons button {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.6em;
+    padding: 5%;
+    background-color: greenyellow;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 6rem;
+}
+
+#friend-buttons > a {
+    flex-shrink: 1;
+}
+
+#send-request {
+    width: 100%;
+}
+
+#friend-buttons button:active {
+    background-color: #8ccc26;
+}
+
+
+#accept-decline-request-form {
+    display: flex;
+    gap: 1em;
+}
+
+#accept-decline-request-form button{
+    width: 50%;
+    padding: 1%;
+    font-size: 1.4em;
+}
+
+#friend-buttons p {
+    align-self: center;
+    font-size: 2em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: italic;
+    font-weight: bold;
+}
+
+#friend-buttons #request-sent {
+    padding: 0;
+    padding-inline: 1%;
+}
+
+@media screen and (max-width: 768px) {
+    #send-request-form, #friend-buttons {
+        flex-direction: column;
+    }
+
+    #send-request-form button {
+        align-self: center;
+        width: 100%;
+    }
+
+    #friend-buttons > * {
+        width: 100%;
+        align-self: center;
+    }
+
+    #friend-buttons > a button {
+        width: 100%;
+    }
+
+    #friend-buttons {
+        gap: 1em;
+    }
+
+
+    #user-info {
+        grid-template-columns: auto;
+    }
+
+    #user-info p {
+        grid-column: span 1;
+    }
+}
+
