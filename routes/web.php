@@ -80,3 +80,6 @@ Route::put('/accept_decline', [FriendshipController::class, 'accept_decline_requ
 
 // Show user's friends
 Route::get('/user/{username}/friends', [FriendshipController::class, 'show_friends'])->name('friends');
+
+// Remove a friend
+Route::delete('/remove_friend', [FriendshipController::class, 'remove_friend'])->name('remove_friend');

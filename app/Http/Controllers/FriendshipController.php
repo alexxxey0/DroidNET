@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Friendship;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,15 +27,7 @@ class FriendshipController extends Controller
             return redirect()->back();
         }
 
-
-    
-        try {
-            Friendship::create($form_fields);
-          
-        } catch (\Illuminate\Database\QueryException $e) {
-              return redirect()->back()->with(['message' => "You've already sent a friend request to this user!"]);
-        }
-        
+        Friendship::create($form_fields);
 
         return redirect()->back()->with(['message' => 'A friend request has been sent to ' . $request['full_name']]);
     }
@@ -47,19 +40,60 @@ class FriendshipController extends Controller
             Friendship::where('request_receiver', '=', auth()->user()->username)
             ->where('request_sender', '=', $request['request_sender'])->update(['status' => 'ACCEPTED']);
 
-            return redirect()->back();
+            if ($request['tab'] == 'friends_tab') return redirect()->back()->with(['switch_tab' => 'incoming']);
+            else return redirect()->back();
+
         } else {
             Friendship::where('request_receiver', '=', auth()->user()->username)
             ->where('request_sender', '=', $request['request_sender'])->update(['status' => 'DECLINED']);
 
-            return redirect()->back();
+            if ($request['tab'] == 'friends_tab') return redirect()->back()->with(['switch_tab' => 'incoming']);
+            else return redirect()->back();
         }
     }
 
     public function show_friends($username) {
+
+        $friendships = Friendship::where(function($query) use ($username) {
+            $query->where('friend1', '=', $username)->orWhere('friend2', '=', $username);
+        })->where('status', '=', 'ACCEPTED')->get();
+        $friends = array();
+        foreach ($friendships as $friendship) {
+            if ($friendship['friend1'] != $username) $friends[] = $friendship['friend1'];
+            else $friends[] = $friendship['friend2'];
+        }
+        $friends_info = User::whereIn('username', $friends)->get();
+
+
+        $incoming_requests = Friendship::select('request_sender')->where('request_receiver', '=', $username)->where('status', '=', 'PENDING')->get();
+        $incoming_requests_users_info = User::whereIn('username', $incoming_requests)->get();
+
+
+        $sent_requests = Friendship::select('request_receiver')->where('request_sender', '=', $username)->where('status', '=', 'PENDING')->get();
+        $sent_requests_users_info = User::whereIn('username', $sent_requests)->get();
+
+
+        $full_name = User::select('first_name', 'last_name')->where('username', '=', $username)->get();
+
         return view('friends', [
-            'title' => $username . "'s friends",
-            'page' => 'friends_page'
+            'title' => $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'] . "'s friends",
+            'username' => $username,
+            'full_name' => $full_name,
+            'page' => 'friends_page',
+            'friends_info' => $friends_info,
+            'incoming_requests_users_info' => $incoming_requests_users_info,
+            'sent_requests_users_info' => $sent_requests_users_info
         ]);
+    }
+
+    public function remove_friend(Request $request) {
+        Friendship::where(function($query) use ($request) {
+            $query->where('friend1', '=', $request['current_user'])->where('friend2', '=', $request['friend']);
+        })->orWhere(function($query) use ($request) {
+            $query->where('friend2', '=', $request['current_user'])->where('friend1', '=', $request['friend']);
+        })->delete();
+        
+        if ($request['tab'] == 'friends_tab') return redirect()->back()->with(['switch_tab' => 'friends']);
+        else return redirect()->back();
     }
 }

@@ -281,13 +281,13 @@
     width: 76%; /* 70% + 2 * 3% (2 * post padding) */
     margin-inline: auto;
     justify-content: space-between;
-    column-gap: 5em;
+    column-gap: 3.5em;
 }
 
 #friend-buttons button {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1.6em;
-    padding: 5%;
+    font-size: 1.4em;
+    padding: 0.5em;
     background-color: greenyellow;
     border-radius: 10px;
     cursor: pointer;
@@ -329,6 +329,10 @@
 #friend-buttons #request-sent {
     padding: 0;
     padding-inline: 1%;
+}
+
+#view_friends {
+    margin-left: auto;
 }
 
 @media screen and (max-width: 768px) {

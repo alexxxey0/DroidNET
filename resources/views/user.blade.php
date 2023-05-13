@@ -71,7 +71,7 @@
                                 <button id='send-request' type='submit'>Send a friend request</button>
                             </form>
                         @endif
-    
+                    <a id='view_friends' href="{{ route('friends', $user[0]['username']) }}"><button>View friends ({{ $friend_count }})</button></a>
                     <a href="#"><button>Write a message</button></a>
                 </div>
             @endif
@@ -202,7 +202,6 @@
         @endif
     @endif
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
     <script>
         $(function() {
             // Ajax request for adding new comments without refreshing the page

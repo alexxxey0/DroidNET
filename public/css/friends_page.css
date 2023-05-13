@@ -1,3 +1,115 @@
-h1 {
-    color: green;
+#tabs {
+    width: 100%;
+    border: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+    justify-content: center;
+    margin-top: 2%;
+    font-size: 1.5em;
+}
+
+#tabs button {
+    background-color: lightskyblue;
+    font-size: 1em;
+    padding: 0.1em;
+    width: max(15%, 100px);
+    border: 2px solid black;
+    border-radius: 10px;
+    
+}
+
+#tabs button:hover {
+    cursor: pointer;
+}
+
+#tabs button:active {
+    background-color: #6bccc9;
+    cursor: pointer;
+}
+
+.friend_info {
+    display: flex;
+    gap: 2em;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+.friend_info img {
+    width: 100%;
+    border: 5px solid black;
+    border-radius: 50%;
+}
+
+.friend_info a {
+    width: 10%;
+}
+
+.friend_info h1 {
+    align-self: center;
+    width: 20%;
+}
+
+#friends_list {
+    margin-bottom: 5%;
+}
+
+.no_friends {
+    text-align: center;
+    margin-top: 5%;
+    width: 100%;
+}
+
+.friend_info form {
+    align-self: center;
+    display: flex;
+    gap: 1em;
+    margin-left: 5%;
+}
+
+.friend_info form button, .remove-friend-form button {
+    padding: 1%;
+    font-size: 1.3em;
+    border-radius: 10px;
+    border: 2px solid black;
+    cursor: pointer;
+}
+
+.remove-friend-form button {
+    background-color: #FF3131;
+}
+
+.remove-friend-form button:active {
+    background-color: #cc2727;
+}
+
+.friend_info form button:hover {
+    cursor: pointer;
+}
+
+.accept-request {
+    background-color: greenyellow;
+}
+
+.accept-request:active {
+    background-color: #8acc26;
+}
+
+.decline-request {
+    background-color: #FF3131;
+}
+
+.decline-request:active {
+    background-color: #cc2727;
+}
+
+#tabs .active {
+    outline: 3px solid black;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transform: scale(1.05);
+}
+
+
+.content {
+    width: 100%;
 }

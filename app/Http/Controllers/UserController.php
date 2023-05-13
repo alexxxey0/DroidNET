@@ -22,6 +22,12 @@ class UserController extends Controller
 
         $commenters_info = Comment::commenters_info();
 
+        $full_name = User::select('first_name', 'last_name')->where('username', '=', $username)->get();
+
+        $friend_count = Friendship::where(function($query) use ($username) {
+            $query->where('friend1', '=', $username)->orWhere('friend2', '=', $username);
+        })->where('status', '=', 'ACCEPTED')->count();
+
         if (Auth::check()) {
             $requests_sent = Friendship::select('request_receiver')->where('request_sender', '=', auth()->user()->username)
             ->where(function($query) {
@@ -44,13 +50,14 @@ class UserController extends Controller
             'user' => User::select('*')->where('username', '=', $username)->get(),
             'users' => User::select('username', 'image')->get(),
             'posts' => $posts,
-            'title' => 'User: ' . $username,
+            'title' => $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'],
             'page' => 'user_page',
             'comments' => $comments,
             'commenters_info' => $commenters_info,
             'request_sent' => $request_sent,
             'request_received' => $request_received,
-            'are_friends' => $are_friends
+            'are_friends' => $are_friends,
+            'friend_count' => $friend_count
         ]);
     }
 
