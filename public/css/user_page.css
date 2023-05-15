@@ -1,4 +1,5 @@
 #user-info {
+    position: relative;
     display: grid;
     column-gap: 1rem;
     row-gap: 5rem;
@@ -333,6 +334,18 @@
 
 #view_friends {
     margin-left: auto;
+}
+
+#user-info > span strong {
+    position: relative;
+}
+
+#user-info > span strong span {
+    position: absolute;
+    font-size: 0.5em;
+    color: red;
+    left: 0;
+    top: 100%;
 }
 
 @media screen and (max-width: 768px) {

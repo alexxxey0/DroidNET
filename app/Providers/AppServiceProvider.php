@@ -26,11 +26,13 @@ class AppServiceProvider extends ServiceProvider
             if (Auth::check()) {
                 $requests_received = Friendship::select('request_sender')->where('request_receiver', '=', auth()->user()->username)
                 ->where('status', '=', 'PENDING')->pluck('request_sender')->toArray();
+
+                $role = auth()->user()->role;
                 
                 $received_requests_count = count($requests_received);
-                $view->with('received_requests_count', $received_requests_count);
+                $view->with(['received_requests_count' => $received_requests_count, 'role' => $role]);
             } else {
-                $view->with('received_requests_count', 0);
+                $view->with(['received_requests_count' => 0, 'role' => 'guest']);
             }
         });
     }

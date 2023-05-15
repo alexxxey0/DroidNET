@@ -92,3 +92,9 @@ Route::get('/settings/edit_profile', [UserController::class, 'edit_profile'])->n
 
 // Update a post
 Route::put('/update_profile', [UserController::class, 'update_profile'])->name('update_profile');
+
+// Show the user search page
+Route::get('/search', [UserController::class, 'search_page'])->name('search_page');
+
+// Show search results
+Route::get('/search_results', [UserController::class, 'show_search_results'])->name('show_search_results');

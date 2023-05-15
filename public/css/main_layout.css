@@ -196,6 +196,10 @@ nav div {
 
 }
 
+.admin-profile-pic {
+    border: 5px solid red !important;
+}
+
 
 @media screen and (max-width: 768px) {
     header {

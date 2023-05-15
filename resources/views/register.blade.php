@@ -47,6 +47,6 @@
             <button id='reg-button' type='submit'>Register!</button>
         </form>
     </div>
-
+    
     <script src="{{ asset('js/main.js') }}"></script>
 @endsection

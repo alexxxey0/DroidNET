@@ -41,8 +41,17 @@
         @endphp
         
         <div id='user-info'>
-            <span><strong>{{$user[0]['first_name']}} {{$user[0]['last_name']}}</strong></span>
-            <img src="{{ asset('images/' . $image_name) }}" alt="Profile Pic">
+            <span><strong>
+                {{$user[0]['first_name']}} {{$user[0]['last_name']}}
+                @if ($user_role == 'admin')
+                    <span id='admin_text'>Administrator</span>
+                @endif
+            </strong></span>
+            @if ($user_role == 'admin')
+                <img class='admin-profile-pic' src="{{ asset('images/' . $image_name) }}" alt="Profile Pic">
+            @else
+                <img class='profile-pic' src="{{ asset('images/' . $image_name) }}" alt="Profile Pic">
+            @endif
             <p>{!! nl2br($user[0]['about_me']) !!}</p>
         </div>
 

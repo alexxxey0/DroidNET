@@ -23,6 +23,7 @@ class UserController extends Controller
         $commenters_info = Comment::commenters_info();
 
         $full_name = User::select('first_name', 'last_name')->where('username', '=', $username)->get();
+        $user_role = User::select('role')->where('username', '=', $username)->get()->first();
 
         $friend_count = Friendship::where(function($query) use ($username) {
             $query->where('friend1', '=', $username)->orWhere('friend2', '=', $username);
@@ -57,7 +58,8 @@ class UserController extends Controller
             'request_sent' => $request_sent,
             'request_received' => $request_received,
             'are_friends' => $are_friends,
-            'friend_count' => $friend_count
+            'friend_count' => $friend_count,
+            'user_role' => $user_role['role']
         ]);
     }
 
@@ -178,6 +180,23 @@ class UserController extends Controller
         $user->update($form_fields);
         return redirect('user/' . $user['username'])->with(['message' => 'Profile edited successfully!']);
 
+    }
+
+    public function search_page() {
+        return view('search_page', [
+            'title' => 'Search for people',
+            'page' => 'search_page'
+        ]);
+    }
+
+    public function show_search_results(Request $request) {
+        $search_results = User::search($request['search_input']);
+
+        return view('search_page', [
+            'title' => 'Search for people',
+            'page' => 'search_page',
+            'search_results' => $search_results
+        ]);
     }
 
 }

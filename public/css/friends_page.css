@@ -28,6 +28,10 @@
     cursor: pointer;
 }
 
+.tabcontent {
+    margin-bottom: 5%;
+}
+
 .friend_info {
     display: flex;
     gap: 2em;
@@ -40,6 +44,11 @@
     border: 5px solid black;
     border-radius: 50%;
     aspect-ratio: 1 / 1;
+    transition: all 0.3s ease;
+}
+
+.friend_info img:hover {
+    transform: scale(1.05);
 }
 
 .friend_info a {

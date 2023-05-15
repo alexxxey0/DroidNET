@@ -30,9 +30,15 @@
             @endphp
 
             <div id='logged-in'>
-                <a href="{{route('user', auth()->user()->username)}}">
-                    <img src='{{ asset('images/' . $image_name) }}' alt="Profile Pic">
-                </a>
+                @if ($role == 'admin')
+                    <a href="{{route('user', auth()->user()->username)}}">
+                        <img class='admin-profile-pic' src='{{ asset('images/' . $image_name) }}' alt="Profile Pic">
+                    </a>
+                @else
+                    <a href="{{route('user', auth()->user()->username)}}">
+                        <img src='{{ asset('images/' . $image_name) }}' alt="Profile Pic">
+                    </a>
+                @endif
                 <span id='logged-in-as'>Logged in as: {{ auth()->user()->username }}</span>
                 <form id='logout-form' action="{{ route('logout') }}" method='POST'>
                     @csrf
@@ -55,7 +61,7 @@
                             <div>{{ $received_requests_count }}</div>
                         @endif
                     </a>
-                    <a href="#"><strong>Search</strong></a>
+                    <a href="{{ route('search_page') }}"><strong>Search</strong></a>
                     <a href="#"><strong>Messages</strong></a>
                     <a href="{{ route('settings') }}"><strong>Settings</strong></a>
                 </nav>
