@@ -1,0 +1,110 @@
+#settings-header {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    padding-top: 10%;
+    padding-bottom: 5%;
+}
+
+#settings-outline {
+    margin-inline: auto;
+    width: 50%;
+    background-color: greenyellow;
+    border-radius: 5px;
+    margin-top: 5%;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    margin-bottom: 20%;
+}
+
+#settings-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#settings-form label {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2em;
+}
+
+#settings-form input {
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 1%;
+    margin-bottom: 2%;
+    font-size: 1.2em;
+}
+
+#settings-form > * {
+    width: 50%;
+    margin-inline: auto;
+}
+
+#settings-form > textarea {
+    margin-bottom: 5%;
+    border-radius: 5px;
+    border: 1px solid black;
+    width: 75%;
+    padding: 1%;
+    resize: none;
+    font-size: 1.2em;
+    overflow-y: hidden;
+    word-wrap: break-word;
+}
+
+#about_me_label {
+    padding-top: 1%;
+    text-align: center;
+}
+
+#settings-form #image {
+    border: 0;
+}
+
+#settings-outline a {
+    display: block;
+    margin-inline: auto;
+    text-align: center;
+    width: 40%;
+}
+
+.settings-button {
+    margin-bottom: 5%;
+    display: inline-block;
+    margin-inline: auto;
+    color: black;
+    background-color: whitesmoke;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.5em;
+    padding-block: 1%;
+    padding-inline: 3%;
+    border-radius: 5px;
+    text-decoration: none;
+    width: 100%;
+}
+
+.settings-button:hover {
+    cursor: pointer;
+}
+
+.settings-button:active {
+    background-color: #c4c4c4;
+}
+
+.error-msg {
+    color: red;
+    padding-bottom: 1%;
+}
+
+.content {
+    flex-grow: 1;
+}
+
+@media screen and (max-width: 1000px) {
+    #settings-outline {
+        width: 75%;
+    }
+
+    .settings-button {
+        width: 50%;
+    }
+}

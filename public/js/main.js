@@ -20,6 +20,7 @@ function add_delete_confirmation(button) {
         var form = $(button).closest('form'); // Get the related form
         if ($(this).hasClass('delete-comment')) var msg = 'Are you sure you want to delete this comment?';
         if ($(this).hasClass('delete-post')) var msg = 'Are you sure you want to delete this post?';
+        if ($(this).hasClass('remove_friend')) var msg = 'Are you sure you want to remove this friend?';
 
         if (confirm(msg)) form.submit();
 

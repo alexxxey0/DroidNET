@@ -50,7 +50,7 @@ class PostController extends Controller
     }
 
     public function update_post(Request $request, Post $post) {
-        //dd($post);
+
         $form_fields = $request->validate([
             'title' => 'required',
             'content' => 'required'

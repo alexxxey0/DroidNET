@@ -83,3 +83,12 @@ Route::get('/user/{username}/friends', [FriendshipController::class, 'show_frien
 
 // Remove a friend
 Route::delete('/remove_friend', [FriendshipController::class, 'remove_friend'])->name('remove_friend');
+
+// Show settings menu
+Route::get('/settings', [UserController::class, 'show_settings'])->name('settings');
+
+// Show edit profile form
+Route::get('/settings/edit_profile', [UserController::class, 'edit_profile'])->name('edit_profile');
+
+// Update a post
+Route::put('/update_profile', [UserController::class, 'update_profile'])->name('update_profile');

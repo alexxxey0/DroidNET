@@ -1,5 +1,6 @@
 @extends('layouts/main_layout')
 @section('content')
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 
     @php
@@ -7,17 +8,15 @@
         
     @endphp
 
-    @auth
-        <div id="tabs">
-            @if ($my_page)
-                <button id='defaultOpen' class="tablinks" onclick="openTab(event, 'friends_list')">Friends</button>
-                <button id='incoming_tab' class="tablinks" onclick="openTab(event, 'incoming')">Incoming requests</button>
-                <button class="tablinks" onclick="openTab(event, 'sent')">Sent requests</button>
-            @else
-                <h1>{{ $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'] }}'s friends</h1>
-            @endif
-        </div>
-    @endauth
+    <div id="tabs">
+        @if ($my_page)
+            <button id='defaultOpen' class="tablinks" onclick="openTab(event, 'friends_list')">Friends</button>
+            <button id='incoming_tab' class="tablinks" onclick="openTab(event, 'incoming')">Incoming requests</button>
+            <button class="tablinks" onclick="openTab(event, 'sent')">Sent requests</button>
+        @else
+            <h1>{{ $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'] }}'s friends</h1>
+        @endif
+    </div>
 
     <div id='friends_list' class='tabcontent'>
         @if (count($friends_info) > 0)
@@ -33,15 +32,15 @@
                     <h1>{{ $friend['first_name'] . ' ' . $friend['last_name'] }}</h1>
 
                     @if ($my_page)
-                    <form name='remove-friend-form' class='remove-friend-form' method='POST' action='{{ route('remove_friend') }}'>
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name='friend' value='{{ $friend['username'] }}'>
-                        <input type="hidden" name='current_user' value='{{ auth()->user()->username }}'>
-                        <input type="hidden" name='tab' value='friends_tab'>
-                        <button name='remove_friend' value='remove' class='remove_friend' type='submit'>Remove from friends</button>
-                    </form>
-                @endif
+                        <form name='remove-friend-form' class='remove-friend-form' method='POST' action='{{ route('remove_friend') }}'>
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" name='friend' value='{{ $friend['username'] }}'>
+                            <input type="hidden" name='current_user' value='{{ auth()->user()->username }}'>
+                            <input type="hidden" name='tab' value='friends_tab'>
+                            <button name='remove_friend' value='remove' class='remove_friend' type='submit'>Remove from friends</button>
+                        </form>
+                    @endif
                 </div>
             @endforeach
         @else
@@ -106,6 +105,9 @@
 
     <script>
         document.getElementById("defaultOpen").click();
+        $('.remove_friend').each(function(index, object) {
+            add_delete_confirmation(object);
+        })
     </script>
 
     @if (session()->get('switch_tab') == 'incoming')

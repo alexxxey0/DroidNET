@@ -16,7 +16,11 @@
 <body>
     <header>
         <div id='droid-net'>
-            <a id='logo' href="{{route('/')}}"><img src="{{ asset('images/logo.png') }}" alt='Logo'></a>
+            @auth
+                <a id='logo' href="{{route('user', ['username' => auth()->user()->username])}}"><img src="{{ asset('images/logo.png') }}" alt='Logo'></a>
+            @else
+                <a id='logo' href="{{route('/')}}"><img src="{{ asset('images/logo.png') }}" alt='Logo'></a>
+            @endauth
             <strong>DroidNET</strong>
         </div>
 
@@ -44,6 +48,7 @@
             <div class="nav">
                 <nav>
                     <a href="{{ route('user', auth()->user()->username) }}"><strong>My Page</strong></a>
+                    <a href="#"><strong>Feed</strong></a>
                     <a id='friends' href="{{ route('friends', auth()->user()->username) }}">
                         <strong>Friends</strong>
                         @if (isset($received_requests_count) && $received_requests_count > 0)
@@ -52,7 +57,7 @@
                     </a>
                     <a href="#"><strong>Search</strong></a>
                     <a href="#"><strong>Messages</strong></a>
-                    <a href="#"><strong>Settings</strong></a>
+                    <a href="{{ route('settings') }}"><strong>Settings</strong></a>
                 </nav>
             </div>
         @endauth

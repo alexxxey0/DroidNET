@@ -39,6 +39,7 @@
     width: 100%;
     border: 5px solid black;
     border-radius: 50%;
+    aspect-ratio: 1 / 1;
 }
 
 .friend_info a {

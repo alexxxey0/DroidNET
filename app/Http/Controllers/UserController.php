@@ -134,4 +134,50 @@ class UserController extends Controller
         return back()->withErrors(['password' => 'Invalid credentials'])->withInput();
     }
 
+    public function show_settings() {
+        return view('settings', [
+            'title' => 'Settings',
+            'page' => 'settings'
+        ]);
+    }
+
+    public function edit_profile() {
+        return view('edit_profile', [
+            'title' => 'Edit profile details',
+            'page' => 'edit_profile'
+        ]);
+    }
+
+    public function update_profile(Request $request) {
+
+        $user = User::where('username', '=', $request['user'])->get()->first();
+
+        $form_fields = $request->validate([
+            'first_name' => ['required', 'max:20'],
+            'last_name' => ['required', 'max:20'],
+            'email' => ['required', 'email', Rule::unique('users')->ignore($user['email'], 'email')],
+            'image' => 'image|mimes:jpg,png,jpeg,svg',
+            'password' => ['nullable', 'min:6', 'confirmed'],
+            'password_confirmation' => ['nullable', 'min:6']
+        ], [
+            'password.confirmed' => 'Passwords do not match'
+        ]);
+
+        if (!isset($form_fields['password'])) $form_fields['password'] = $user['password'];
+        $form_fields['about_me'] = $request['about_me'];
+
+        if (isset($form_fields['image'])) {
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $form_fields['image'] = $imageName;
+        } else $form_fields['image'] = $user['image'];
+
+        // Hash password
+        $form_fields['password'] = bcrypt($form_fields['password']);
+
+        $user->update($form_fields);
+        return redirect('user/' . $user['username'])->with(['message' => 'Profile edited successfully!']);
+
+    }
+
 }
