@@ -1,42 +1,14 @@
-#user-info {
-    position: relative;
-    display: grid;
-    column-gap: 1rem;
-    row-gap: 5rem;
-    grid-template-columns: 1fr 1fr;
-    width: 70%;
+/* Post */
+
+hr {
+    width: 76%;
     margin-inline: auto;
-    margin-top: 5%;
     margin-bottom: 5%;
 }
 
-#user-info span, #user-info img {
-    margin: auto;
+.content > div:first-of-type {
+    margin-top: 5%;
 }
-
-#user-info span {
-    font-size: clamp(2em, 5vw, 4em);
-    white-space: nowrap;
-}
-
-#user-info img {
-    width: max(50%, 3em);
-    aspect-ratio: 1 / 1;
-    border: 5px solid black;
-    border-radius: 10px;
-}
-
-#user-info p {
-    grid-column: span 2;
-    font-size: 1.5em;
-}
-
-#no-posts {
-    text-align: center;
-    margin-block: 5%;
-}
-
-/* Post */
 
 .post {
     width: 70%;
@@ -95,8 +67,28 @@
     margin-bottom: 5%;
 }
 
-.post:last-child {
-    margin-bottom: 200px;
+.poster_info {
+    display: flex;
+    gap: 10%;
+    width: 76%;
+    margin-inline: auto;
+    margin-bottom: 3%;
+}
+
+.poster_info img {
+    width: 60%;
+    border: 5px solid black;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+}
+
+.poster_info h2 {
+    align-self: center;
+    font-size: 3em;
+}
+
+.poster_info a {
+    width: 30%;
 }
 
 /* Comments */
@@ -147,6 +139,10 @@
     text-align: right;
     margin-bottom: auto;
     margin-top: 10%;
+}
+
+.comment-buttons > div:first-child {
+    margin-top: 5%;
 }
 
 #user-info p {
@@ -274,110 +270,5 @@
 
 .content {
     flex-grow: 1;
-}
-
-#friend-buttons {
-    margin-block: 5%;
-    display: flex;
-    width: 76%; /* 70% + 2 * 3% (2 * post padding) */
-    margin-inline: auto;
-    justify-content: space-between;
-    column-gap: 3.5em;
-}
-
-#friend-buttons button {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1.4em;
-    padding: 0.5em;
-    background-color: greenyellow;
-    border-radius: 10px;
-    cursor: pointer;
-    height: 6rem;
-}
-
-#friend-buttons > a {
-    flex-shrink: 1;
-}
-
-#send-request {
-    width: 100%;
-}
-
-#friend-buttons button:active {
-    background-color: #8ccc26;
-}
-
-
-#accept-decline-request-form {
-    display: flex;
-    gap: 1em;
-}
-
-#accept-decline-request-form button{
-    width: 50%;
-    padding: 1%;
-    font-size: 1.4em;
-}
-
-#friend-buttons p {
-    align-self: center;
-    font-size: 2em;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-style: italic;
-    font-weight: bold;
-}
-
-#friend-buttons #request-sent {
-    padding: 0;
-    padding-inline: 1%;
-}
-
-#view_friends {
-    margin-left: auto;
-}
-
-#user-info > span strong {
-    position: relative;
-}
-
-#user-info > span strong span {
-    position: absolute;
-    font-size: 0.5em;
-    color: red;
-    left: 0;
-    top: 100%;
-}
-
-@media screen and (max-width: 768px) {
-    #send-request-form, #friend-buttons {
-        flex-direction: column;
-    }
-
-    #send-request-form button {
-        align-self: center;
-        width: 100%;
-    }
-
-    #friend-buttons > * {
-        width: 100%;
-        align-self: center;
-    }
-
-    #friend-buttons > a button {
-        width: 100%;
-    }
-
-    #friend-buttons {
-        gap: 1em;
-    }
-
-
-    #user-info {
-        grid-template-columns: auto;
-    }
-
-    #user-info p {
-        grid-column: span 1;
-    }
 }
 

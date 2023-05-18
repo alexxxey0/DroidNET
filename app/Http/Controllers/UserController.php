@@ -165,7 +165,9 @@ class UserController extends Controller
             'password.confirmed' => 'Passwords do not match'
         ]);
 
-        if (!isset($form_fields['password'])) $form_fields['password'] = $user['password'];
+        if (!isset($form_fields['password'])) $form_fields['password'] = $user['password']; 
+        else $form_fields['password'] = bcrypt($form_fields['password']);
+
         $form_fields['about_me'] = $request['about_me'];
 
         if (isset($form_fields['image'])) {
@@ -173,9 +175,6 @@ class UserController extends Controller
             $request->image->move(public_path('images'), $imageName);
             $form_fields['image'] = $imageName;
         } else $form_fields['image'] = $user['image'];
-
-        // Hash password
-        $form_fields['password'] = bcrypt($form_fields['password']);
 
         $user->update($form_fields);
         return redirect('user/' . $user['username'])->with(['message' => 'Profile edited successfully!']);

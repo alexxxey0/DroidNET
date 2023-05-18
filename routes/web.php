@@ -98,3 +98,6 @@ Route::get('/search', [UserController::class, 'search_page'])->name('search_page
 
 // Show search results
 Route::get('/search_results', [UserController::class, 'show_search_results'])->name('show_search_results');
+
+// Show feed
+Route::get('/feed', [PostController::class, 'show_feed'])->name('show_feed');

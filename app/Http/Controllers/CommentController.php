@@ -60,6 +60,8 @@ class CommentController extends Controller
         $post = Post::select('author')->where('id', '=', $comment['post'])->get();
 
         $comment->update($form_fields);
-        return redirect('user/' . $post[0]['author'] . '#comment-buttons' . $comment['id'])->with(['message' => 'Comment edited successfully!']);
+
+        if ($request['target_page'] == 'user') return redirect('user/' . $post[0]['author'] . '#comment-buttons' . $comment['id'])->with(['message' => 'Comment edited successfully!']);
+        else return redirect('feed/' . '#comment-buttons' . $comment['id'])->with(['message' => 'Comment edited successfully!']);
     }
 }

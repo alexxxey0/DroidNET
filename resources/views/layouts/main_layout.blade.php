@@ -54,7 +54,7 @@
             <div class="nav">
                 <nav>
                     <a href="{{ route('user', auth()->user()->username) }}"><strong>My Page</strong></a>
-                    <a href="#"><strong>Feed</strong></a>
+                    <a href="{{ route('show_feed') }}"><strong>Feed</strong></a>
                     <a id='friends' href="{{ route('friends', auth()->user()->username) }}">
                         <strong>Friends</strong>
                         @if (isset($received_requests_count) && $received_requests_count > 0)

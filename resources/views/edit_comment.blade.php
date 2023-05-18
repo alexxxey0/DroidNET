@@ -7,6 +7,12 @@
             @csrf
             @method('PUT')
 
+            @php
+                // check from which page user arrived, so we can then redirect him back accordingly
+                $prev_page = Route::getRoutes()->match(Request::create(URL::previous()))->getName();
+            @endphp
+
+            <input type="hidden" name='target_page' value='{{ $prev_page }}'>
             <label id='content-label' for='content'>Comment text</label>
             <textarea onkeydown=adjust(this) form='edit-comment-form' name='content' id='content' rows='12'>{{ $content }}</textarea>
             @error('content')
