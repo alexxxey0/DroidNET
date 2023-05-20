@@ -38,6 +38,7 @@
         @php
             $my_page = isset(auth()->user()->username) ? auth()->user()->username == $user[0]['username'] : false;
             $image_name = isset($user[0]['image']) ? $user[0]['image'] : 'default_image.jpg';
+            $role = auth()->user()->role;
         @endphp
         
         <div id='user-info'>
@@ -169,7 +170,7 @@
                                     </div>
 
                                     @auth
-                                        @if ($comment['author'] == auth()->user()->username || $my_page)
+                                        @if ($comment['author'] == auth()->user()->username || $my_page || $role == 'admin')
                                             <!-- Delete comment form -->
                                             <form id='{{'delete-comment-form' . $comment['id'] }}'  name='delete-comment-form' class='delete-comment-form' method='POST' action='{{ route('delete_comment') }}'>
                                                 @csrf
@@ -194,7 +195,7 @@
                             @endif
                         @endforeach
                     </div>
-                    @if ($my_page)
+                    @if ($my_page || $role == 'admin')
                         <!-- Delete post form -->
                         <form id='{{'delete_form' . $post['id'] }}'  name='delete-post-form' class='delete-post-form' method='POST' action='{{ route('delete_post') }}'>
                             @csrf
@@ -205,7 +206,9 @@
                                 <input class='delete-post' type='image' name='submit' src="{{ asset('images/delete_icon_active.png') }}" alt="Delete" >
                             </div>
                         </form>
+                    @endif
 
+                    @if ($my_page)
                         <!-- Edit post link -->
                         <div class='edit-link'>
                             <img src="{{ asset('images/edit_icon.png') }}" alt="Edit" class='edit-inactive'>

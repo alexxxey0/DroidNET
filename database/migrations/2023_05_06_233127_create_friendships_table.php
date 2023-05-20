@@ -21,11 +21,7 @@ return new class extends Migration
             $table->string('status', 20);
             $table->timestamps();
         });
-
-        // Make each friendship unique (1 row per 1 friendship)
-        DB::statement('ALTER TABLE friendships ADD COLUMN friend1 VARCHAR(50) AS (LEAST(request_sender, request_receiver)), 
-        ADD COLUMN friend2 VARCHAR(50) AS (GREATEST(request_sender, request_receiver));');
-        DB::statement('CREATE UNIQUE INDEX unique_friendship ON friendships (friend1, friend2);');
+        
     }
 
     /**

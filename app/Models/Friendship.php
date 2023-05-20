@@ -12,8 +12,8 @@ class Friendship extends Model
 
     // check if 2 users are friends
     public static function are_friends($user1, $user2) {
-        if (Friendship::where('friend1', '=', $user1)->where('friend2', '=', $user2)->where('status', '=', 'ACCEPTED')->count() > 0 ||
-            Friendship::where('friend1', '=', $user2)->where('friend2', '=', $user1)->where('status', '=', 'ACCEPTED')->count() > 0) return true;
+        if (Friendship::where('request_sender', '=', $user1)->where('request_receiver', '=', $user2)->where('status', '=', 'ACCEPTED')->count() > 0 ||
+            Friendship::where('request_sender', '=', $user2)->where('request_receiver', '=', $user1)->where('status', '=', 'ACCEPTED')->count() > 0) return true;
         else return false;
     }
 }

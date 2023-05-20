@@ -26,7 +26,7 @@ class UserController extends Controller
         $user_role = User::select('role')->where('username', '=', $username)->get()->first();
 
         $friend_count = Friendship::where(function($query) use ($username) {
-            $query->where('friend1', '=', $username)->orWhere('friend2', '=', $username);
+            $query->where('request_receiver', '=', $username)->orWhere('request_sender', '=', $username);
         })->where('status', '=', 'ACCEPTED')->count();
 
         if (Auth::check()) {

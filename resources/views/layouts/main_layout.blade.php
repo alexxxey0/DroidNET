@@ -12,16 +12,23 @@
     <title>{{$title}}</title>
     <link rel="stylesheet" href="{{ asset('css/main_layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/' . $page . '.css') }}">
+    <link rel="shortcut icon" href="{{ asset('images/icon1.png') }}" type="image/x-icon">
 </head>
 <body>
     <header>
         <div id='droid-net'>
-            @auth
-                <a id='logo' href="{{route('user', ['username' => auth()->user()->username])}}"><img src="{{ asset('images/logo.png') }}" alt='Logo'></a>
-            @else
-                <a id='logo' href="{{route('/')}}"><img src="{{ asset('images/logo.png') }}" alt='Logo'></a>
-            @endauth
-            <strong>DroidNET</strong>
+            <div id='logo_img'>
+                @auth
+                    <a id='logo' href="{{route('user', ['username' => auth()->user()->username])}}"><img src="{{ asset('images/logo.png') }}" alt='Logo'></a>
+                @else
+                    <a id='logo' href="{{route('/')}}"><img src="{{ asset('images/logo.png') }}" alt='Logo'></a>
+                @endauth
+                <strong>DroidNET</strong>
+            </div>
+
+            @guest
+                <a id='search_top_link' href="{{ route('search_page') }}">Search for people &#128270;</a>
+            @endguest
         </div>
 
         @auth

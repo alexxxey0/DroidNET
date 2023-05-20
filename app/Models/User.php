@@ -19,7 +19,8 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     public static function search($search_input) {
-        return User::where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', '%' . $search_input . '%')->get();
+        // Return all users matching the search input except the current user
+        return User::where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', '%' . $search_input . '%')->where('username', '!=', auth()->user()->username)->get();
     }
 }
 

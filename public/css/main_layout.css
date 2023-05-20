@@ -26,19 +26,41 @@ header {
     background-color: greenyellow;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border-bottom: 10px solid black;
+    padding-block: 0.5em;
 }
 
-header > * {
-    width: 50%;
+
+#search_top_link {
+    align-self: center;
+    margin-left: auto;
+    margin-right: 5%;
+    white-space: nowrap;
+    text-decoration: none;
+    background-color: lightskyblue;
+    padding: 1%;
+    font-size: 1.5em;
+    border: 3px solid black;
+    border-radius: 10px;
+
+}
+
+#search_top_link:active {
+    background-color: #6bccc9;
+    color: black;
+}
+
+#search_top_link:visited {
+    color: black;
 }
 
 #droid-net {
     display: flex;
     justify-content: flex-start;
+    width: 100%;
 }
 
-#droid-net a {
-    width: 20%;
+#logo {
+    width: min(20%, 125px);
 }
 
 #droid-net strong {
@@ -47,13 +69,24 @@ header > * {
 }
 
 #droid-net img {
-    width: 80%;
-    padding: 10%;
+    width: 100%;
+    padding: 0;
+    display: block;
+    padding: 15%;
+}
+
+#logo_img {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 5%;
 }
 
 #logged-in {
     display: flex;
     justify-content: flex-end;
+    gap: 5%;
+    width: 70%;
 }
 
 #logged-in > * {
@@ -61,17 +94,17 @@ header > * {
 }
 
 #logged-in a {
-    width: 30%;
     cursor: default;
+    width: 20%;
 }
 
 #logged-in img {
     display: block;
-    width: 50%;
     aspect-ratio: 1 / 1;
     border: 5px solid black;
     border-radius: 10px;
     margin-inline: auto;
+    width: 100%;
 }
 
 #logged-in img:hover {
@@ -104,10 +137,6 @@ header > * {
     font-size: 1.5em;
 }
 
-
-header img {
-    max-width: 100%;
-}
 
 /* Footer */
 
@@ -214,8 +243,15 @@ nav div {
         gap: 1em;
     }
 
-    #droid-net {
+    #droid-net{
         justify-content: flex-start;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #search_top_link {
+        margin-inline: auto;
+        margin-bottom: 5%;
     }
 
     #logged-in img {

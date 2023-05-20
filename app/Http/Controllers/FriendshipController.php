@@ -55,12 +55,12 @@ class FriendshipController extends Controller
     public function show_friends($username) {
 
         $friendships = Friendship::where(function($query) use ($username) {
-            $query->where('friend1', '=', $username)->orWhere('friend2', '=', $username);
+            $query->where('request_sender', '=', $username)->orWhere('request_receiver', '=', $username);
         })->where('status', '=', 'ACCEPTED')->get();
         $friends = array();
         foreach ($friendships as $friendship) {
-            if ($friendship['friend1'] != $username) $friends[] = $friendship['friend1'];
-            else $friends[] = $friendship['friend2'];
+            if ($friendship['request_sender'] != $username) $friends[] = $friendship['request_sender'];
+            else $friends[] = $friendship['request_receiver'];
         }
         $friends_info = User::whereIn('username', $friends)->get();
 
@@ -88,9 +88,9 @@ class FriendshipController extends Controller
 
     public function remove_friend(Request $request) {
         Friendship::where(function($query) use ($request) {
-            $query->where('friend1', '=', $request['current_user'])->where('friend2', '=', $request['friend']);
+            $query->where('request_sender', '=', $request['current_user'])->where('request_receiver', '=', $request['friend']);
         })->orWhere(function($query) use ($request) {
-            $query->where('friend2', '=', $request['current_user'])->where('friend1', '=', $request['friend']);
+            $query->where('request_receiver', '=', $request['current_user'])->where('request_sender', '=', $request['friend']);
         })->delete();
         
         if ($request['tab'] == 'friends_tab') return redirect()->back()->with(['switch_tab' => 'friends']);

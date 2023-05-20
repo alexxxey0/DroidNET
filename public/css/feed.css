@@ -1,9 +1,13 @@
 /* Post */
 
-hr {
+.post_divider {
     width: 76%;
     margin-inline: auto;
     margin-bottom: 5%;
+}
+
+hr:last-of-type {
+    display: none;
 }
 
 .content > div:first-of-type {
