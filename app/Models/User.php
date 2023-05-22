@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,7 +21,8 @@ class User extends Authenticatable
 
     public static function search($search_input) {
         // Return all users matching the search input except the current user
-        return User::where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', '%' . $search_input . '%')->where('username', '!=', auth()->user()->username)->get();
+        if (Auth::check()) return User::where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', '%' . $search_input . '%')->where('username', '!=', auth()->user()->username)->get();
+        else return User::where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', '%' . $search_input . '%')->get();
     }
 }
 

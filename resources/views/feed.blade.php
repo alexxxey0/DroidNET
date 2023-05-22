@@ -29,133 +29,136 @@
 
     @endif
 
+    @if (count($posts) > 0)
+        @foreach ($posts as $post)
+            <div class='post-buttons' id='{{ 'post-buttons' . $post['id'] }}'>
 
-    @foreach ($posts as $post)
-        <div class='post-buttons' id='{{ 'post-buttons' . $post['id'] }}'>
-
-            @php
-                // Get posters's profile picture and name
-                foreach ($posters_info as $poster) {
-                    //dd($poster['username'], $posters_info);
-                    if ($poster['username'] == $post['author']) {
-                        $poster_first_name = $poster['first_name'];
-                        $poster_last_name = $poster['last_name'];
-                        $poster_image_name = isset($poster['image']) ? $poster['image'] : 'default_image.jpg';
+                @php
+                    // Get posters's profile picture and name
+                    foreach ($posters_info as $poster) {
+                        //dd($poster['username'], $posters_info);
+                        if ($poster['username'] == $post['author']) {
+                            $poster_first_name = $poster['first_name'];
+                            $poster_last_name = $poster['last_name'];
+                            $poster_image_name = isset($poster['image']) ? $poster['image'] : 'default_image.jpg';
+                        }
                     }
-                }
-            @endphp
+                @endphp
 
-            <div class='poster_info'>
-                <h2>{{ $poster_first_name }} {{ $poster_last_name }}</h2>
-                <a href="{{ route('user', $post['author']) }}"><img class='poster_pic' src="{{ asset('images/' . $poster_image_name) }}" alt=""></a>
-            </div>
-
-            <div class='post' id='{{ 'post' . $post['id'] }}'>
-                <div class='title-date'>
-                    <h1>{{$post['title'] }}</h1>
-                    <span>Published on: {{ date("M jS, Y G:i", strtotime($post['created_at'])) }}
-                        @if ($post['created_at'] != $post['updated_at'])
-                            <br>Last edited on: {{ date("M jS, Y G:i", strtotime($post['updated_at'])) }}
-                        @endif
-                    </span>
+                <div class='poster_info'>
+                    <h2>{{ $poster_first_name }} {{ $poster_last_name }}</h2>
+                    <a href="{{ route('user', $post['author']) }}"><img class='poster_pic' src="{{ asset('images/' . $poster_image_name) }}" alt=""></a>
                 </div>
 
-                <p>{!! nl2br($post['content']) !!}</p>
-                @auth
-                    <form id='{{'comment_form' . $post['id'] }}'  name='comment_form' class='new-comment-form' method='POST' action='{{ route('add_comment') }}'>
-                        @csrf
-                        <input type="hidden" name='post_id' value='{{ $post['id'] }}'>
-                        <input type="hidden" name='img' value='{{ auth()->user()->image }}'>
-                        <input type="hidden" name='name' value='{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}'>
-                        <textarea id='{{'new_comment_text' . $post['id']}}' class="@error ('content', $post['id']) is-invalid @enderror comment-text" form='{{'comment_form' . $post['id'] }}' onkeyup=adjust(this) name="content" rows="3" placeholder="Your comment"></textarea>
-                        <span>
-                            <img src="{{ asset('images/send_icon.png') }}" alt="Send">
-                            <input class='send_comment' type='image' name='submit' src="{{ asset('images/send_icon_active.png') }}" alt="Send" >
+                <div class='post' id='{{ 'post' . $post['id'] }}'>
+                    <div class='title-date'>
+                        <h1>{{$post['title'] }}</h1>
+                        <span>Published on: {{ date("M jS, Y G:i", strtotime($post['created_at'])) }}
+                            @if ($post['created_at'] != $post['updated_at'])
+                                <br>Last edited on: {{ date("M jS, Y G:i", strtotime($post['updated_at'])) }}
+                            @endif
                         </span>
-                        @error('content', $post['id'])
-                                <strong><p class='error-msg'>{{ $message }}</p></strong>
-                        @enderror
-
-                    </form>
-                @endauth
-                <hr>
-
-                @foreach ($comments as $comment)
-                    @if ($comment['post'] == $post['id'])
-                        <div class='comment-buttons' id='{{ 'comment-buttons' . $comment['id'] }}'>
-                            <div class="comment">
-                                
-                                @php
-                                    // Get commenter's profile picture and name
-                                    foreach ($commenters_info as $commenter) {
-                                        if ($commenter['author'] == $comment['author']) {
-                                            $comment_image = isset($commenter['image']) ? $commenter['image'] : 'default_image.jpg';
-                                            $commenter_first_name = $commenter['first_name'];
-                                            $commenter_last_name = $commenter['last_name'];
-                                        }
-                                    }
-                                @endphp
-
-                                <a href="{{ route('user', $comment['author']) }}"><img src="{{ asset('images/' . $comment_image) }}" alt="Comment author's pic"></a>
-                                <span class='comment-name'><strong>{{ $commenter_first_name }} {{ $commenter_last_name }}</strong></span>
-                                <span class='comment-date'>
-                                    {{ date("M jS, Y G:i", strtotime($comment['created_at'])) }}
-                                    @if ($comment['created_at'] != $comment['updated_at'])
-                                        <br>Last edited on: {{ date("M jS, Y G:i", strtotime($comment['updated_at'])) }}
-                                    @endif
-                                </span>
-                                <span></span>
-                                <span class='comment-content'> {!! nl2br($comment['content']) !!} </span>
-                            </div>
-
-                            @auth
-                                @if ($comment['author'] == auth()->user()->username)
-                                    <!-- Delete comment form -->
-                                    <form id='{{'delete-comment-form' . $comment['id'] }}'  name='delete-comment-form' class='delete-comment-form' method='POST' action='{{ route('delete_comment') }}'>
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="hidden" name='comment_id' value='{{ $comment['id'] }}'>
-                                        <div>
-                                            <img src="{{ asset('images/delete_icon.png') }}" alt="Delete">
-                                            <input class='delete-comment' type='image' name='submit' src="{{ asset('images/delete_icon_active.png') }}" alt="Delete" >
-                                        </div>
-                                    </form>
-                                    @if ($comment['author'] == auth()->user()->username)
-                                        <!-- Edit comment link -->
-                                        <div class='edit-comment-link'>
-                                            <img src="{{ asset('images/edit_icon.png') }}" alt="Edit" class='edit-comment-inactive'>
-                                            <a href='{{ route('edit_comment', ['comment' => $comment['id']]) }}'><img class='edit-comment-active' type='image' name='submit' src="{{ asset('images/edit_icon_active.png') }}" alt="Edit"></a>
-                                        </div>
-                                    @endif
-                                @endif
-                            @endauth
-
-                        </div>
-                    @endif
-                @endforeach
-            </div>
-            @if ($post['author'] == auth()->user()->username)
-                <!-- Delete post form -->
-                <form id='{{'delete_form' . $post['id'] }}'  name='delete-post-form' class='delete-post-form' method='POST' action='{{ route('delete_post') }}'>
-                    @csrf
-                    @method('DELETE')
-                    <input type="hidden" name='post_id' value='{{ $post['id'] }}'>
-                    <div>
-                        <img src="{{ asset('images/delete_icon.png') }}" alt="Delete">
-                        <input class='delete-post' type='image' name='submit' src="{{ asset('images/delete_icon_active.png') }}" alt="Delete" >
                     </div>
-                </form>
 
-                <!-- Edit post link -->
-                <div class='edit-link'>
-                    <img src="{{ asset('images/edit_icon.png') }}" alt="Edit" class='edit-inactive'>
-                    <a href='{{ route('edit_post', ['post' => $post['id']]) }}'><img class='edit-active' type='image' name='submit' src="{{ asset('images/edit_icon_active.png') }}" alt="Edit"></a>
+                    <p>{!! nl2br($post['content']) !!}</p>
+                    @auth
+                        <form id='{{'comment_form' . $post['id'] }}'  name='comment_form' class='new-comment-form' method='POST' action='{{ route('add_comment') }}'>
+                            @csrf
+                            <input type="hidden" name='post_id' value='{{ $post['id'] }}'>
+                            <input type="hidden" name='img' value='{{ auth()->user()->image }}'>
+                            <input type="hidden" name='name' value='{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}'>
+                            <textarea id='{{'new_comment_text' . $post['id']}}' class="@error ('content', $post['id']) is-invalid @enderror comment-text" form='{{'comment_form' . $post['id'] }}' onkeyup=adjust(this) name="content" rows="3" placeholder="Your comment"></textarea>
+                            <span>
+                                <img src="{{ asset('images/send_icon.png') }}" alt="Send">
+                                <input class='send_comment' type='image' name='submit' src="{{ asset('images/send_icon_active.png') }}" alt="Send" >
+                            </span>
+                            @error('content', $post['id'])
+                                    <strong><p class='error-msg'>{{ $message }}</p></strong>
+                            @enderror
+
+                        </form>
+                    @endauth
+                    <hr>
+
+                    @foreach ($comments as $comment)
+                        @if ($comment['post'] == $post['id'])
+                            <div class='comment-buttons' id='{{ 'comment-buttons' . $comment['id'] }}'>
+                                <div class="comment">
+                                    
+                                    @php
+                                        // Get commenter's profile picture and name
+                                        foreach ($commenters_info as $commenter) {
+                                            if ($commenter['author'] == $comment['author']) {
+                                                $comment_image = isset($commenter['image']) ? $commenter['image'] : 'default_image.jpg';
+                                                $commenter_first_name = $commenter['first_name'];
+                                                $commenter_last_name = $commenter['last_name'];
+                                            }
+                                        }
+                                    @endphp
+
+                                    <a href="{{ route('user', $comment['author']) }}"><img src="{{ asset('images/' . $comment_image) }}" alt="Comment author's pic"></a>
+                                    <span class='comment-name'><strong>{{ $commenter_first_name }} {{ $commenter_last_name }}</strong></span>
+                                    <span class='comment-date'>
+                                        {{ date("M jS, Y G:i", strtotime($comment['created_at'])) }}
+                                        @if ($comment['created_at'] != $comment['updated_at'])
+                                            <br>Last edited on: {{ date("M jS, Y G:i", strtotime($comment['updated_at'])) }}
+                                        @endif
+                                    </span>
+                                    <span></span>
+                                    <span class='comment-content'> {!! nl2br($comment['content']) !!} </span>
+                                </div>
+
+                                @auth
+                                    @if ($comment['author'] == auth()->user()->username)
+                                        <!-- Delete comment form -->
+                                        <form id='{{'delete-comment-form' . $comment['id'] }}'  name='delete-comment-form' class='delete-comment-form' method='POST' action='{{ route('delete_comment') }}'>
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name='comment_id' value='{{ $comment['id'] }}'>
+                                            <div>
+                                                <img src="{{ asset('images/delete_icon.png') }}" alt="Delete">
+                                                <input class='delete-comment' type='image' name='submit' src="{{ asset('images/delete_icon_active.png') }}" alt="Delete" >
+                                            </div>
+                                        </form>
+                                        @if ($comment['author'] == auth()->user()->username)
+                                            <!-- Edit comment link -->
+                                            <div class='edit-comment-link'>
+                                                <img src="{{ asset('images/edit_icon.png') }}" alt="Edit" class='edit-comment-inactive'>
+                                                <a href='{{ route('edit_comment', ['comment' => $comment['id']]) }}'><img class='edit-comment-active' type='image' name='submit' src="{{ asset('images/edit_icon_active.png') }}" alt="Edit"></a>
+                                            </div>
+                                        @endif
+                                    @endif
+                                @endauth
+
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
-            @endif
+                @if ($post['author'] == auth()->user()->username)
+                    <!-- Delete post form -->
+                    <form id='{{'delete_form' . $post['id'] }}'  name='delete-post-form' class='delete-post-form' method='POST' action='{{ route('delete_post') }}'>
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name='post_id' value='{{ $post['id'] }}'>
+                        <div>
+                            <img src="{{ asset('images/delete_icon.png') }}" alt="Delete">
+                            <input class='delete-post' type='image' name='submit' src="{{ asset('images/delete_icon_active.png') }}" alt="Delete" >
+                        </div>
+                    </form>
 
-        </div>
-        <hr class='post_divider'>
-    @endforeach
+                    <!-- Edit post link -->
+                    <div class='edit-link'>
+                        <img src="{{ asset('images/edit_icon.png') }}" alt="Edit" class='edit-inactive'>
+                        <a href='{{ route('edit_post', ['post' => $post['id']]) }}'><img class='edit-active' type='image' name='submit' src="{{ asset('images/edit_icon_active.png') }}" alt="Edit"></a>
+                    </div>
+                @endif
+
+            </div>
+            <hr class='post_divider'>
+        @endforeach
+    @else
+        <h2 class='no_feed'>Your feed is empty!</h2>
+    @endif
 
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
     <script src='{{ asset('js/main.js') }}'></script>

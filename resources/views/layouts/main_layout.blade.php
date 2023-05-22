@@ -69,7 +69,7 @@
                         @endif
                     </a>
                     <a href="{{ route('search_page') }}"><strong>Search</strong></a>
-                    <a href="#"><strong>Messages</strong></a>
+                    <a href="{{ route('show_chats') }}"><strong>Chats</strong></a>
                     <a href="{{ route('settings') }}"><strong>Settings</strong></a>
                 </nav>
             </div>

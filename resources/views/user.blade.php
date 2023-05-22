@@ -38,7 +38,7 @@
         @php
             $my_page = isset(auth()->user()->username) ? auth()->user()->username == $user[0]['username'] : false;
             $image_name = isset($user[0]['image']) ? $user[0]['image'] : 'default_image.jpg';
-            $role = auth()->user()->role;
+            $role = isset(auth()->user()->role) ? auth()->user()->role : 'guest';
         @endphp
         
         <div id='user-info'>
@@ -82,7 +82,7 @@
                             </form>
                         @endif
                     <a id='view_friends' href="{{ route('friends', $user[0]['username']) }}"><button>View friends ({{ $friend_count }})</button></a>
-                    <a href="#"><button>Write a message</button></a>
+                    <a href="{{ route('open_chat', $user[0]['username']) }}"><button>Write a message</button></a>
                 </div>
             @endif
         @endauth

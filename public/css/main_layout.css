@@ -41,6 +41,7 @@ header {
     font-size: 1.5em;
     border: 3px solid black;
     border-radius: 10px;
+    color: black;
 
 }
 
@@ -87,6 +88,7 @@ header {
     justify-content: flex-end;
     gap: 5%;
     width: 70%;
+    margin-inline: auto;
 }
 
 #logged-in > * {
@@ -200,6 +202,7 @@ nav a {
     width: 100%;
     border-radius: 20px;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 nav a:hover {

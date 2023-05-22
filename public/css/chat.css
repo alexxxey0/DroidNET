@@ -1,0 +1,147 @@
+#top_pic {
+    width: 15%;
+    aspect-ratio: 1 / 1;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+#top_name {
+    align-self: center;
+    font-size: 3em;
+}
+
+#top_div {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5%;
+    margin-top: 5%;
+    gap: 2em;
+}
+
+#top_div a {
+    align-self: center;
+    color: black;
+    text-decoration: none;
+}
+
+#top_div a:visited {
+    color: black;
+}
+
+#top_div a:hover, #top_div a:active {
+    color: red;
+}
+
+#chat_window {
+    border: 2px solid black;
+    overflow-y: scroll;
+    word-wrap: break-word;
+    padding: 5%;
+    height: 500px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    width: 85%;
+    margin-inline: auto;
+}
+
+.message-buttons {
+    position: relative;
+}
+
+.new-message-form {
+    display: flex;
+    justify-content: center;
+    gap: 0.4em;
+}
+
+.new-message-form span {
+    align-self: flex-end;
+}
+
+.new-message-form textarea {
+    resize: none;
+    border-radius: 5px;
+    padding: 1%;
+    word-wrap: break-word;
+    width: max(100%, 150px);
+    overflow-y: hidden;
+    
+}
+
+.new-message-form input, .new-message-form img {
+    width: 25px;
+    aspect-ratio: 1 / 1;
+    border-radius: 5px;
+}
+
+.new-message-form input {
+    display: none;
+}
+
+.new-message-form span:hover img {
+    display: none;
+}
+
+.new-message-form span:hover input {
+    display: inline;
+}
+
+.new-message-form {
+    margin-top: 3%;
+    margin-bottom: 5%;
+}
+
+.msg_author {
+    display: flex;
+    gap: 1em;
+}
+
+.msg_author h2 {
+    align-self: center;
+}
+
+.message h2 {
+    display: inline;
+}
+
+.message p {
+    margin-left: 12%;
+}
+
+.message img {
+    width: 10%;
+    aspect-ratio: 1 / 1;
+    border: 3px solid black;
+    border-radius: 50%;
+}
+
+.sent_at {
+    align-self: center;
+    display: block;
+    margin-left: auto;
+}
+
+#chat_main {
+    width: 70%;
+    margin-inline: auto;
+}
+
+.error-msg {
+    margin-bottom: 5%;
+    font-size: 1.2em;
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        width: 95%;
+    }
+
+    #chat_main {
+        width: 100%;
+    }
+}

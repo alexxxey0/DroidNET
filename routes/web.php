@@ -3,6 +3,7 @@ namespace App\Models;
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FriendshipController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -101,3 +102,12 @@ Route::get('/search_results', [UserController::class, 'show_search_results'])->n
 
 // Show feed
 Route::get('/feed', [PostController::class, 'show_feed'])->name('show_feed');
+
+// Open a chat with another user
+Route::get('/chat/{user}', [MessageController::class, 'open_chat'])->name('open_chat');
+
+// Open user's chats
+Route::get('/chats', [MessageController::class, 'show_chats'])->name('show_chats');
+
+// Send a message
+Route::post('/send_message', [MessageController::class, 'send_message'])->name('send_message');

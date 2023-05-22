@@ -1,7 +1,11 @@
+<!-- if user is authenticated redirect him to his page -->
+@auth
+        <script>window.location = '{{ route('user', auth()->user()->username) }}';</script>
+@endauth
+
 @extends('layouts/main_layout')
 
 @section('content')
-
     <p id='welcome-text'>Welcome to DroidNET!</p>
     
     <div id='buttons'>
