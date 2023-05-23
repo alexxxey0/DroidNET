@@ -5,7 +5,12 @@
             @php
                 $user_img = isset($user['image']) ? $user['image'] : 'default_image.jpg';
             @endphp
-            <div class="chat_with">
+
+            @if ($user['unread'])
+            <div class='chat_with unread'>
+            @else
+            <div class='chat_with'>
+            @endif
                 <div class='msg_author'>
                     <a class='img_link' href="{{ route('open_chat', $user['username']) }}"><img src="{{ asset('images/' . $user_img) }}" alt=""></a>
                     <a class='name_link' href="{{ route('open_chat', $user['username']) }}"><h2>{{ $user['first_name'] }} {{ $user['last_name'] }}</h2></a>

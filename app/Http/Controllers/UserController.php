@@ -49,6 +49,7 @@ class UserController extends Controller
 
         return view('user', [
             'user' => User::select('*')->where('username', '=', $username)->get(),
+            //'user_obj' => User::select('*')->where('username', '=', $username)->first(),
             'users' => User::select('username', 'image')->get(),
             'posts' => $posts,
             'title' => $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'],

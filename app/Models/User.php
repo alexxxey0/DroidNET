@@ -6,6 +6,7 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -23,6 +24,10 @@ class User extends Authenticatable
         // Return all users matching the search input except the current user
         if (Auth::check()) return User::where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', '%' . $search_input . '%')->where('username', '!=', auth()->user()->username)->get();
         else return User::where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', '%' . $search_input . '%')->get();
+    }
+
+    public function isOnline() {
+        return Cache::has('user-is-online-' . $this->username);
     }
 }
 

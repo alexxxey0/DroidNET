@@ -15,7 +15,7 @@
                         $user_image = isset($user['image']) ? $user['image'] : 'default_image.jpg';
                     @endphp
                     <a href="{{ route('user', $user['username']) }}"><img src="{{ asset('images/' . $user_image) }}" alt="User's pic"></a>
-                    <span class='user-name'><strong>{{ $user['first_name'] }} {{ $user['last_name'] }}</strong></span>
+                    <a href="{{ route('user', $user['username']) }}" class="name_link"><span class='user-name'><strong>{{ $user['first_name'] }} {{ $user['last_name'] }}</strong></span></a>
                 </div>
             @endforeach
         @else

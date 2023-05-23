@@ -34,18 +34,34 @@
     margin-left: 5%;
     margin-top: 5%;
     margin-bottom: 5%;
+    gap: 5%;
 }
 
 .user a {
-    width: 30%;
+    width: 15%;
 }
 
 .user img {
-    width: 50%;
+    width: 90%;
     aspect-ratio: 1 / 1;
     border: 5px solid black;
     border-radius: 50%;
     transition: 0.3s all ease;
+}
+
+.name_link {
+    color: black;
+    text-decoration: none;
+    align-self: center;
+    white-space: nowrap;
+}
+
+.name_link:visited {
+    color: black;
+}
+
+.name_link:active, .name_link:hover {
+    color: red;
 }
 
 .user img:hover {
@@ -56,7 +72,6 @@
     width: 50%;
     align-self: center;
     font-size: 2em;
-    margin-left: -5%;
 }
 
 #no_results {

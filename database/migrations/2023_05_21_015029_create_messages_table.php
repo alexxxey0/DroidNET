@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('message_receiver', 50);
             $table->foreign('message_receiver')->references('username')->on('users')->onDelete('cascade');
             $table->text('content');
+            $table->string('status', 20);
             $table->timestamps();
         });
     }

@@ -35,16 +35,29 @@ class MessageController extends Controller
             if ($message['message_receiver'] != auth()->user()->username && !in_array($message['message_receiver'], $users)) $users[] = $message['message_receiver'];
         }
 
-        $users_info = User::whereIn('username', $users)->get();
+        $users_info = User::whereIn('username', $users)->get()->toArray();
 
-        foreach ($users_info as $user) {
-            $last_message = Message::select('content', 'message_sender')->where('message_sender', '=', $user['username'])->orWhere('message_receiver', '=', $user['username'])->orderBy('created_at', 'DESC')->first();
+        foreach ($users_info as &$user) {
+            $last_message = Message::select('content', 'message_sender', 'created_at')->where('message_sender', '=', $user['username'])->orWhere('message_receiver', '=', $user['username'])->orderBy('created_at', 'DESC')->first();
+            $last_message_status = Message::select('status')->where('message_sender', '=', $user['username'])->where('message_receiver', '=', auth()->user()->username)->orderBy('created_at', 'DESC')->first();
+
+            // check if there are unread messages from this user
+            $user_unread = isset($last_message_status['status']) && $last_message_status['status'] == 'UNREAD';
+
             $user['last_message'] = $last_message['content'];
+            $user['last_message_time'] = $last_message['created_at'];
             $user['sent_last'] = $last_message['message_sender'] == $user['username'];
+            $user['unread'] = $user_unread;
 
             // Shorten the last message if it is too long
             if (strlen($user['last_message']) > 50) $user['last_message'] = substr($user['last_message'], 0, 50) . '...';
         }
+
+        // Sort users by the time of last message, so the chats would be displayed from newest to oldest
+        usort($users_info, function($user1, $user2) {
+            return $user1['last_message_time'] < $user2['last_message_time'];
+        });
+
         
         return view('chats', [
             'title' => 'Chats',
@@ -62,12 +75,11 @@ class MessageController extends Controller
         ]);
         $form_fields['message_sender'] = $request['message_sender'];
         $form_fields['message_receiver'] = $request['message_receiver'];
-
+        $form_fields['status'] = 'UNREAD';
         Message::create($form_fields);
 
         $time = date("h:i A, d/m/Y", time());
         $image = isset(auth()->user()->image) ? asset('images/' . auth()->user()->image) : asset('images/default_image.jpg');
-
 
         return response()->json([
             'name' => auth()->user()['first_name'] . ' ' . auth()->user()['last_name'],
@@ -75,5 +87,13 @@ class MessageController extends Controller
             'content' => $request['content'],
             'time' => $time
         ]);
+    }
+
+    public function refresh_messages(Request $request) {
+        $user = $request['user'];
+
+        // mark unread messages as read when user opens the chat
+        Message::where('message_sender', '=', $user)->where('message_receiver', '=', auth()->user()->username)->update(['status' => 'READ']);
+        return response()->json();
     }
 }

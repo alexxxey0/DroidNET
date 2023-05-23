@@ -111,3 +111,6 @@ Route::get('/chats', [MessageController::class, 'show_chats'])->name('show_chats
 
 // Send a message
 Route::post('/send_message', [MessageController::class, 'send_message'])->name('send_message');
+
+// Refresh messages' statuses
+Route::post('/refresh_messages', [MessageController::class, 'refresh_messages'])->name('refresh_messages');

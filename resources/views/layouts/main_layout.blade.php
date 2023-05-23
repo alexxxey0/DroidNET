@@ -9,6 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>{{$title}}</title>
     <link rel="stylesheet" href="{{ asset('css/main_layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/' . $page . '.css') }}">
@@ -69,7 +70,12 @@
                         @endif
                     </a>
                     <a href="{{ route('search_page') }}"><strong>Search</strong></a>
-                    <a href="{{ route('show_chats') }}"><strong>Chats</strong></a>
+                    <a id='unread_messages' href="{{ route('show_chats') }}">
+                        <strong>Chats</strong>
+                        @if (isset($unread_messages_count) && $unread_messages_count > 0)
+                            <div>{{ $unread_messages_count }}</div>
+                        @endif
+                    </a>
                     <a href="{{ route('settings') }}"><strong>Settings</strong></a>
                 </nav>
             </div>

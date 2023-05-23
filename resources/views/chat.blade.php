@@ -105,7 +105,7 @@
                     },
 
                     error: function(response) {
-                        //
+                        alert('error');
                     }
                 });
             });
@@ -118,12 +118,20 @@
             // Ajax request for refreshing the chat window
             function refresh_chat() {
                 $.ajax({
+                    url: `{{ route('refresh_messages') }}`,
+                    type: 'post',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {user: `{{ $user_info['username'] }}`},
                     success: function(response) {
                         $('#chat_window').load(' #chat_window > *');
+                        $('#unread_messages').load(' #unread_messages > *');
 
                         var chat_window = document.getElementById('chat_window');
                         var scroll = false;
 
+                        //console.log(response.user);
 
                         if (Math.abs(chat_window.scrollTop - (chat_window.scrollHeight - chat_window.offsetHeight)) <= 5) {
                             scroll = true;
@@ -141,7 +149,7 @@
                     },
 
                     error: function(response) {
-                        //
+                        alert('error');
                     }
                 });
             }
