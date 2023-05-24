@@ -1,12 +1,13 @@
 <?php
 namespace App\Models;
 
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\FriendshipController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\FriendshipController;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,3 +115,11 @@ Route::post('/send_message', [MessageController::class, 'send_message'])->name('
 
 // Refresh messages' statuses
 Route::post('/refresh_messages', [MessageController::class, 'refresh_messages'])->name('refresh_messages');
+
+// Change language
+Route::get('lang/{lang}', function ($lang) {
+    App::setLocale($lang);
+    session()->put('lang', $lang);
+ 
+    return back();
+})->name('lang');
