@@ -23,7 +23,7 @@ class UserController extends Controller
         $commenters_info = Comment::commenters_info();
 
         $full_name = User::select('first_name', 'last_name')->where('username', '=', $username)->get();
-        $user_role = User::select('role')->where('username', '=', $username)->get()->first();
+        $user_role = User::select('role')->where('username', '=', $username)->get();
 
         $friend_count = Friendship::where(function($query) use ($username) {
             $query->where('request_receiver', '=', $username)->orWhere('request_sender', '=', $username);
@@ -47,12 +47,18 @@ class UserController extends Controller
             $are_friends = false;
         }
 
+        if ($full_name->isEmpty()) $title = null;
+        else $title = $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'];
+
+        if ($user_role->isEmpty()) $role = null;
+        else $role = $user_role[0]['role'];
+
         return view('user', [
             'user' => User::select('*')->where('username', '=', $username)->get(),
             //'user_obj' => User::select('*')->where('username', '=', $username)->first(),
             'users' => User::select('username', 'image')->get(),
             'posts' => $posts,
-            'title' => $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'],
+            'title' => $title,
             'page' => 'user_page',
             'comments' => $comments,
             'commenters_info' => $commenters_info,
@@ -60,7 +66,7 @@ class UserController extends Controller
             'request_received' => $request_received,
             'are_friends' => $are_friends,
             'friend_count' => $friend_count,
-            'user_role' => $user_role['role']
+            'user_role' => $role
         ]);
     }
 

@@ -118,8 +118,7 @@ Route::post('/refresh_messages', [MessageController::class, 'refresh_messages'])
 
 // Change language
 Route::get('lang/{lang}', function ($lang) {
-    App::setLocale($lang);
     session()->put('lang', $lang);
- 
     return back();
+    
 })->name('lang');

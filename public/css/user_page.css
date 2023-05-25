@@ -61,6 +61,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 3%;
+    text-align: right;
 }
 
 .new-comment-form textarea {
@@ -346,6 +347,13 @@
     color: red;
     left: 0;
     top: 100%;
+}
+
+.no_friends {
+    text-align: center;
+    margin-top: 5%;
+    width: 100%;
+    font-size: 2em;
 }
 
 @media screen and (max-width: 768px) {

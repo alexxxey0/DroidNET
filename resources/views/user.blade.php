@@ -32,7 +32,7 @@
     @endif
 
     @if (count($user) == 0)
-        <h2>This user doesn't exist</h2>
+        <h2 class='no_friends'>{{ __('text.no_user') }}</h2>
         <script>document.title = 'User not found'</script>
     @else
         @php
@@ -61,51 +61,51 @@
                 <div id='friend-buttons'>
 
                         @if ($request_sent)
-                            <button disabled id='request-sent'>Friend request sent</button>
+                            <button disabled id='request-sent'>{{ __('text.request_sent') }}</button>
                         @elseif ($request_received)
                             <form name='accept-decline-request-form' id='accept-decline-request-form' method='POST' action='{{ route('accept_decline_request') }}'>
                                 @csrf
                                 @method('PUT')
                                 <input type='hidden' name='request_sender' value='{{ $user[0]['username'] }}'>
-                                <button name='accept_decline' value='accept' class='accept-decline' id='accept-request' type='submit'>Accept friend request</button>
-                                <button name='accept_decline' value='decline' class='accept-decline' id='decline-request' type='submit'>Decline friend request</button>
+                                <button name='accept_decline' value='accept' class='accept-decline' id='accept-request' type='submit'>{{ __('text.accept_request') }}</button>
+                                <button name='accept_decline' value='decline' class='accept-decline' id='decline-request' type='submit'>{{ __('text.decline_request') }}</button>
                             </form>
                         @elseif ($are_friends)
-                            <p>{{ $user[0]['first_name'] . ' ' . $user[0]['last_name'] }} is your friend &check;</p>
+                            <p>{{ $user[0]['first_name'] . ' ' . $user[0]['last_name'] }} {{ __('text.is_friend') }} &check;</p>
                         @else
                             <form name='send-request-form' id='send-request-form' method='POST' action='{{ route('send_request') }}'>
                                 @csrf             
                                 <input type='hidden' name='request_sender' value='{{ auth()->user()->username }}'>
                                 <input type='hidden' name='request_receiver' value='{{ $user[0]['username'] }}'>
                                 <input type='hidden' name='full_name' value='{{$user[0]['first_name'] . ' ' . $user[0]['last_name']}}'>
-                                <button id='send-request' type='submit'>Send a friend request</button>
+                                <button id='send-request' type='submit'>{{ __('text.send_request') }}</button>
                             </form>
                         @endif
-                    <a id='view_friends' href="{{ route('friends', $user[0]['username']) }}"><button>View friends ({{ $friend_count }})</button></a>
-                    <a href="{{ route('open_chat', $user[0]['username']) }}"><button>Write a message</button></a>
+                    <a id='view_friends' href="{{ route('friends', $user[0]['username']) }}"><button>{{ __('text.view_friends') }} ({{ $friend_count }})</button></a>
+                    <a href="{{ route('open_chat', $user[0]['username']) }}"><button>{{ __('text.write_message') }}</button></a>
                 </div>
             @endif
         @endauth
 
         @guest
             <div id='friend-buttons'>
-                <a id='view_friends' href="{{ route('friends', $user[0]['username']) }}"><button>View friends ({{ $friend_count }})</button></a>
+                <a id='view_friends' href="{{ route('friends', $user[0]['username']) }}"><button>{{ __('text.view_friends') }} ({{ $friend_count }})</button></a>
             </div>
         @endguest   
         
   
         @if ($my_page)
             <div class='new-post'>
-                <a href="{{ route('new_post') }}"><button>Create a new post!</button></a>
+                <a href="{{ route('new_post') }}"><button>{{ __('text.create_post!') }}</button></a>
             </div>
         @endif
 
         @if (count($posts) == 0)
 
             @if ($my_page)
-                <h1 id='no-posts'>You have no posts yet!</h1>
+                <h1 id='no-posts'>{{ __('text.no_posts_you') }}</h1>
             @else
-                <h1 id='no-posts'>This user has no posts yet!</h1>
+                <h1 id='no-posts'>{{ __('text.no_posts_user') }}</h1>
             @endif
             
         @else
@@ -114,9 +114,21 @@
                     <div class='post' id='{{ 'post' . $post['id'] }}'>
                         <div class='title-date'>
                             <h1>{{$post['title'] }}</h1>
-                            <span>Published on: {{ date("M jS, Y G:i", strtotime($post['created_at'])) }}
+                            @php
+                                $locale = Config::get('app.locale');
+                                if (empty($locale)) $locale = 'en';
+                                if ($locale == 'lv') {
+                                    $fmt = new IntlDateFormatter( "lv_LV" ,IntlDateFormatter::FULL, IntlDateFormatter::FULL, null,IntlDateFormatter::GREGORIAN, "LLLL d, yyyy HH:mm");
+                                } elseif ($locale == 'en') {
+                                    $fmt = new IntlDateFormatter( "en_GB" ,IntlDateFormatter::FULL, IntlDateFormatter::FULL, null,IntlDateFormatter::GREGORIAN, "LLLL d, yyyy HH:mm");
+                                }
+                                $post_created = ucfirst(datefmt_format($fmt, strtotime($post['created_at'])));
+                                $post_updated = ucfirst(datefmt_format($fmt, strtotime($post['updated_at'])));
+                                
+                            @endphp
+                            <span>{{ __('text.published') }}: {{ $post_created }}
                                 @if ($post['created_at'] != $post['updated_at'])
-                                    <br>Last edited on: {{ date("M jS, Y G:i", strtotime($post['updated_at'])) }}
+                                    <br>{{ __('text.edited') }}: {{ $post_updated }}
                                 @endif
                             </span>
                         </div>
@@ -128,7 +140,7 @@
                                 <input type="hidden" name='post_id' value='{{ $post['id'] }}'>
                                 <input type="hidden" name='img' value='{{ auth()->user()->image }}'>
                                 <input type="hidden" name='name' value='{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}'>
-                                <textarea id='{{'new_comment_text' . $post['id']}}' class="@error ('content', $post['id']) is-invalid @enderror comment-text" form='{{'comment_form' . $post['id'] }}' onkeyup=adjust(this) name="content" rows="3" placeholder="Your comment"></textarea>
+                                <textarea id='{{'new_comment_text' . $post['id']}}' class="@error ('content', $post['id']) is-invalid @enderror comment-text" form='{{'comment_form' . $post['id'] }}' onkeyup=adjust(this) name="content" rows="3" placeholder="{{ __('text.your_comment') }}"></textarea>
                                 <span>
                                     <img src="{{ asset('images/send_icon.png') }}" alt="Send">
                                     <input class='send_comment' type='image' name='submit' src="{{ asset('images/send_icon_active.png') }}" alt="Send" >
@@ -143,6 +155,10 @@
 
                         @foreach ($comments as $comment)
                             @if ($comment['post'] == $post['id'])
+                                @php
+                                    $comment_created = ucfirst(datefmt_format($fmt, strtotime($comment['created_at'])));
+                                    $comment_updated = ucfirst(datefmt_format($fmt, strtotime($comment['updated_at'])));
+                                @endphp
                                 <div class='comment-buttons' id='{{ 'comment-buttons' . $comment['id'] }}'>
                                     <div class="comment">
                                         
@@ -160,9 +176,9 @@
                                         <a href="{{ route('user', $comment['author']) }}"><img src="{{ asset('images/' . $comment_image) }}" alt="Comment author's pic"></a>
                                         <span class='comment-name'><strong>{{ $commenter_first_name }} {{ $commenter_last_name }}</strong></span>
                                         <span class='comment-date'>
-                                            {{ date("M jS, Y G:i", strtotime($comment['created_at'])) }}
+                                            {{ $comment_created }}
                                             @if ($comment['created_at'] != $comment['updated_at'])
-                                                <br>Last edited on: {{ date("M jS, Y G:i", strtotime($comment['updated_at'])) }}
+                                                <br>{{ __('text.edited') }}: {{ $comment_updated }}
                                             @endif
                                         </span>
                                         <span></span>
@@ -222,7 +238,29 @@
     @endif
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
     <script src='{{ asset('js/main.js') }}'></script>
+    @php
+        $locale = Config::get('app.locale');
+        if (empty($locale)) $locale = 'en';
+    @endphp
     <script>
+        function add_delete_confirmation(button) {
+            $(button).on('click', function (event) {
+                event.preventDefault();
+
+                var form = $(button).closest('form'); // Get the related form
+                if ('{{ $locale }}' == 'en') {
+                    if ($(this).hasClass('delete-comment')) var msg = 'Are you sure you want to delete this comment?';
+                    if ($(this).hasClass('delete-post')) var msg = 'Are you sure you want to delete this post?';
+                } else if ('{{$locale}}' == 'lv') {
+                    if ($(this).hasClass('delete-comment')) var msg = 'Vai tiešām vēlaties dzēst šo komentāru?';
+                    if ($(this).hasClass('delete-post')) var msg = 'Vai tiešām vēlaties dzēst šo ziņu?';
+                }
+
+                if (confirm(msg)) form.submit();
+
+            })
+        }
+
         $(function() {
             // Ajax request for adding new comments without refreshing the page
             $('.new-comment-form').submit(function(event) {
@@ -282,7 +320,8 @@
                         $('#comment_error').remove(); // don't display more than 1 error message at once
 
                         var form = $('#' + form_id);
-                        var error = `<h2 id='comment_error'>Comment text is required!</h2>`;
+                        if ('{{ $locale }}' == 'en') var error = `<h2 id='comment_error'>Comment text is required!</h2>`;
+                        else if ('{{ $locale }}' == 'lv') var error = `<h2 id='comment_error'>Komentāra teksts ir nepieciešams!</h2>`;
                         $(form).append(error);
                     }
                 });

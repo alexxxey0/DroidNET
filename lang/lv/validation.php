@@ -172,7 +172,9 @@ return [
         'last_name' => 'uzvārds',
         'password' => 'parole',
         'email' => 'e-pasts',
-        'image' => 'profila bilde'
+        'image' => 'profila bilde',
+        'title' => 'virsraksts',
+        'content' => 'teksts'
     ],
 
 ];

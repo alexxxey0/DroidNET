@@ -53,9 +53,9 @@
                 <div class='post' id='{{ 'post' . $post['id'] }}'>
                     <div class='title-date'>
                         <h1>{{$post['title'] }}</h1>
-                        <span>Published on: {{ date("M jS, Y G:i", strtotime($post['created_at'])) }}
+                        <span>{{ __('text.published') }}: {{ date("M jS, Y G:i", strtotime($post['created_at'])) }}
                             @if ($post['created_at'] != $post['updated_at'])
-                                <br>Last edited on: {{ date("M jS, Y G:i", strtotime($post['updated_at'])) }}
+                                <br>{{ __('text.edited') }}: {{ date("M jS, Y G:i", strtotime($post['updated_at'])) }}
                             @endif
                         </span>
                     </div>
@@ -67,7 +67,7 @@
                             <input type="hidden" name='post_id' value='{{ $post['id'] }}'>
                             <input type="hidden" name='img' value='{{ auth()->user()->image }}'>
                             <input type="hidden" name='name' value='{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}'>
-                            <textarea id='{{'new_comment_text' . $post['id']}}' class="@error ('content', $post['id']) is-invalid @enderror comment-text" form='{{'comment_form' . $post['id'] }}' onkeyup=adjust(this) name="content" rows="3" placeholder="Your comment"></textarea>
+                            <textarea id='{{'new_comment_text' . $post['id']}}' class="@error ('content', $post['id']) is-invalid @enderror comment-text" form='{{'comment_form' . $post['id'] }}' onkeyup=adjust(this) name="content" rows="3" placeholder="{{ __('text.your_comment') }}"></textarea>
                             <span>
                                 <img src="{{ asset('images/send_icon.png') }}" alt="Send">
                                 <input class='send_comment' type='image' name='submit' src="{{ asset('images/send_icon_active.png') }}" alt="Send" >
@@ -157,11 +157,15 @@
             <hr class='post_divider'>
         @endforeach
     @else
-        <h2 class='no_feed'>Your feed is empty!</h2>
+        <h2 class='no_feed'>{{ __('text.feed_empty') }}</h2>
     @endif
 
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
     <script src='{{ asset('js/main.js') }}'></script>
+    @php
+        $locale = Config::get('app.locale');
+        if (empty($locale)) $locale = 'en';
+    @endphp
     <script>
         $(function() {
             // Ajax request for adding new comments without refreshing the page
@@ -222,7 +226,8 @@
                         $('#comment_error').remove(); // don't display more than 1 error message at once
 
                         var form = $('#' + form_id);
-                        var error = `<h2 id='comment_error'>Comment text is required!</h2>`;
+                        if ('{{ $locale }}' == 'en') var error = `<h2 id='comment_error'>Comment text is required!</h2>`;
+                        else if ('{{ $locale }}' == 'lv') var error = `<h2 id='comment_error'>Komentāra teksts ir nepieciešams!</h2>`;
                         $(form).append(error);
                     }
                 });

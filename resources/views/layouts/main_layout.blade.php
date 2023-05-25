@@ -5,6 +5,7 @@
         // These headers will force the browser, and proxies if any, not to cache the page and force a new request to the server for that page
         header("Expires: Thu, 19 Nov 1981 08:52:00 GMT"); //Date in the past
         header("Cache-Control: no-store, no-cache, must-revalidate"); //HTTP/1.1
+        
     @endphp
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +26,10 @@
                     <a id='logo' href="{{route('/')}}"><img src="{{ asset('images/logo.png') }}" alt='Logo'></a>
                 @endauth
                 <strong>DroidNET</strong>
+                <div id="flags">
+                    <a title='English' class='flag uk' href="{{route('lang', 'en')}}"><img src="{{ asset('images/uk.png') }}" alt=""></a>
+                    <a title='Latvian' class='flag lv' href="{{route('lang', 'lv')}}"><img src="{{ asset('images/latvia.png') }}" alt=""></a>
+                </div>
             </div>
 
             @guest
@@ -32,8 +37,7 @@
             @endguest
         </div>
 
-        <a href="{{route('lang', 'en')}}">English</a>
-        <a href="{{route('lang', 'lv')}}">Latvian</a>
+        
 
         @auth
             @php

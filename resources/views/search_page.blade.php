@@ -2,8 +2,8 @@
 
 @section('content')
     <form id='search_form' action="{{ route('show_search_results') }}">
-        <input minlength="3" required placeholder="Enter the name of the person you are looking for" type="text" name='search_input'>
-        <button type="submit">Search</button>
+        <input minlength="3" required placeholder="{{ __('text.enter_name') }}" type="text" name='search_input'>
+        <button type="submit">{{ __('text.search') }}</button>
     </form>
 
     @if (isset($search_results))
@@ -19,7 +19,7 @@
                 </div>
             @endforeach
         @else
-            <h1 id='no_results'>The search has not given any results</h1>
+            <h1 id='no_results'>{{ __('text.no_results') }}</h1>
         @endif
     @endif
 

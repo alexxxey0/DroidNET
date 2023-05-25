@@ -233,6 +233,23 @@ nav div {
 }
 
 
+#flags {
+    width: 5em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-self: center;
+    margin-left: auto;
+    margin-right: 2em;
+}
+
+
+.flag img {
+    border: 3px solid black;
+    padding: 0 !important;
+}
+
+
 @media screen and (max-width: 768px) {
     header {
         flex-direction: column;

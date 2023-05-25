@@ -188,7 +188,9 @@ return [
         'last_name' => 'last name',
         'password' => 'password',
         'email' => 'e-mail',
-        'image' => 'profile picture'
+        'image' => 'profile picture',
+        'title' => 'title',
+        'content' => 'text'
     ],
 
 ];

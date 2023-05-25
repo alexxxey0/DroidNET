@@ -25,9 +25,6 @@ class PostController extends Controller
         $form_fields = $request->validate([
             'title' => 'required',
             'content' => 'required'
-        ], [
-            'title.required' => 'Post title is required',
-            'content.required' => 'Post text is required'
         ]);
 
         $username = auth()->user()->username;
@@ -57,9 +54,6 @@ class PostController extends Controller
         $form_fields = $request->validate([
             'title' => 'required',
             'content' => 'required'
-        ], [
-            'title.required' => 'Post title is required',
-            'content.required' => 'Post text is required'
         ]);
 
         $username = auth()->user()->username;

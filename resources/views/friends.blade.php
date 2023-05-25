@@ -5,16 +5,20 @@
 
     @php
         $my_page = isset(auth()->user()->username) ? auth()->user()->username == $username : false;
-        
+        $locale = Config::get('app.locale');
     @endphp
 
     <div id="tabs">
         @if ($my_page)
-            <button id='defaultOpen' class="tablinks" onclick="openTab(event, 'friends_list')">Friends</button>
-            <button id='incoming_tab' class="tablinks" onclick="openTab(event, 'incoming')">Incoming requests</button>
-            <button class="tablinks" onclick="openTab(event, 'sent')">Sent requests</button>
+            <button id='defaultOpen' class="tablinks" onclick="openTab(event, 'friends_list')">{{ __('text.friends') }}</button>
+            <button id='incoming_tab' class="tablinks" onclick="openTab(event, 'incoming')">{{ __('text.incoming_requests') }}</button>
+            <button class="tablinks" onclick="openTab(event, 'sent')">{{ __('text.sent_requests') }}</button>
         @else
-            <h1>{{ $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'] }}'s friends</h1>
+            @if ($locale == 'en')
+                <h1>{{ $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'] }}'s {{ __('text.friends_lower') }}</h1>
+            @elseif ($locale == 'lv')
+                <h1>{{ $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'] }} {{ __('text.friends_lower') }}</h1>
+            @endif
         @endif
     </div>
 
@@ -38,16 +42,16 @@
                             <input type="hidden" name='friend' value='{{ $friend['username'] }}'>
                             <input type="hidden" name='current_user' value='{{ auth()->user()->username }}'>
                             <input type="hidden" name='tab' value='friends_tab'>
-                            <button name='remove_friend' value='remove' class='remove_friend' type='submit'>Remove from friends</button>
+                            <button name='remove_friend' value='remove' class='remove_friend' type='submit'>{{ __('text.remove_friend') }}</button>
                         </form>
                     @endif
                 </div>
             @endforeach
         @else
             @if ($my_page)
-                <h1 class='no_friends'>You have no friends</h1>
+                <h1 class='no_friends'>{{ __('text.no_friends_you') }}</h1>
             @else
-                <h1 class="no_friends">{{ $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'] }} has no friends</h1>
+                <h1 class="no_friends">{{ $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'] }} {{ __('text.no_friends_user') }}</h1>
             @endif
         @endif
     </div>
@@ -71,14 +75,14 @@
                             @method('PUT')
                             <input type='hidden' name='request_sender' value='{{ $user['username'] }}'>
                             <input type="hidden" name='tab' value='friends_tab'>
-                            <button name='accept_decline' value='accept' class='accept-decline accept-request' type='submit'>Accept friend request</button>
-                            <button name='accept_decline' value='decline' class='accept-decline decline-request' type='submit'>Decline friend request</button>
+                            <button name='accept_decline' value='accept' class='accept-decline accept-request' type='submit'>{{ __('text.request_accept') }}</button>
+                            <button name='accept_decline' value='decline' class='accept-decline decline-request' type='submit'>{{ __('text.request_decline') }}</button>
                         </form>
                     </div>
 
                 @endforeach
             @else
-                <h1 class='no_friends'>You have no incoming requests</h1>
+                <h1 class='no_friends'>{{ __('text.no_incoming_requests') }}</h1>
             @endif
         </div>
 
@@ -98,12 +102,28 @@
 
                 @endforeach
             @else
-                <h1 class='no_friends'>You have no sent requests</h1>
+                <h1 class='no_friends'>{{ __('text.no_sent_requests') }}</h1>
             @endif
         </div>
     @endif
 
     <script>
+        function add_delete_confirmation(button) {
+            $(button).on('click', function (event) {
+                event.preventDefault();
+
+                var form = $(button).closest('form'); // Get the related form
+                if ('{{ $locale }}' == 'en') {
+                    if ($(this).hasClass('remove_friend')) var msg = 'Are you sure you want to remove this friend?';
+                } else if ('{{$locale}}' == 'lv') {
+                    if ($(this).hasClass('remove_friend')) var msg = 'Vai tiešām vēlaties noņemt šo draugu?';
+                }
+
+                if (confirm(msg)) form.submit();
+
+            })
+        }
+
         document.getElementById("defaultOpen").click();
         $('.remove_friend').each(function(index, object) {
             add_delete_confirmation(object);

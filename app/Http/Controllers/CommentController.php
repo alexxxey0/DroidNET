@@ -50,8 +50,6 @@ class CommentController extends Controller
     public function update_comment(Request $request, Comment $comment) {
         $form_fields = $request->validate([
             'content' => 'required'
-        ], [
-            'content.required' => 'Comment text is required'
         ]);
 
         $username = auth()->user()->username;
