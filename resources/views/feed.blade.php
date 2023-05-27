@@ -43,6 +43,18 @@
                             $poster_image_name = isset($poster['image']) ? $poster['image'] : 'default_image.jpg';
                         }
                     }
+
+                    $locale = Config::get('app.locale');
+                    if (empty($locale)) $locale = 'en';
+                    if ($locale == 'lv') {
+                        $fmt = new IntlDateFormatter( "lv_LV" ,IntlDateFormatter::FULL, IntlDateFormatter::FULL, null,IntlDateFormatter::GREGORIAN, "LLLL d, yyyy HH:mm");
+                    } elseif ($locale == 'en') {
+                        $fmt = new IntlDateFormatter( "en_GB" ,IntlDateFormatter::FULL, IntlDateFormatter::FULL, null,IntlDateFormatter::GREGORIAN, "LLLL d, yyyy HH:mm");
+                    }
+                    $post_created = ucfirst(datefmt_format($fmt, strtotime($post['created_at'])));
+                    $post_updated = ucfirst(datefmt_format($fmt, strtotime($post['updated_at'])));
+                                
+
                 @endphp
 
                 <div class='poster_info'>
@@ -53,9 +65,9 @@
                 <div class='post' id='{{ 'post' . $post['id'] }}'>
                     <div class='title-date'>
                         <h1>{{$post['title'] }}</h1>
-                        <span>{{ __('text.published') }}: {{ date("M jS, Y G:i", strtotime($post['created_at'])) }}
+                        <span>{{ __('text.published') }}: {{ $post_created }}
                             @if ($post['created_at'] != $post['updated_at'])
-                                <br>{{ __('text.edited') }}: {{ date("M jS, Y G:i", strtotime($post['updated_at'])) }}
+                                <br>{{ __('text.edited') }}: {{ $post_updated }}
                             @endif
                         </span>
                     </div>
@@ -82,6 +94,10 @@
 
                     @foreach ($comments as $comment)
                         @if ($comment['post'] == $post['id'])
+                            @php
+                                $comment_created = ucfirst(datefmt_format($fmt, strtotime($comment['created_at'])));
+                                $comment_updated = ucfirst(datefmt_format($fmt, strtotime($comment['updated_at'])));
+                            @endphp
                             <div class='comment-buttons' id='{{ 'comment-buttons' . $comment['id'] }}'>
                                 <div class="comment">
                                     
@@ -99,9 +115,9 @@
                                     <a href="{{ route('user', $comment['author']) }}"><img src="{{ asset('images/' . $comment_image) }}" alt="Comment author's pic"></a>
                                     <span class='comment-name'><strong>{{ $commenter_first_name }} {{ $commenter_last_name }}</strong></span>
                                     <span class='comment-date'>
-                                        {{ date("M jS, Y G:i", strtotime($comment['created_at'])) }}
+                                        {{ __('text.published') }}: {{ $comment_created }}
                                         @if ($comment['created_at'] != $comment['updated_at'])
-                                            <br>Last edited on: {{ date("M jS, Y G:i", strtotime($comment['updated_at'])) }}
+                                            <br>{{ __('text.edited') }}: {{ $comment_updated }}
                                         @endif
                                     </span>
                                     <span></span>
@@ -167,6 +183,24 @@
         if (empty($locale)) $locale = 'en';
     @endphp
     <script>
+        function add_delete_confirmation(button) {
+            $(button).on('click', function (event) {
+                event.preventDefault();
+
+                var form = $(button).closest('form'); // Get the related form
+                if ('{{ $locale }}' == 'en') {
+                    if ($(this).hasClass('delete-comment')) var msg = 'Are you sure you want to delete this comment?';
+                    if ($(this).hasClass('delete-post')) var msg = 'Are you sure you want to delete this post?';
+                } else if ('{{$locale}}' == 'lv') {
+                    if ($(this).hasClass('delete-comment')) var msg = 'Vai tiešām vēlaties dzēst šo komentāru?';
+                    if ($(this).hasClass('delete-post')) var msg = 'Vai tiešām vēlaties dzēst šo ziņu?';
+                }
+
+                if (confirm(msg)) form.submit();
+
+            })
+        }
+        
         $(function() {
             // Ajax request for adding new comments without refreshing the page
             $('.new-comment-form').submit(function(event) {

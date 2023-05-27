@@ -2,8 +2,8 @@
 
 @section('content')
     <div id='settings-outline'>
-        <h1 id='settings-header'>Settings</h1>
-        <a href="{{ route('edit_profile') }}"><button class='settings-button'>Edit profile details</button></a>
+        <h1 id='settings-header'>{{ __('text.settings') }}</h1>
+        <a href="{{ route('edit_profile') }}"><button class='settings-button'>{{ __('text.edit_profile') }}</button></a>
 
     </div>
 

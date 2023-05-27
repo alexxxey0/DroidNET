@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -42,7 +43,7 @@ class CommentController extends Controller
         return view('edit_comment', [
             'comment' => $comment['id'],
             'content' => $comment['content'],
-            'title' => 'Edit comment',
+            'title' => __('text.edit_comment'),
             'page' => 'edit_comment'
         ]);
     }
@@ -59,7 +60,12 @@ class CommentController extends Controller
 
         $comment->update($form_fields);
 
-        if ($request['target_page'] == 'user') return redirect('user/' . $post[0]['author'] . '#comment-buttons' . $comment['id'])->with(['message' => 'Comment edited successfully!']);
-        else return redirect('feed/' . '#comment-buttons' . $comment['id'])->with(['message' => 'Comment edited successfully!']);
+        
+        $locale = App::getLocale();
+        if ($locale == 'en') $message = 'Comment edited successfully!';
+        elseif ($locale == 'lv') $message = 'Komentārs ir veiksmīgi rediģēts!';
+
+        if ($request['target_page'] == 'user') return redirect('user/' . $post[0]['author'] . '#comment-buttons' . $comment['id'])->with(['message' => $message]);
+        else return redirect('feed/' . '#comment-buttons' . $comment['id'])->with(['message' => $message]);
     }
 }

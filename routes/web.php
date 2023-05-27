@@ -23,8 +23,11 @@ use App\Http\Controllers\FriendshipController;
 
 // Welcome page
 Route::get('/', function() {
+    $locale = App::getLocale();
+    if ($locale == 'en') $title = 'Welcome to DroidNET!';
+    elseif ($locale == 'lv') $title = 'Laipni lūdzam DroidNET!';
     return view('welcome', [
-        'title' => 'Welcome to DroidNET!',
+        'title' => $title,
         'page' => 'welcome'
     ]);
 })->name('/');

@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Friendship;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -74,7 +75,7 @@ class UserController extends Controller
 
     public function register() {
         return view('register', [
-            'title' => 'Register',
+            'title' => __('text.register'),
             'page' => 'registration_page'
         ]);
     }
@@ -104,7 +105,10 @@ class UserController extends Controller
         $user = User::create($form_fields);
         auth()->login($user);
 
-        return redirect('user/' . $form_fields['username'])->with(['message' => 'Registration successful!']); // redirect user to his profile page
+        $locale = App::getLocale();
+        if ($locale == 'en') $message = 'Registration successful!';
+        elseif ($locale == 'lv') $message = 'Reģistrācija veiksmīga!';
+        return redirect('user/' . $form_fields['username'])->with(['message' => $message]); // redirect user to his profile page
     }
 
     // Log out
@@ -122,7 +126,7 @@ class UserController extends Controller
 
     public function login () {
         return view('login', [
-            'title' => 'Log In',
+            'title' => __('text.log_in'),
             'page' => 'login_page'
         ]);
     }
@@ -145,14 +149,14 @@ class UserController extends Controller
 
     public function show_settings() {
         return view('settings', [
-            'title' => 'Settings',
+            'title' => __('text.settings'),
             'page' => 'settings'
         ]);
     }
 
     public function edit_profile() {
         return view('edit_profile', [
-            'title' => 'Edit profile details',
+            'title' => __('text.edit_profile'),
             'page' => 'edit_profile'
         ]);
     }
@@ -168,8 +172,6 @@ class UserController extends Controller
             'image' => 'image|mimes:jpg,png,jpeg,svg',
             'password' => ['nullable', 'min:6', 'confirmed'],
             'password_confirmation' => ['nullable', 'min:6']
-        ], [
-            'password.confirmed' => 'Passwords do not match'
         ]);
 
         if (!isset($form_fields['password'])) $form_fields['password'] = $user['password']; 
@@ -184,13 +186,17 @@ class UserController extends Controller
         } else $form_fields['image'] = $user['image'];
 
         $user->update($form_fields);
-        return redirect('user/' . $user['username'])->with(['message' => 'Profile edited successfully!']);
+
+        $locale = App::getLocale();
+        if ($locale == 'en') $message = 'Profile edited successfully!';
+        elseif ($locale == 'lv') $message = 'Profils ir veiksmīgi rediģēts!';
+        return redirect('user/' . $user['username'])->with(['message' => $message]);
 
     }
 
     public function search_page() {
         return view('search_page', [
-            'title' => 'Search for people',
+            'title' => __('text.search_for_people'),
             'page' => 'search_page'
         ]);
     }
@@ -199,7 +205,7 @@ class UserController extends Controller
         $search_results = User::search($request['search_input']);
 
         return view('search_page', [
-            'title' => 'Search for people',
+            'title' => __('text.search_for_people'),
             'page' => 'search_page',
             'search_results' => $search_results
         ]);

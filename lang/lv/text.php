@@ -69,7 +69,17 @@ return [
     'no_incoming_requests' => 'Jums nav ienākošu pieprasījumu',
 
     'enter_name' => 'Ievadiet tās personas vārdu, kuru meklējat',
-    'no_results' => 'Meklēšana nav devusi nekādus rezultātus'
+    'no_results' => 'Meklēšana nav devusi nekādus rezultātus',
 
+    'your_message' => 'Jūsu ziņa',
+    'sent_at' => 'Nosūtīts',
+    'you' => 'Jūs',
 
+    // Settings
+    'settings' => 'Iestatījumi',
+    'edit_profile' => 'Rediģēt profila informāciju',
+    'description' => 'Apraksts',
+    'set_new_password' => 'Iestatīt jaunu paroli',
+    'confirm_new_password' => 'Apstiprināt jaunu paroli',
+    'save_changes' => 'Saglabāt izmaiņas'
 ];

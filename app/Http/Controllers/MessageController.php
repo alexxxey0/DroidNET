@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 
 class MessageController extends Controller
@@ -17,8 +18,12 @@ class MessageController extends Controller
             $query->where('message_receiver', '=', auth()->user()->username)->where('message_sender', '=', $user_info['username']);
         })->get();
 
+        $locale = App::getLocale();
+        if ($locale == 'en') $title = 'Chat with ' . $user_info['first_name'] . ' ' . $user_info['last_name'];
+        elseif ($locale == 'lv') $title = 'Čats ar ' . $user_info['first_name'] . ' ' . $user_info['last_name'];
+
         return view('chat', [
-            'title' => 'Chat with ' . $user_info['first_name'] . ' ' . $user_info['last_name'],
+            'title' => $title,
             'page' => 'chat',
             'user_info' => $user_info,
             'messages' => $messages
@@ -60,7 +65,7 @@ class MessageController extends Controller
 
         
         return view('chats', [
-            'title' => 'Chats',
+            'title' => __('text.chats'),
             'page' => 'chats',
             'users_info' => $users_info
         ]);

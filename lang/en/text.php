@@ -68,5 +68,17 @@ return [
     'no_incoming_requests' => 'You have no incoming requests',
 
     'enter_name' => 'Enter the name of the person you are looking for',
-    'no_results' => 'The search has not given any results'
+    'no_results' => 'The search has not given any results',
+
+    'your_message' => 'Your message',
+    'sent_at' => 'Sent at',
+    'you' => 'You',
+
+    // Settings
+    'settings' => 'Settings',
+    'edit_profile' => 'Edit profile details',
+    'description' => 'Description',
+    'set_new_password' => 'Set a new password',
+    'confirm_new_password' => 'Confirm new password',
+    'save_changes' => 'Save changes'
 ];

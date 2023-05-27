@@ -18,7 +18,7 @@
                 @if ($user['sent_last'])
                     <p>{{ $user['last_message'] }}</p>
                 @else
-                    <p><strong>You</strong>: {{ $user['last_message'] }}</p>
+                    <p><strong>{{ __('text.you') }}</strong>: {{ $user['last_message'] }}</p>
                 @endif
             </div>
             <hr>

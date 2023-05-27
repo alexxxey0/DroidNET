@@ -17,6 +17,14 @@
             @foreach ($messages as $message)
                 @php
                     $my_msg = $message['message_sender'] == auth()->user()->username;
+                    $locale = Config::get('app.locale');
+                    if (empty($locale)) $locale = 'en';
+                    if ($locale == 'lv') {
+                        $fmt = new IntlDateFormatter( "lv_LV" ,IntlDateFormatter::FULL, IntlDateFormatter::FULL, null,IntlDateFormatter::GREGORIAN, "LLLL d, yyyy HH:mm");
+                    } elseif ($locale == 'en') {
+                        $fmt = new IntlDateFormatter( "en_GB" ,IntlDateFormatter::FULL, IntlDateFormatter::FULL, null,IntlDateFormatter::GREGORIAN, "LLLL d, yyyy HH:mm");
+                    }
+                    $message_sent = ucfirst(datefmt_format($fmt, strtotime($message['created_at'])));
                 @endphp
 
                 <div class='message'>
@@ -24,14 +32,14 @@
                         <div class='msg_author'>
                             <img src="{{ asset('images/' . $my_img) }}" alt="">
                             <h2>{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</h2>
-                            <span class='sent_at'>Sent at: {{ date("h:i A, d/m/Y", strtotime($message['created_at'])) }}</span>
+                            <span class='sent_at'>{{ __('text.sent_at') }}: {{ $message_sent }}</span>
                         </div>
                         <p>{!! nl2br($message['content']) !!}</p>
                     @else
                         <div class='msg_author'>
                             <img src="{{ asset('images/' . $user_img) }}" alt="">
                             <h2>{{ $user_info['first_name'] }} {{ $user_info['last_name'] }}</h2>
-                            <span class='sent_at'>Sent at: {{ date("h:i A, d/m/Y", strtotime($message['created_at'])) }}</span>
+                            <span class='sent_at'>{{ __('text.sent_at') }}: {{ $message_sent }}</span>
                         </div>
                         <p>{!! nl2br($message['content']) !!}</p>
                     @endif
@@ -45,7 +53,7 @@
                 <input type="hidden" name="message_sender" value='{{ auth()->user()->username }}'>
                 <input type="hidden" name='message_receiver' value='{{ $user_info['username'] }}'>
                 
-                <textarea id='new_message_text' class="@error ('content') is-invalid @enderror message-text" form='message_form' onkeyup=adjust(this) name="content" rows="3" placeholder="Your message"></textarea>
+                <textarea id='new_message_text' class="@error ('content') is-invalid @enderror message-text" form='message_form' onkeyup=adjust(this) name="content" rows="3" placeholder="{{ __('text.your_message') }}"></textarea>
                 <span>
                     <img src="{{ asset('images/send_icon.png') }}" alt="Send">
                     <input class='send_message' type='image' name='submit' src="{{ asset('images/send_icon_active.png') }}" alt="Send" >

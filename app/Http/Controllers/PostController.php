@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Friendship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 
 class PostController extends Controller
@@ -15,7 +16,7 @@ class PostController extends Controller
     // Show "Create a new post" form
     public function new_post() {
         return view('new_post', [
-            'title' => 'Create a new post',
+            'title' => __('text.create_post'),
             'page' => 'new_post'
         ]);
     }
@@ -31,7 +32,11 @@ class PostController extends Controller
         $form_fields['author'] = $username;
 
         Post::create($form_fields);
-        return redirect('user/' . $username)->with(['message' => 'Post created successfully!']);
+
+        $locale = App::getLocale();
+        if ($locale == 'en') $message = 'Post created successfully!';
+        elseif ($locale == 'lv') $message = 'Ziņa ir veiksmīgi izveidota!';
+        return redirect('user/' . $username)->with(['message' => $message]);
     }
 
     public function delete_post(Request $request) {
@@ -44,7 +49,7 @@ class PostController extends Controller
             'post' => $post['id'],
             'post_title' => $post['title'],
             'content' => $post['content'],
-            'title' => 'Edit post',
+            'title' => __('text.edit_post'),
             'page' => 'edit_post'
         ]);
     }
@@ -58,9 +63,12 @@ class PostController extends Controller
 
         $username = auth()->user()->username;
         $form_fields['author'] = $username;
-
         $post->update($form_fields);
-        return redirect('user/' . $username . '#post-buttons' . $post['id'])->with(['message' => 'Post edited successfully!']);
+
+        $locale = App::getLocale();
+        if ($locale == 'en') $message = 'Post edited successfully!';
+        elseif ($locale == 'lv') $message = 'Ziņa ir veiksmīgi rediģēta!';
+        return redirect('user/' . $username . '#post-buttons' . $post['id'])->with(['message' => $message]);
     }
 
     public function show_feed() {
@@ -81,7 +89,7 @@ class PostController extends Controller
 
 
         return view('feed', [
-            'title' => 'Feed',
+            'title' => __('text.feed'),
             'page' => 'feed',
             'posts' => $posts,
             'comments' => $comments,

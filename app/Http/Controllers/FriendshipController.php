@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Friendship;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 
 class FriendshipController extends Controller
@@ -29,7 +30,10 @@ class FriendshipController extends Controller
 
         Friendship::create($form_fields);
 
-        return redirect()->back()->with(['message' => 'A friend request has been sent to ' . $request['full_name']]);
+        $locale = App::getLocale();
+        if ($locale == 'en') $message = 'A friend request has been sent to ' . $request['full_name'];
+        elseif ($locale == 'lv') $message = 'Draudzības pieprasījums ir nosūtīts ' . $request['full_name'];
+        return redirect()->back()->with(['message' => $message]);
     }
 
     public function accept_decline_request(Request $request) {
@@ -75,8 +79,12 @@ class FriendshipController extends Controller
 
         $full_name = User::select('first_name', 'last_name')->where('username', '=', $username)->get();
 
+        $locale = App::getLocale();
+        if ($locale == 'en') $title = $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'] . "'s friends";
+        elseif ($locale == 'lv') $title = $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'] . " draugi";
+
         return view('friends', [
-            'title' => $full_name[0]['first_name'] . ' ' . $full_name[0]['last_name'] . "'s friends",
+            'title' => $title,
             'username' => $username,
             'full_name' => $full_name,
             'page' => 'friends_page',
