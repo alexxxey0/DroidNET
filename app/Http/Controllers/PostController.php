@@ -41,7 +41,11 @@ class PostController extends Controller
 
     public function delete_post(Request $request) {
         Post::where('id', '=', $request['post_id'])->delete();
-        return response()->json(['message' => 'Post deleted successfully!']);
+
+        $locale = App::getLocale();
+        if ($locale == 'en') $message = 'Post deleted successfully!';
+        elseif ($locale == 'lv') $message = 'Ziņa veiksmīgi izdzēsta!';
+        return response()->json(['message' => $message]);
     }
 
     public function edit_post(Post $post) {

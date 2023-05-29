@@ -2,7 +2,7 @@
 
 return [
     'registration' => 'Reģistrācija',
-    'login' => 'Pieslēgties',
+    'log_in' => 'Pieslēgties',
     'welcome' => 'Laipni lūdzam DroidNET!',
     'login' => 'Pieslēgties',
     'register' => 'Reģistrēties',
@@ -10,6 +10,7 @@ return [
     'first_name' => 'Vārds',
     'last_name' => 'Uzvārds',
     'password' => 'Parole',
+    'confirm_password' => 'Apstipriniet paroli',
     'email' => 'E-pasts',
     'image' => 'Profila bilde',
     'about_me' => 'Pastāsti mums par sevi',
@@ -81,5 +82,37 @@ return [
     'description' => 'Apraksts',
     'set_new_password' => 'Iestatīt jaunu paroli',
     'confirm_new_password' => 'Apstiprināt jaunu paroli',
-    'save_changes' => 'Saglabāt izmaiņas'
+    'save_changes' => 'Saglabāt izmaiņas',
+    'edit_mods' => 'Iecelt/noņemt moderatorus',
+
+    'appoint_mod' => 'Iecelt moderatoru',
+    'enter_username' => 'Ievadiet lietotājvārdu',
+    'remove_mod' => 'Noņemt moderatoru',
+    'administrator' => 'Administrators',
+    'moderator' => 'Moderators',
+    'banned_users' => 'Bloķētie lietotāji',
+    'appoint_ban' => 'Bloķēt šo lietotāju',
+    'remove_ban' => 'Atbloķēt šo lietotāju',
+
+    'ban_reason' => 'Bloķēšanas iemesls',
+    'select_reason' => 'Izvēlieties iemeslu',
+    'harassment' => 'Vajāšana un kiberhuligānisms',
+    'threats' => 'Draudījumi vai vardarbība',
+    'spamming' => 'Spamu sūtīšana vai krāpšana',
+    'fake_accounts' => 'Personificēšana vai viltotie konti',
+    'illegal' => 'Nelikumīgas darbības',
+    'other' => 'Cits',
+    'user_banned' => 'Šis lietotājs ir bloķēts!',
+    'banned' => '[BLOĶĒTS]',
+    'you_banned' => 'Jūs tikāt bloķēts no DroidNET',
+
+    'harassment_banned' => 'Jūsu uzvedība sociālajā tīklā ietvēra atkārtotu citu lietotāju mērķēšanu un vajāšanu, izmantojot aizskarošus ziņojumus, apvainojošus komentārus vai kiberhuligānismu. Šāda veida uzvedība nav pieļaujama, jo tā rada negatīvu un kaitīgu vidi citiem lietotājiem.',
+    'threats_banned' => 'Jūsu darbības sociālajā tīklā ietvēra tiešas vai netiešas draudus citiem lietotājiem vai vardarbības veicināšanu. Šāda uzvedība tiek uzskatīta par smagu pārkāpumu, jo tā apdraud indivīdu drošību un labklājību kopienā.',
+    'spamming_banned' => 'Jūsu aktivitātes sociālajā tīklā ietvēra atkārtotas nerelevantas ziņas citiem lietotājiem vai iesaistīšanos krāpnieciskās shēmās, piemēram, zvejošanas mēģinājumos vai maldinošās prakses. Šādas darbības traucē platformas normālai darbībai un rada riskus lietotāju kopienai.',
+    'fake_accounts_banned' => 'Jūs izveidojāt vai izmantojāt viltus kontus sociālajā tīklā ar nolūku maldināt vai apmānīt citus. Personificēt kādu citu, vai nu konkrētu indivīdu vai izdomātu tēlu, grauj uzticēšanos un autentiskumu platformā.',
+    'illegal_banned' => 'Jūsu darbības sociālajā tīklā pārkāpa likumu vai platformas lietošanas noteikumus. Tas ietver darbības, piemēram, nelikumīgu vielu veicināšanu vai iesaistīšanos tādu materiālu kopīgošanā, kurš ir aizsargāts ar autortiesībām, bez atļaujas vai jebkāda cita nelikumīga uzvedība.',
+    'note_reasons' => 'Lūdzu, ņemiet vērā, ka iepriekš minētie iemesli tiek ņemti vērā nopietni, lai nodrošinātu drošu un cieņpilnu vidi visiem lietotājiem.',
+    'ban_summary' => 'Ja jums ir kādas bažas vai jūs uzskatāt, ka jūsu bloķēšana bija kļūda, jūs varat sazināties ar mūsu atbalsta komandu, lai iegūtu papildu skaidrojumus un palīdzību.',
+
+    'back_to_home' => 'Atpakaļ uz sākumlapu'
 ];

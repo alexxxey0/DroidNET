@@ -1,0 +1,84 @@
+.content {
+    width: 100%;
+}
+
+#edit_mod_form {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+    gap: 1em;
+}
+
+#edit_mod_form input {
+    font-size: 1.5em;
+    padding: 1%;
+}
+
+#edit_mod_form button {
+    font-size: 1.5em;
+    background-color: greenyellow;
+    padding: 1%;
+    border-radius: 10px;
+}
+
+#edit_mod_form button:hover {
+    cursor: pointer;
+}
+
+#edit_mod_form button:active {
+    background-color: #8ccc26;
+}
+
+#mods {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+    width: 80%;
+    margin-inline: auto;
+    margin-block: 5%;
+}
+
+.mod {
+    display: flex;
+    gap: 2em;
+}
+
+.mod a {
+    width: 15%;
+}
+
+.mod img {
+    width: 100%;
+    border: 3px solid black;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+}
+
+.mod h2 {
+    font-size: 2em;
+}
+
+.mod div {
+    align-self: center;
+    width: 30%;
+}
+
+.remove_mod_form {
+    align-self: center;
+}
+
+.remove_mod {
+    background-color: #FF3131;
+    padding: 1%;
+    font-size: 1.5em;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+.remove_mod:hover {
+    cursor: pointer;
+}
+
+.remove_mod:active {
+    background-color: #cc2727;
+}

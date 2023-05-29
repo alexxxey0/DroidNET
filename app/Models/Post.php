@@ -12,7 +12,7 @@ class Post extends Model
 
     public static function posters_info() {
         $posters_info = Post::join('users', 'users.username', '=', 'posts.author')->
-                                    select('users.first_name', 'users.last_name', 'users.username', 'users.image')->get();
+                                    select('users.first_name', 'users.last_name', 'users.username', 'users.image', 'users.role')->get();
         return $posters_info;
     }
 }

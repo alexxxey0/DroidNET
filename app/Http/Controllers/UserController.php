@@ -87,7 +87,7 @@ class UserController extends Controller
             'username' => ['required', Rule::unique('users', 'username'), 'max:50'],
             'first_name' => ['required', 'max:20'],
             'last_name' => ['required', 'max:20'],
-            'password' => ['required', 'min:6'],
+            'password' => ['required', 'min:6', 'confirmed'],
             'email' => ['required', 'email', Rule::unique('users', 'email')],
             'image' => 'image|mimes:jpg,png,jpeg,svg'
         ]);
@@ -209,6 +209,96 @@ class UserController extends Controller
             'page' => 'search_page',
             'search_results' => $search_results
         ]);
+    }
+
+
+    public function edit_mods() {
+        $mods = User::where('role', '=', 'moderator')->get();
+
+        return view('edit_mods', [
+            'title' => __('text.edit_mods'),
+            'page' => 'edit_mods',
+            'mods' => $mods
+        ]);
+    }
+
+    public function remove_mod(Request $request) {
+        User::where('username', '=', $request['username'])->update(['role' => 'user']);
+
+        return redirect()->back();
+    }
+
+    public function add_mod(Request $request) {
+        $mods = User::select('username')->where('role', '=', 'moderator')->pluck('username')->toArray();
+        $users = User::select('username')->pluck('username')->toArray();
+        $locale = App::getLocale();
+        
+        if (in_array($request['username'], $mods)) {
+            if ($locale == 'en') $message = 'This user is already a moderator!';
+            elseif ($locale == 'lv') $message = 'Šis lietotājs jau ir moderators!';
+            return redirect()->back()->with(['message' => $message]);
+
+        } elseif (!in_array($request['username'], $users)) {
+            if ($locale == 'en') $message = "This user doesn't exist!";
+            elseif ($locale == 'lv') $message = 'Šis lietotājs neeksistē!';
+            return redirect()->back()->with(['message' => $message]);
+        }
+
+        User::where('username', '=', $request['username'])->update(['role' => 'moderator']);
+        return redirect()->back();
+    }
+
+    public function banned_users() {
+        $bans = User::where('role', '=', 'banned')->get();
+
+        return view('banned_users', [
+            'title' => __('text.banned_users'),
+            'page' => 'banned_users',
+            'bans' => $bans
+
+        ]);
+    }
+
+    public function ban_user(Request $request) {
+        $username = $request['username'];
+        $ban_reason = $request['ban_reason'];
+
+        $banned = User::select('username')->where('role', '=', 'banned')->pluck('username')->toArray();
+        $users = User::select('username')->pluck('username')->toArray();
+        $role = User::select('role')->where('username', '=', $username)->pluck('role')->first();
+        $current_role = auth()->user()->role;
+        $locale = App::getLocale();
+        
+        if (in_array($username, $banned)) {
+            if ($locale == 'en') $message = 'This user is already banned!';
+            elseif ($locale == 'lv') $message = 'Šis lietotājs jau ir bloķēts!';
+            return redirect()->back()->with(['message' => $message]);
+
+        } elseif (!in_array($username, $users)) {
+            if ($locale == 'en') $message = "This user doesn't exist!";
+            elseif ($locale == 'lv') $message = 'Šis lietotājs neeksistē!';
+            return redirect()->back()->with(['message' => $message]);
+
+        } elseif ($username == auth()->user()->username) {
+            if ($locale == 'en') $message = "You can't ban yourself!";
+            elseif ($locale == 'lv') $message = 'Jūs nevarat bloķēt sevi!';
+            return redirect()->back()->with(['message' => $message]);
+
+        } elseif ($current_role == 'moderator' && in_array($role, ['admin', 'moderator'])) {
+            if ($locale == 'en') $message = "You do not have permission to ban this user!";
+            elseif ($locale == 'lv') $message = 'Jums nav atļaujas bloķēt šo lietotāju!';
+            return redirect()->back()->with(['message' => $message]);
+        }
+
+        User::where('username', '=', $username)->update(['role' => 'banned', 'ban_reason' => $ban_reason]);
+        return redirect()->back();
+    }
+
+    public function unban_user(Request $request) {
+        $username = $request['username'];
+
+        User::where('username', '=', $username)->update(['role' => 'user', 'ban_reason' => null]);
+        return redirect()->back();
     }
 
 }

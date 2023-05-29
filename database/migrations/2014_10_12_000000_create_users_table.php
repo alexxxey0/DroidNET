@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email', 50)->unique();
             $table->text('about_me')->nullable();
             $table->string('role', 20)->default('user');
+            $table->text('ban_reason')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });

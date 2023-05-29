@@ -30,6 +30,12 @@
                 <strong><p class='error-msg'>{{ $errors->first('password') }}</p></strong>
             @enderror
 
+            <label for='password'>{{ __('text.confirm_password') }}</label>
+            <input type='password' name='password_confirmation' id='password_confirmation'>
+            @error('password_confirmation')
+                <strong><p class='error-msg'>{{ $errors->first('password_confirmation') }}</p></strong>
+            @enderror
+
             <label for='email'>{{ __('text.email') }}</label>
             <input type='email' name='email' id='email' value='{{old('email')}}'>
             @error('email')

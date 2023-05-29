@@ -2,7 +2,7 @@
 
 return [
     'registration' => 'Registration',
-    'login' => 'Log In',
+    'log_in' => 'Log In',
     'welcome' => 'Welcome to DroidNET!',
     'login' => 'Log In',
     'register' => 'Register',
@@ -10,6 +10,7 @@ return [
     'first_name' => 'First name',
     'last_name' => 'Last name',
     'password' => 'Password',
+    'confirm_password' => 'Confirm password',
     'email' => 'E-mail',
     'image' => 'Profile picture',
     'about_me' => 'Tell us about yourself',
@@ -80,5 +81,38 @@ return [
     'description' => 'Description',
     'set_new_password' => 'Set a new password',
     'confirm_new_password' => 'Confirm new password',
-    'save_changes' => 'Save changes'
+    'save_changes' => 'Save changes',
+    'edit_mods' => 'Appoint/remove moderators',
+
+    'appoint_mod' => 'Appoint a moderator',
+    'enter_username' => 'Enter username',
+    'remove_mod' => 'Remove moderator',
+    'administrator' => 'Administrator',
+    'moderator' => 'Moderator',
+    'banned_users' => 'Banned users',
+    'appoint_ban' => 'Ban this user',
+    'remove_ban' => 'Unban this user',
+
+    'ban_reason' => 'Ban reason',
+    'select_reason' => 'Select a reason',
+    'harassment' => 'Harassment and cyberbullying',
+    'threats' => 'Threats or violence',
+    'spamming' => 'Spamming or scamming',
+    'fake_accounts' => 'Impersonation or fake accounts',
+    'illegal' => 'Illegal activities',
+    'other' => 'Other',
+    'user_banned' => 'This user is banned!',
+    'banned' => '[BANNED]',
+    'you_banned' => 'You were banned from DroidNET',
+
+    'harassment_banned' => 'Your behavior on the social network involved repeatedly targeting and harassing other users, either through offensive messages, derogatory comments, or online bullying. This type of behavior is not tolerated as it creates a negative and harmful environment for other users.',
+    'threats_banned' => 'Your actions on the social network included making direct or indirect threats towards other users or promoting violence. Such behavior is considered a serious violation as it jeopardizes the safety and well-being of individuals within the community.',
+    'spamming_banned' => 'Your activities on the social network involved repeatedly sending unsolicited and irrelevant content to other users or engaging in fraudulent schemes, such as phishing attempts or deceptive practices. These actions disrupt the normal functioning of the platform and pose risks to the user community.',
+    'fake_accounts_banned' => "You created or utilized fake accounts on the social network with the intention to deceive or mislead others. Impersonating someone else, whether it's a specific individual or a fictional character, undermines the trust and authenticity of the platform.",
+    'illegal_banned' => "Your actions on the social network violated the law or the platform's terms of service. This includes activities such as promoting or engaging in illegal substances, sharing copyrighted material without permission, or participating in any other form of unlawful behavior.",
+    'note_reasons' => 'Please note that the above reasons are taken seriously to ensure a safe and respectful environment for all users.',
+    'ban_summary' => 'If you have any concerns or believe your ban was a mistake, you can reach out to our support team for further clarification and assistance.',
+
+    'back_to_home' => 'Back to Home page'
+
 ];

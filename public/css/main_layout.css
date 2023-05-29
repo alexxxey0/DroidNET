@@ -232,6 +232,10 @@ nav div {
     border: 5px solid red !important;
 }
 
+.mod-profile-pic {
+    border: 5px solid blue !important;
+}
+
 
 #flags {
     width: 5em;

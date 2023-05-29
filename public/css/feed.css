@@ -6,7 +6,7 @@
     margin-bottom: 5%;
 }
 
-hr:last-of-type {
+.post-buttons:last-of-type hr {
     display: none;
 }
 
@@ -201,7 +201,7 @@ hr:last-of-type {
     aspect-ratio: 1 / 1;
     position: absolute;
     right: 5%;
-    top: 0;
+    top: 15rem;
 }
 
 /* Edit post button */
@@ -222,7 +222,7 @@ hr:last-of-type {
     aspect-ratio: 1 / 1;
     position: absolute;
     right: 4.7%;
-    top: 5rem;
+    top: 19rem;
 }
 
 

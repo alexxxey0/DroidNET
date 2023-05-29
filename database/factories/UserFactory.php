@@ -12,7 +12,7 @@ class UserFactory extends Factory
 {
     public function definition(): array
     {
-        $roles = array('admin', 'user');
+        $roles = array('user');
         $num = rand();
         $passwordHash = bcrypt($num);
         return [

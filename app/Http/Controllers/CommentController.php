@@ -36,7 +36,11 @@ class CommentController extends Controller
 
     public function delete_comment(Request $request) {
         Comment::where('id', '=', $request['comment_id'])->delete();
-        return response()->json(['message' => 'Comment deleted successfully!']);
+
+        $locale = App::getLocale();
+        if ($locale == 'en') $message = 'Comment deleted successfully!';
+        elseif ($locale == 'lv') $message = 'Komentārs veiksmīgi izdzēsts!';
+        return response()->json(['message' => $message]);
     }
 
     public function edit_comment(Comment $comment) {

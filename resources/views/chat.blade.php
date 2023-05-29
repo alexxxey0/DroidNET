@@ -4,12 +4,18 @@
     @php
         $my_img = isset(auth()->user()->image) ? auth()->user()->image : 'default_image.jpg';
         $user_img = isset($user_info['image']) ? $user_info['image'] : 'default_image.jpg';
+        $is_banned = $user_info['role'] == 'banned';
     @endphp
 
     <div id='chat_main'>
         <div id='top_div'>
             <img id='top_pic' src="{{ asset('images/' . $user_img) }}" alt="">
-            <a href="{{ route('user', $user_info['username']) }}"><h2 id='top_name'>{{ $user_info['first_name'] }} {{ $user_info['last_name'] }}</h2></a>
+            <a href="{{ route('user', $user_info['username']) }}"><h2 id='top_name'>
+                {{ $user_info['first_name'] }} {{ $user_info['last_name'] }}
+                @if ($is_banned)
+                    {{ __('text.banned') }}
+                @endif
+            </h2></a>
         </div>
 
 
@@ -53,10 +59,12 @@
                 <input type="hidden" name="message_sender" value='{{ auth()->user()->username }}'>
                 <input type="hidden" name='message_receiver' value='{{ $user_info['username'] }}'>
                 
-                <textarea id='new_message_text' class="@error ('content') is-invalid @enderror message-text" form='message_form' onkeyup=adjust(this) name="content" rows="3" placeholder="{{ __('text.your_message') }}"></textarea>
+                <textarea @if ($is_banned) disabled @endif id='new_message_text' class="@error ('content') is-invalid @enderror message-text" form='message_form' onkeyup=adjust(this) name="content" rows="3" placeholder="{{ __('text.your_message') }}"></textarea>
                 <span>
-                    <img src="{{ asset('images/send_icon.png') }}" alt="Send">
-                    <input class='send_message' type='image' name='submit' src="{{ asset('images/send_icon_active.png') }}" alt="Send" >
+                    @if (!$is_banned)
+                        <img src="{{ asset('images/send_icon.png') }}" alt="Send">
+                        <input class='send_message' type='image' name='submit' src="{{ asset('images/send_icon_active.png') }}" alt="Send" >
+                    @endif
                 </span>
             </form>
             @error('content')

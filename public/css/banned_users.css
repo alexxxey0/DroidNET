@@ -1,0 +1,88 @@
+.content {
+    width: 100%;
+}
+
+#edit_ban_form {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+    gap: 1em;
+}
+
+#edit_ban_form input {
+    font-size: 1.5em;
+    padding: 1%;
+}
+
+#edit_ban_form button {
+    font-size: 1.5em;
+    background-color: greenyellow;
+    padding: 1%;
+    border-radius: 10px;
+}
+
+#edit_ban_form button:hover {
+    cursor: pointer;
+}
+
+#edit_ban_form button:active {
+    background-color: #8ccc26;
+}
+
+#bans {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+    width: 80%;
+    margin-inline: auto;
+    margin-block: 5%;
+}
+
+.ban {
+    display: flex;
+    gap: 2em;
+}
+
+.ban a {
+    width: 15%;
+}
+
+.ban img {
+    width: 100%;
+    border: 3px solid black;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+}
+
+.ban h2 {
+    font-size: 2em;
+}
+
+.ban div {
+    align-self: center;
+    width: 30%;
+}
+
+.remove_ban_form {
+    align-self: center;
+}
+
+.remove_ban {
+    background-color: #FF3131;
+    padding: 2%;
+    font-size: 1.5em;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+.remove_ban:hover {
+    cursor: pointer;
+}
+
+.remove_ban:active {
+    background-color: #cc2727;
+}
+
+select {
+    font-size: 1.2em;
+}

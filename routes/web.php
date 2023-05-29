@@ -119,6 +119,24 @@ Route::post('/send_message', [MessageController::class, 'send_message'])->name('
 // Refresh messages' statuses
 Route::post('/refresh_messages', [MessageController::class, 'refresh_messages'])->name('refresh_messages');
 
+// Show page for appointing/removing moderators
+Route::get('/settings/edit_mods', [UserController::class, 'edit_mods'])->name('edit_mods');
+
+// Remove a mod
+Route::put('/remove_mod', [UserController::class, 'remove_mod'])->name('remove_mod');
+
+// Appoint a moderator
+Route::put('/add_mod', [UserController::class, 'add_mod'])->name('add_mod');
+
+// Show banned users
+Route::get('/banned_users', [UserController::class, 'banned_users'])->name('banned_users');
+
+// Ban a user
+Route::put('/ban_user', [UserController::class, 'ban_user'])->name('ban_user');
+
+// Unban a user
+Route::put('/unban_user', [UserController::class, 'unban_user'])->name('unban_user');
+
 // Change language
 Route::get('lang/{lang}', function ($lang) {
     session()->put('lang', $lang);

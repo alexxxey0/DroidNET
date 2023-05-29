@@ -3,37 +3,11 @@
 
 @section('content')
 
-    <style>
-        .success-msg {
-                position: fixed;
-                top: 0;
-                background-color: lightskyblue;
-                text-align: center;
-                margin-inline: auto;
-                left: 0;
-                right: 0;
-                width: fit-content;
-                font-family: Verdana, Geneva, Tahoma, sans-serif;
-                border: 3px solid black;
-                padding: 1%;
-                z-index: 1;
-            }
-    </style>
-
-    <!-- Show a message -->
-    @if (session()->get('message'))
-        <h1 class='success-msg'>{{ session()->get('message') }}</h1>
-
-        <script>
-            const success_msg = document.querySelector('.success-msg');
-            setTimeout(() => {success_msg.style.display="none"}, 3000);
-        </script>
-
-    @endif
-
     @if (count($user) == 0)
         <h2 class='no_friends'>{{ __('text.no_user') }}</h2>
         <script>document.title = 'User not found'</script>
+    @elseif ($user[0]['role'] == 'banned')
+        <h2 class="no_friends">{{ __('text.user_banned')}}</h2>
     @else
         @php
             $my_page = isset(auth()->user()->username) ? auth()->user()->username == $user[0]['username'] : false;
@@ -45,11 +19,15 @@
             <span><strong>
                 {{$user[0]['first_name']}} {{$user[0]['last_name']}}
                 @if ($user_role == 'admin')
-                    <span id='admin_text'>Administrator</span>
+                    <span id='admin_text'>{{ __('text.administrator') }}</span>
+                @elseif ($user_role == 'moderator')
+                    <span id='mod_text'>{{ __('text.moderator') }}</span>
                 @endif
             </strong></span>
             @if ($user_role == 'admin')
                 <img class='admin-profile-pic' src="{{ asset('images/' . $image_name) }}" alt="Profile Pic">
+            @elseif ($user_role == 'moderator')
+                <img class='mod-profile-pic' src="{{ asset('images/' . $image_name) }}" alt="Profile Pic">
             @else
                 <img class='profile-pic' src="{{ asset('images/' . $image_name) }}" alt="Profile Pic">
             @endif
@@ -169,6 +147,7 @@
                                                     $comment_image = isset($commenter['image']) ? $commenter['image'] : 'default_image.jpg';
                                                     $commenter_first_name = $commenter['first_name'];
                                                     $commenter_last_name = $commenter['last_name'];
+                                                    $commenter_role = $commenter['role'];
                                                 }
                                             }
                                         @endphp
@@ -186,7 +165,7 @@
                                     </div>
 
                                     @auth
-                                        @if ($comment['author'] == auth()->user()->username || $my_page || $role == 'admin')
+                                        @if ($comment['author'] == auth()->user()->username || $my_page || $role == 'admin' || ($role == 'moderator' && !in_array($commenter_role, ['admin', 'moderator'])))
                                             <!-- Delete comment form -->
                                             <form id='{{'delete-comment-form' . $comment['id'] }}'  name='delete-comment-form' class='delete-comment-form' method='POST' action='{{ route('delete_comment') }}'>
                                                 @csrf
@@ -211,7 +190,7 @@
                             @endif
                         @endforeach
                     </div>
-                    @if ($my_page || $role == 'admin')
+                    @if ( $my_page || $role == 'admin' || ($role == 'moderator' && !in_array($user[0]['role'], ['admin', 'moderator'])) )
                         <!-- Delete post form -->
                         <form id='{{'delete_form' . $post['id'] }}'  name='delete-post-form' class='delete-post-form' method='POST' action='{{ route('delete_post') }}'>
                             @csrf
