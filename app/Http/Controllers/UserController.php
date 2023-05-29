@@ -231,6 +231,7 @@ class UserController extends Controller
     public function add_mod(Request $request) {
         $mods = User::select('username')->where('role', '=', 'moderator')->pluck('username')->toArray();
         $users = User::select('username')->pluck('username')->toArray();
+        $banned = User::select('username')->where('role', '=', 'banned')->pluck('username')->toArray();
         $locale = App::getLocale();
         
         if (in_array($request['username'], $mods)) {
@@ -241,6 +242,16 @@ class UserController extends Controller
         } elseif (!in_array($request['username'], $users)) {
             if ($locale == 'en') $message = "This user doesn't exist!";
             elseif ($locale == 'lv') $message = 'Šis lietotājs neeksistē!';
+            return redirect()->back()->with(['message' => $message]);
+
+        } elseif ($request['username'] == auth()->user()->username) {
+            if ($locale == 'en') $message = "You are the administrator!";
+            elseif ($locale == 'lv') $message = 'Jūs esat administrators!';
+            return redirect()->back()->with(['message' => $message]);
+            
+        } elseif (in_array($request['username'], $banned)) {
+            if ($locale == 'en') $message = "This user is banned!";
+            elseif ($locale == 'lv') $message = 'Šis lietotājs ir bloķēts!';
             return redirect()->back()->with(['message' => $message]);
         }
 

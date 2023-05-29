@@ -68,3 +68,10 @@
     border-bottom-left-radius: 10px;
 }
 
+.no_friends {
+    text-align: center;
+    margin-top: 5%;
+    width: 100%;
+    font-size: 2em;
+}
+

@@ -64,6 +64,10 @@
     text-align: right;
 }
 
+.title-date h1 {
+    text-align: left;
+}
+
 .new-comment-form textarea {
     resize: none;
     border-radius: 5px;

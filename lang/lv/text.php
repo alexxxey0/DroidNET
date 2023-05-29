@@ -31,7 +31,7 @@ return [
     'settings' => 'Iestatījumi',
 
     // user page
-    'create_post!' => 'Izveidot jaunu ziņu!',
+    'create_post!' => 'Izveidot jaunu rakstu!',
     'published' => 'Publicēts',
     'your_comment' => 'Jūsu komentārs',
     'edited' => 'Pēdējo reizi rediģēts',
@@ -48,14 +48,14 @@ return [
     'write_message' => 'Uzrakstīt ziņu',
 
     // edit post/comment
-    'edit_post' => 'Rediģēt ziņu',
+    'edit_post' => 'Rediģēt rakstu',
     'edit' => 'Rediģēt',
     'edit_comment' => 'Rediģēt komentāru',
     'comment_text' => 'Komentāra teksts',
-    'post_title' => 'Ziņas virsraksts',
-    'post_text' => 'Ziņas teksts',
+    'post_title' => 'Raksta virsraksts',
+    'post_text' => 'Raksta teksts',
     'post_confirm' => 'Izveidot!',
-    'create_post' => 'Izveidot jaunu ziņu',
+    'create_post' => 'Izveidot jaunu rakstu',
 
     'feed_empty' => 'Jums nav jaunumu!',
 
@@ -75,6 +75,7 @@ return [
     'your_message' => 'Jūsu ziņa',
     'sent_at' => 'Nosūtīts',
     'you' => 'Jūs',
+    'no_chats' => 'Jums nav čatu!',
 
     // Settings
     'settings' => 'Iestatījumi',

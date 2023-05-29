@@ -74,6 +74,7 @@ return [
     'your_message' => 'Your message',
     'sent_at' => 'Sent at',
     'you' => 'You',
+    'no_chats' => 'You have no chats!',
 
     // Settings
     'settings' => 'Settings',
