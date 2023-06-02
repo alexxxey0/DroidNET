@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
@@ -54,6 +55,8 @@ class UserController extends Controller
         if ($user_role->isEmpty()) $role = null;
         else $role = $user_role[0]['role'];
 
+        $liked_posts = Like::select('post')->where('user', '=', auth()->user()->username)->pluck('post')->toArray();
+
         return view('user', [
             'user' => User::select('*')->where('username', '=', $username)->get(),
             //'user_obj' => User::select('*')->where('username', '=', $username)->first(),
@@ -67,7 +70,8 @@ class UserController extends Controller
             'request_received' => $request_received,
             'are_friends' => $are_friends,
             'friend_count' => $friend_count,
-            'user_role' => $role
+            'user_role' => $role,
+            'liked_posts' => $liked_posts
         ]);
     }
 

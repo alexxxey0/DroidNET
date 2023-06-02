@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('author')->references('username')->on('users')->onDelete('cascade');
             $table->string('title', 100);
             $table->text('content');
+            $table->bigInteger('like_count')->default(0);
             $table->timestamps();
         });
     }

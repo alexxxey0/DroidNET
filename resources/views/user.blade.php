@@ -112,6 +112,22 @@
                         </div>
 
                         <p>{!! nl2br($post['content']) !!}</p>
+
+                        @php
+                            $liked = in_array($post['id'], $liked_posts);
+                        @endphp
+
+                        <form id='{{'like_form' . $post['id']}}' action='{{ route('like_post') }}' method='POST' class='like_form'>
+                            @csrf
+                            @if (!$liked)
+                                <input class='like_image' type="image" name='submit' src='{{ asset('images/like.png') }}'>
+                            @else
+                                <input class='like_image' type="image" name='submit' src='{{ asset('images/liked.png') }}'>
+                            @endif
+                            <input type="hidden" value='{{$post['id']}}' name='post'>
+                            <input type="hidden" value='{{ auth()->user()->username }}' name='user'>
+                            <span>{{ __('text.like') }} | {{$post['like_count']}}</span>
+                        </form>
                         @auth
                             <form id='{{'comment_form' . $post['id'] }}'  name='comment_form' class='new-comment-form' method='POST' action='{{ route('add_comment') }}'>
                                 @csrf
@@ -364,6 +380,25 @@
                     });
                 });
             }
+
+            // Ajax for liking or unliking a post
+            $('.like_form').submit(function(event) {
+                event.preventDefault();
+                var formData = $(this).serializeArray();
+
+                $.ajax({
+                    url: `{{ route('like_post') }}`,
+                    type: 'post',
+                    data: formData,
+                    success: function(response) {
+                        $('#like_form' + response.post).load(' #like_form' + response.post + ' > *');
+                    },
+
+                    error: function(response) {
+                        alert('error');
+                    }
+                });
+            });
 
             $('.delete-comment-form').each(function(index, object) {
                 comment_delete_ajax(object);

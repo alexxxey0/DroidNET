@@ -1,5 +1,12 @@
 @extends('layouts/main_layout')
 @section('content')
+    <div id='sort_by_div'>
+        <h3>{{ __('text.sort_by') }}</h3>
+        <select name="sort_by" id="sort_by">
+            <option @if ($sort_by == 'new') selected @endif value="new">{{ __('text.new') }} &#8987;</option>
+            <option @if ($sort_by == 'best') selected @endif value="best">{{ __('text.best') }} &#128293;</option>
+        </select>
+    </div>
 
     <style>
         .success-msg {
@@ -74,6 +81,23 @@
                         </div>
 
                         <p>{!! nl2br($post['content']) !!}</p>
+
+                        @php
+                            $liked = in_array($post['id'], $liked_posts);
+                        @endphp
+
+                        <form id='{{'like_form' . $post['id']}}' action='{{ route('like_post') }}' method='POST' class='like_form'>
+                            @csrf
+                            @if (!$liked)
+                                <input class='like_image' type="image" name='submit' src='{{ asset('images/like.png') }}'>
+                            @else
+                                <input class='like_image' type="image" name='submit' src='{{ asset('images/liked.png') }}'>
+                            @endif
+                            <input type="hidden" value='{{$post['id']}}' name='post'>
+                            <input type="hidden" value='{{ auth()->user()->username }}' name='user'>
+                            <span>{{ __('text.like') }} | {{$post['like_count']}}</span>
+                        </form>
+
                         @auth
                             <form id='{{'comment_form' . $post['id'] }}'  name='comment_form' class='new-comment-form' method='POST' action='{{ route('add_comment') }}'>
                                 @csrf
@@ -321,6 +345,31 @@
                         alert('error');
                     }
                 });
+            });
+
+            // Ajax for liking or unliking a post
+            $('.like_form').submit(function(event) {
+                event.preventDefault();
+                var formData = $(this).serializeArray();
+
+                $.ajax({
+                    url: `{{ route('like_post') }}`,
+                    type: 'post',
+                    data: formData,
+                    success: function(response) {
+                        $('#like_form' + response.post).load(' #like_form' + response.post + ' > *');
+                    },
+
+                    error: function(response) {
+                        alert('error');
+                    }
+                });
+            });
+
+            // Sort posts
+            $('#sort_by').on('change', function(event) {
+                var selected = $('#sort_by').find(':selected').val();
+                window.location = `{{ route('show_feed') }}` + '/' + selected;
             });
 
             $('.delete-comment-form').each(function(index, object) {

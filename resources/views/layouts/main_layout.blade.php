@@ -132,7 +132,7 @@
                 <div class="nav">
                     <nav>
                         <a href="{{ route('user', auth()->user()->username) }}"><strong>{{ __('text.my_page') }}</strong></a>
-                        <a href="{{ route('show_feed') }}"><strong>{{ __('text.feed') }}</strong></a>
+                        <a href="{{ route('show_feed', ['sort_by' => 'new']) }}"><strong>{{ __('text.feed') }}</strong></a>
                         <a id='friends' href="{{ route('friends', auth()->user()->username) }}">
                             <strong>{{ __('text.friends') }}</strong>
                             @if (isset($received_requests_count) && $received_requests_count > 0)
@@ -150,7 +150,7 @@
                     </nav>
                 </div>
             @endauth
-            <div class='content'>
+            <div id='content' class='content'>
                 @yield('content')   
             </div>
         </main>

@@ -105,7 +105,7 @@ Route::get('/search', [UserController::class, 'search_page'])->name('search_page
 Route::get('/search_results', [UserController::class, 'show_search_results'])->name('show_search_results');
 
 // Show feed
-Route::get('/feed', [PostController::class, 'show_feed'])->name('show_feed');
+Route::get('/feed/{sort_by?}', [PostController::class, 'show_feed'])->name('show_feed');
 
 // Open a chat with another user
 Route::get('/chat/{user}', [MessageController::class, 'open_chat'])->name('open_chat');
@@ -136,6 +136,9 @@ Route::put('/ban_user', [UserController::class, 'ban_user'])->name('ban_user');
 
 // Unban a user
 Route::put('/unban_user', [UserController::class, 'unban_user'])->name('unban_user');
+
+// Like or unlike a post
+Route::post('/like_post', [PostController::class, 'like_post'])->name('like_post');
 
 // Change language
 Route::get('lang/{lang}', function ($lang) {

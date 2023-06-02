@@ -114,6 +114,9 @@ return [
     'note_reasons' => 'Please note that the above reasons are taken seriously to ensure a safe and respectful environment for all users.',
     'ban_summary' => 'If you have any concerns or believe your ban was a mistake, you can reach out to our support team for further clarification and assistance.',
 
-    'back_to_home' => 'Back to Home page'
-
+    'back_to_home' => 'Back to Home page',
+    'like' => 'Like',
+    'new' => 'New',
+    'best' => 'Best',
+    'sort_by' => 'Sort by: '
 ];

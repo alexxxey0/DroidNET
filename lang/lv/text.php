@@ -115,5 +115,9 @@ return [
     'note_reasons' => 'Lūdzu, ņemiet vērā, ka iepriekš minētie iemesli tiek ņemti vērā nopietni, lai nodrošinātu drošu un cieņpilnu vidi visiem lietotājiem.',
     'ban_summary' => 'Ja jums ir kādas bažas vai jūs uzskatāt, ka jūsu bloķēšana bija kļūda, jūs varat sazināties ar mūsu atbalsta komandu, lai iegūtu papildu skaidrojumus un palīdzību.',
 
-    'back_to_home' => 'Atpakaļ uz sākumlapu'
+    'back_to_home' => 'Atpakaļ uz sākumlapu',
+    'like' => 'Patīk',
+    'new' => 'Jaunākie',
+    'best' => 'Labākie',
+    'sort_by' => 'Kārtot pēc: '
 ];
