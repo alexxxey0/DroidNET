@@ -69,7 +69,12 @@ class CommentController extends Controller
         if ($locale == 'en') $message = 'Comment edited successfully!';
         elseif ($locale == 'lv') $message = 'Komentārs ir veiksmīgi rediģēts!';
 
-        if ($request['target_page'] == 'user') return redirect('user/' . $post[0]['author'] . '#comment-buttons' . $comment['id'])->with(['message' => $message]);
-        else return redirect('feed/' . '#comment-buttons' . $comment['id'])->with(['message' => $message]);
+        
+        $target_page = $request['target_page'];
+        if (str_contains($target_page, 'user')) return redirect('user/' . $post[0]['author'] . '#comment-buttons' . $comment['id'])->with(['message' => $message]);
+        else {
+            if (str_contains($target_page, 'new')) return redirect('feed/new/' . '#comment-buttons' . $comment['id'])->with(['message' => $message]);
+            elseif (str_contains($target_page, 'best')) return redirect('feed/best/' . '#comment-buttons' . $comment['id'])->with(['message' => $message]);
+        }
     }
 }

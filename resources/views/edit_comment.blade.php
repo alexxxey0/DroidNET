@@ -9,7 +9,7 @@
 
             @php
                 // check from which page user arrived, so we can then redirect him back accordingly
-                $prev_page = Route::getRoutes()->match(Request::create(URL::previous()))->getName();
+                $prev_page = url()->previous();
             @endphp
 
             <input type="hidden" name='target_page' value='{{ $prev_page }}'>

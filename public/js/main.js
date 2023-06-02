@@ -34,5 +34,48 @@ function openTab(event, tabName) {
     event.currentTarget.className += " active";
 }
 
+function add_delete_confirmation(button) {
+    $(button).on('click', function (event) {
+        event.preventDefault();
+
+        var form = $(button).closest('form'); // Get the related form
+        if (locale == 'en') {
+            if ($(this).hasClass('delete-comment')) var msg = 'Are you sure you want to delete this comment?';
+            if ($(this).hasClass('delete-post')) var msg = 'Are you sure you want to delete this post?';
+        } else if (locale == 'lv') {
+            if ($(this).hasClass('delete-comment')) var msg = 'Vai tiešām vēlaties dzēst šo komentāru?';
+            if ($(this).hasClass('delete-post')) var msg = 'Vai tiešām vēlaties dzēst šo ziņu?';
+        }
+
+        if (confirm(msg)) form.submit();
+
+    })
+}
+
+
+function get_url(page) {
+    return 'http://www.droidnet.web/' + page;
+}
+
+function get_img(img) {
+    return 'http://www.droidnet.web/images/' + img;
+}
+
+
+$('.delete-post').each(function(index, object) {
+    add_delete_confirmation(object);
+})
+
+$('.delete-comment').each(function(index, object) {
+    add_delete_confirmation(object);
+})
+
+
+
+// Sort posts
+$('#sort_by').on('change', function(event) {
+    var selected = $('#sort_by').find(':selected').val();
+    window.location = get_url('feed') + '/' + selected;
+});
 
 
