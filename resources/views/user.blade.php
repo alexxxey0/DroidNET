@@ -113,22 +113,30 @@
 
                         <p>{!! nl2br($post['content']) !!}</p>
 
-                        @php
-                            $liked = in_array($post['id'], $liked_posts);
-                        @endphp
-
-                        <form id='{{'like_form' . $post['id']}}' action='{{ route('like_post') }}' method='POST' class='like_form'>
-                            @csrf
-                            @if (!$liked)
-                                <input class='like_image' type="image" name='submit' src='{{ asset('images/like.png') }}'>
-                            @else
-                                <input class='like_image' type="image" name='submit' src='{{ asset('images/liked.png') }}'>
-                            @endif
-                            <input type="hidden" value='{{$post['id']}}' name='post'>
-                            <input type="hidden" value='{{ auth()->user()->username }}' name='user'>
-                            <span>{{ __('text.like') }} | {{$post['like_count']}}</span>
-                        </form>
                         @auth
+                            @php
+                                $liked = in_array($post['id'], $liked_posts);
+                            @endphp
+                        @else
+                            @php
+                                $liked = null;
+                            @endphp
+                        @endauth
+
+                        @auth
+                            <form id='{{'like_form' . $post['id']}}' action='{{ route('like_post') }}' method='POST' class='like_form'>
+                                @csrf
+                                @if (!$liked)
+                                    <input class='like_image' type="image" name='submit' src='{{ asset('images/like.png') }}'>
+                                @else
+                                    <input class='like_image' type="image" name='submit' src='{{ asset('images/liked.png') }}'>
+                                @endif
+                                <input type="hidden" value='{{$post['id']}}' name='post'>
+                                @auth
+                                    <input type="hidden" value='{{ auth()->user()->username }}' name='user'>
+                                @endauth
+                                <span>{{ __('text.like') }} | {{$post['like_count']}}</span>
+                            </form>
                             <form id='{{'comment_form' . $post['id'] }}'  name='comment_form' class='new-comment-form' method='POST' action='{{ route('add_comment') }}'>
                                 @csrf
                                 <input type="hidden" name='post_id' value='{{ $post['id'] }}'>

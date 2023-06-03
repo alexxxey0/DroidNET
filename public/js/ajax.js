@@ -86,7 +86,7 @@ $('.delete-post-form').submit(function(event) {
             }).prependTo('main');
 
             const success_msg = document.querySelector('.success-msg');
-            setTimeout(() => {success_msg.style.display="none"}, 3000);
+            setTimeout(() => {success_msg.remove()}, 3000);
         },
 
         error: function(response) {
@@ -116,7 +116,7 @@ function comment_delete_ajax(comment) {
                 }).prependTo('main');
 
                 const success_msg = document.querySelector('.success-msg');
-                setTimeout(() => {success_msg.style.display="none"}, 3000);
+                setTimeout(() => {success_msg.remove()}, 3000);
             },
 
             error: function(response) {

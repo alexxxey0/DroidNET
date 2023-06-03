@@ -41,8 +41,8 @@ return [
 
     'request_sent' => 'Draudzības pieprasījums nosūtīts',
     'send_request' => 'Nosūtīt draudzības pieprasījumu',
-    'request_accept' => 'Pieņemt draudzības pieprasījumu',
-    'request_decline' => 'Noraidīt draudzības pieprasījumu',
+    'accept_request' => 'Pieņemt draudzības pieprasījumu',
+    'decline_request' => 'Noraidīt draudzības pieprasījumu',
     'is_friend' => 'ir jūsu draugs',
     'view_friends' => 'Apskatīt draugus',
     'write_message' => 'Uzrakstīt ziņu',

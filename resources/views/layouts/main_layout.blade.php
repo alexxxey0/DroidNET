@@ -71,7 +71,7 @@
 
             <script>
                 const success_msg = document.querySelector('.success-msg');
-                setTimeout(() => {success_msg.style.display="none"}, 3000);
+                setTimeout(() => {success_msg.remove()}, 3000);
             </script>
 
         @endif

@@ -75,8 +75,8 @@
                             @method('PUT')
                             <input type='hidden' name='request_sender' value='{{ $user['username'] }}'>
                             <input type="hidden" name='tab' value='friends_tab'>
-                            <button name='accept_decline' value='accept' class='accept-decline accept-request' type='submit'>{{ __('text.request_accept') }}</button>
-                            <button name='accept_decline' value='decline' class='accept-decline decline-request' type='submit'>{{ __('text.request_decline') }}</button>
+                            <button name='accept_decline' value='accept' class='accept-decline accept-request' type='submit'>{{ __('text.accept_request') }}</button>
+                            <button name='accept_decline' value='decline' class='accept-decline decline-request' type='submit'>{{ __('text.decline_request') }}</button>
                         </form>
                     </div>
 

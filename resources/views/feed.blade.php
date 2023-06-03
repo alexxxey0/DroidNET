@@ -25,17 +25,6 @@
             }
     </style>
 
-    <!-- Show a message -->
-    @if (session()->get('message'))
-        <h1 class='success-msg'>{{ session()->get('message') }}</h1>
-
-        <script>
-            const success_msg = document.querySelector('.success-msg');
-            setTimeout(() => {success_msg.style.display="none"}, 3000);
-        </script>
-
-    @endif
-
     @if (count($posts) > 0)
         @foreach ($posts as $post)
 
@@ -196,6 +185,12 @@
     @else
         <h2 class='no_feed'>{{ __('text.feed_empty') }}</h2>
     @endif
+
+    
+    @php
+        $locale = Config::get('app.locale');
+        if (empty($locale)) $locale = 'en';
+    @endphp
 
     <script>
         var locale = '{{ $locale }}';

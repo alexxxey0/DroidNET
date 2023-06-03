@@ -43,10 +43,12 @@ class UserController extends Controller
             $request_received = in_array($username, $requests_received); // check if current user has received a request from this user and it's still pending
 
             $are_friends = Friendship::are_friends(auth()->user()->username, $username);
+            $liked_posts = Like::select('post')->where('user', '=', auth()->user()->username)->pluck('post')->toArray();
         } else {
             $request_sent = false;
             $request_received = false;
             $are_friends = false;
+            $liked_posts = null;
         }
 
         if ($full_name->isEmpty()) $title = null;
@@ -54,8 +56,6 @@ class UserController extends Controller
 
         if ($user_role->isEmpty()) $role = null;
         else $role = $user_role[0]['role'];
-
-        $liked_posts = Like::select('post')->where('user', '=', auth()->user()->username)->pluck('post')->toArray();
 
         return view('user', [
             'user' => User::select('*')->where('username', '=', $username)->get(),
@@ -88,7 +88,7 @@ class UserController extends Controller
 
     public function create_user(Request $request) {
         $form_fields = $request->validate([
-            'username' => ['required', Rule::unique('users', 'username'), 'max:50'],
+            'username' => ['required', Rule::unique('users', 'username'), 'max:30'],
             'first_name' => ['required', 'max:20'],
             'last_name' => ['required', 'max:20'],
             'password' => ['required', 'min:6', 'confirmed'],
