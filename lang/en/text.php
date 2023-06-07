@@ -118,5 +118,7 @@ return [
     'like' => 'Like',
     'new' => 'New',
     'best' => 'Best',
-    'sort_by' => 'Sort by: '
+    'sort_by' => 'Sort by: ',
+
+    'page_not_allowed' => 'You do not have the permission to access this page!'
 ];

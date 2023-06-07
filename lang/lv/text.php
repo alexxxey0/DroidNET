@@ -119,5 +119,7 @@ return [
     'like' => 'Patīk',
     'new' => 'Jaunākie',
     'best' => 'Labākie',
-    'sort_by' => 'Kārtot pēc: '
+    'sort_by' => 'Kārtot pēc: ',
+
+    'page_not_allowed' => 'Jums nav atļaujas piekļūt šai lapai!'
 ];

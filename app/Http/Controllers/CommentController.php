@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use IntlDateFormatter;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,7 +28,16 @@ class CommentController extends Controller
 
         $name = $request['name'];
         $image = isset(auth()->user()->image) ? asset('images/' . auth()->user()->image) : asset('images/default_image.jpg');
-        $time = date("M jS, Y G:i", time());
+
+        $locale = Config::get('app.locale');
+        if (empty($locale)) $locale = 'en';
+        if ($locale == 'lv') {
+            $fmt = new IntlDateFormatter( "lv_LV" ,IntlDateFormatter::FULL, IntlDateFormatter::FULL, null,IntlDateFormatter::GREGORIAN, "LLLL d, yyyy HH:mm");
+        } elseif ($locale == 'en') {
+            $fmt = new IntlDateFormatter( "en_GB" ,IntlDateFormatter::FULL, IntlDateFormatter::FULL, null,IntlDateFormatter::GREGORIAN, "LLLL d, yyyy HH:mm");
+        }
+        $time = ucfirst(datefmt_format($fmt, time()));
+
 
         $comment = Comment::create($form_fields);
         $id = $comment['id'];
